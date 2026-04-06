@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dreweb.agency/sitemap.xml
+
+# dreweb — Design. Develop. Deliver.
+# Located in Indore, India
