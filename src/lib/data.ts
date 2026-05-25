@@ -1,7 +1,7 @@
 export const BRAND = {
   name: "dreweb",
   tagline: "Design • Develop • Deliver",
-  email: "nickvshnv@gmail.com",
+  email: "info@dreweb.online",
   phone: "+91 6261029938",
   location: "Indore, Madhya Pradesh, India",
   instagram: "@dreweb.agency",

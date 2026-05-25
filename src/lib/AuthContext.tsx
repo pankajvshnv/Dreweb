@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (storedUser) {
       const parsed = JSON.parse(storedUser);
       setUser(parsed);
-      setIsAdmin(parsed.email === 'nickvshnv@gmail.com');
+      setIsAdmin(parsed.email === 'info@dreweb.online');
     }
     setLoading(false);
   }, []);
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const newUser = { email, uid: 'local-admin' };
     localStorage.setItem('local_user', JSON.stringify(newUser));
     setUser(newUser);
-    setIsAdmin(email === 'nickvshnv@gmail.com');
+    setIsAdmin(email === 'info@dreweb.online');
   };
 
   const signOut = () => {

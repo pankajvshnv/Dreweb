@@ -21,7 +21,7 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
     try {
-      if (email === 'nickvshnv@gmail.com' && password === 'Macbook@123') {
+      if (email === 'info@dreweb.online' && password === 'Macbook@123') {
         signIn(email);
         navigate('/admin/dashboard');
       } else {
@@ -38,7 +38,7 @@ export default function AdminLogin() {
     setError('');
     try {
       setTimeout(() => {
-        signIn('nickvshnv@gmail.com');
+        signIn('info@dreweb.online');
         navigate('/admin/dashboard');
       }, 500);
     } catch (err: any) {
@@ -67,7 +67,7 @@ export default function AdminLogin() {
                 required 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="nickvshnv@gmail.com"
+                placeholder="info@dreweb.online"
                 className="rounded-xl border-zinc-200 bg-zinc-50 focus:bg-white h-12"
               />
             </div>
