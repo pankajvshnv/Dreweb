@@ -14,6 +14,7 @@ export default function Contact() {
     mobile: '',
     company: '',
     service: '',
+    currency: '$', // Added currency state
     budget: '',
     message: ''
   });
@@ -32,7 +33,8 @@ export default function Contact() {
         createdAt: new Date().toISOString(),
       });
       setSuccess(true);
-      setFormData({ name: '', email: '', mobile: '', company: '', service: '', budget: '', message: '' });
+      // Reset form including currency
+      setFormData({ name: '', email: '', mobile: '', company: '', service: '', currency: '$', budget: '', message: '' });
     } catch (error) {
       console.error(error);
       alert('Failed to send message: ' + (error as Error).message);
@@ -74,7 +76,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-bold mb-1">Phone / WhatsApp</h4>
-                    <a href={`tel:${BRAND.phone.replace(/\\s+/g, '')}`} className="text-zinc-500 hover:text-black transition-colors">{BRAND.phone}</a>
+                    <a href={`tel:${BRAND.phone.replace(/\s+/g, '')}`} className="text-zinc-500 hover:text-black transition-colors">{BRAND.phone}</a>
                   </div>
                 </div>
               </StaggerItem>
@@ -139,19 +141,33 @@ export default function Contact() {
                     </select>
                   </div>
 
+                  {/* BUDGET SECTION UPDATED */}
                   <div className="flex flex-col gap-2">
                     <label htmlFor="budget" className="text-sm font-semibold text-zinc-700">Estimated Budget</label>
-                    <select id="budget" value={formData.budget} onChange={handleChange} className="bg-white px-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all appearance-none cursor-pointer">
-                      <option value="">Select a budget range...</option>
-                      <option value="small">&lt; $100</option>
-                      <option value="medium">$200 - $300</option>
-                      <option value="large">$300 - $500</option>
-                      <option value="enterprise">&gt; $Custom</option>
-                    </select>
+                    <div className="flex gap-3">
+                      <select 
+                        id="currency" 
+                        value={formData.currency} 
+                        onChange={handleChange} 
+                        className="bg-white px-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all appearance-none cursor-pointer w-24 shrink-0"
+                      >
+                        <option value="$">$ (USD)</option>
+                        <option value="₹">₹ (INR)</option>
+                      </select>
+                      <input 
+                        type="number" 
+                        id="budget" 
+                        value={formData.budget} 
+                        onChange={handleChange} 
+                        className="flex-1 bg-white px-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" 
+                        placeholder="Enter amount" 
+                      />
+                    </div>
                   </div>
 
+                  {/* MESSAGE SECTION UPDATED */}
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="message" className="text-sm font-semibold text-zinc-700">Project Details</label>
+                    <label htmlFor="message" className="text-sm font-semibold text-zinc-700">Tell us about your project:</label>
                     <textarea id="message" required value={formData.message} onChange={handleChange} rows={4} className="bg-white px-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all resize-none" placeholder="Tell us about your goals..."></textarea>
                   </div>
 
