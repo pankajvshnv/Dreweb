@@ -73,14 +73,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2"
           >
-            {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="h-10 w-auto" />
-            ) : (
-              <>
-                <div className="w-10 h-10 bg-brand-lime rounded-xl flex items-center justify-center font-display font-extrabold text-xl text-black">d</div>
-                <span className="font-display font-extrabold text-2xl tracking-tight text-black">dreweb</span>
-              </>
-            )}
+            <img src={logoUrl || "/logo.png"} alt="Logo" className="h-10 w-auto" />
           </motion.div>
         </Link>
 

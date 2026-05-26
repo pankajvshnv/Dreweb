@@ -38,19 +38,12 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }}
           className="flex flex-col items-center gap-8"
         >
-          {/* Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5, filter: 'blur(20px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-            className="flex items-center gap-3"
           >
-            <div className="w-12 h-12 bg-brand-lime rounded-xl flex items-center justify-center font-display font-extrabold text-2xl text-black">
-              d
-            </div>
-            <span className="font-display font-extrabold text-4xl tracking-tight text-white">
-              dreweb
-            </span>
+            <img src="/logo.png" alt="Logo" className="h-16 w-auto" />
           </motion.div>
 
           {/* Progress bar */}

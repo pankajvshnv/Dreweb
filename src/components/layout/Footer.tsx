@@ -30,14 +30,7 @@ export default function Footer() {
             {/* Footer Logo */}
             <div className="mb-8">
               <Link to="/">
-                {logoUrl ? (
-                  <img src={logoUrl} alt="dreweb" className="h-20 w-auto" />
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <div className="w-14 h-14 bg-brand-lime rounded-2xl flex items-center justify-center font-display font-extrabold text-2xl text-black">d</div>
-                    <span className="font-display font-extrabold text-5xl tracking-tight text-black">dreweb</span>
-                  </div>
-                )}
+                <img src={logoUrl || "/logo.png"} alt="dreweb" className="h-20 w-auto" />
               </Link>
             </div>
             <h2 className="font-display text-5xl lg:text-7xl font-extrabold tracking-[-0.04em] mb-6">
