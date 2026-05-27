@@ -167,7 +167,7 @@ export default function Home() {
                     {project.heroImage ? (
                       <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover" whileHover={{ scale: 1.08 }} transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }} />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-display text-3xl font-bold uppercase tracking-widest">{project.title.substring(0, 2)}</div>
+                      <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-display text-3xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                     )}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <motion.div className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center" initial={{ scale: 0.5, opacity: 0 }} whileHover={{ scale: 1 }} animate={{}} whileInView={{}}><ArrowUpRight size={24} strokeWidth={2.5} /></motion.div>
