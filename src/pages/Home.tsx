@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers } from 'lucide-react';
-import { PROJECTS, INDUSTRIES } from '../lib/data';
+import { PROJECTS } from '../lib/data';
 import { useCollection } from '../lib/useCollection';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Counter, Magnetic, Float, Parallax, SlideReveal, LineReveal, ScaleIn } from '../components/motion/Animations';
 import { FloatingShowcase } from '../components/home/FloatingShowcase';
@@ -279,21 +279,6 @@ export default function Home() {
         </StaggerContainer>
       </section>
 
-      {/* ━━━ INDUSTRIES ━━━ */}
-      <section className="py-24 bg-zinc-50 overflow-hidden">
-        <FadeIn>
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center mb-12">
-            <TextReveal as="h2" className="font-display text-3xl font-bold tracking-tighter">Industries We Accelerate</TextReveal>
-          </div>
-        </FadeIn>
-        <StaggerContainer className="flex flex-wrap items-center justify-center gap-4 max-w-4xl mx-auto px-4" stagger={0.05}>
-          {INDUSTRIES.map((ind, idx) => (
-            <StaggerItem key={idx}>
-              <motion.span whileHover={{ scale: 1.08, y: -4 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }} className="inline-block px-6 py-3 bg-white border border-zinc-200 rounded-full font-medium text-zinc-700 hover:border-brand-indigo hover:text-brand-indigo hover:shadow-lg transition-all cursor-default shadow-sm">{ind}</motion.span>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </section>
     </div>
   );
 }
