@@ -34,7 +34,7 @@ export default function AdminProjectEdit() {
     challenge: '',
     solution: '',
     technologies: [],
-    liveUrl: '',
+    link: '',
     github: '',
     isFeatured: false,
     isPublic: true,
@@ -207,8 +207,8 @@ export default function AdminProjectEdit() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="liveUrl" className="font-bold">Live Website URL</Label>
-                  <Input id="liveUrl" value={formData.liveUrl} onChange={handleChange} placeholder="https://" className="border-zinc-200 rounded-xl" />
+                  <Label htmlFor="link" className="font-bold">Live Website URL</Label>
+                  <Input id="link" value={formData.link} onChange={handleChange} placeholder="https://" className="border-zinc-200 rounded-xl" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="github" className="font-bold">GitHub Repository</Label>

@@ -180,12 +180,12 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       <span className="text-zinc-500 border border-white/10 rounded-full px-3 py-1 text-sm">{project.year}</span>
-                      {project.link && (
+                      { (project.link || project.liveUrl) && (
                         <a 
-                          href={project.link} 
+                          href={project.link || project.liveUrl} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link, '_blank'); }}
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link || project.liveUrl, '_blank'); }}
                           className="flex items-center gap-1 text-xs font-bold text-white bg-white/10 hover:bg-white/20 hover:text-brand-lime px-3 py-1.5 rounded-full transition-all"
                         >
                           Visit Site <ArrowUpRight size={14} />
