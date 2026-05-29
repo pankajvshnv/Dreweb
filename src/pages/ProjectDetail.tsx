@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Play } from 'lucide-react';
 import { useDocumentBySlug } from '../lib/useDocument';
 import NotFound from './NotFound';
 import { FadeIn, TextReveal, ScaleIn, Magnetic, ImageReveal } from '../components/motion/Animations';
@@ -56,11 +56,36 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* Main Image */}
+      {/* Main Media */}
       <section className="px-6 lg:px-8 max-w-7xl mx-auto mb-24">
         <ScaleIn delay={0.2}>
           <div className="w-full aspect-video bg-zinc-100 rounded-[2rem] md:rounded-[3rem] border border-zinc-200 flex items-center justify-center relative overflow-hidden group">
-            {project.heroImage ? (
+            {project.heroVideo ? (
+              <>
+                <video
+                  src={project.heroVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={project.heroImage || undefined}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Subtle overlay on hover */}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center shadow-2xl"
+                  >
+                    <Play size={28} strokeWidth={2} fill="currentColor" />
+                  </motion.div>
+                </div>
+                <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-sm text-white text-xs font-bold rounded-full">
+                  <Play size={11} fill="currentColor" /> VIDEO
+                </div>
+              </>
+            ) : project.heroImage ? (
               <motion.img 
                 src={project.heroImage} 
                 alt={project.title} 

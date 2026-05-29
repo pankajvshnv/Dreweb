@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Save, LayoutTemplate, X as XIcon, Edit2, UploadCloud } from 'lucide-react';
+import { ArrowLeft, Save, X as XIcon, Edit2, UploadCloud, Video, Image as ImageIcon } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -21,7 +21,9 @@ export default function AdminProjectEdit() {
   const [isPublishing, setIsPublishing] = useState(false);
   const [techInput, setTechInput] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState<any>({
     title: '',
@@ -39,6 +41,7 @@ export default function AdminProjectEdit() {
     isFeatured: false,
     isPublic: true,
     heroImage: '',
+    heroVideo: '',
     gallery: [],
     metaTitle: '',
     metaDesc: '',
@@ -97,6 +100,24 @@ export default function AdminProjectEdit() {
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsVideoUploading(true);
+    try {
+      const path = `projects/videos/${Date.now()}_${file.name}`;
+      const url = await uploadFile(path, file);
+      setFormData((prev: any) => ({ ...prev, heroVideo: url }));
+      addToast('Video uploaded successfully!', 'success');
+    } catch (error) {
+      addToast('Failed to upload video. Please try again.', 'error');
+    } finally {
+      setIsVideoUploading(false);
+      if (videoInputRef.current) videoInputRef.current.value = '';
     }
   };
 
@@ -290,10 +311,19 @@ export default function AdminProjectEdit() {
 
         {/* Media Tab */}
         <TabsContent value="media" className="space-y-6 mt-6">
+
+          {/* Hero Image */}
           <Card className="border-zinc-200 rounded-2xl">
             <CardHeader>
-              <CardTitle>Featured Image / Hero</CardTitle>
-              <CardDescription>Main image displayed in portfolio grids.</CardDescription>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-brand-lime/10 flex items-center justify-center">
+                  <ImageIcon className="w-5 h-5 text-brand-lime" />
+                </div>
+                <div>
+                  <CardTitle>Hero Image</CardTitle>
+                  <CardDescription>Main image displayed in portfolio grids and cards.</CardDescription>
+                </div>
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex flex-col gap-4">
@@ -328,12 +358,94 @@ export default function AdminProjectEdit() {
               </div>
 
               {formData.heroImage && (
-                  <div className="mt-4 border border-zinc-200 rounded-lg overflow-hidden max-w-md">
-                     <img src={formData.heroImage} alt="Hero preview" className="w-full h-auto object-cover" />
-                  </div>
+                <div className="mt-4 border border-zinc-200 rounded-xl overflow-hidden max-w-md relative group">
+                  <img src={formData.heroImage} alt="Hero preview" className="w-full h-auto object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => setFormData((prev: any) => ({ ...prev, heroImage: '' }))}
+                    className="absolute top-2 right-2 w-7 h-7 bg-black/60 hover:bg-black text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <XIcon className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               )}
             </CardContent>
           </Card>
+
+          {/* Hero Video */}
+          <Card className="border-zinc-200 rounded-2xl">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-brand-blue/10 flex items-center justify-center">
+                  <Video className="w-5 h-5 text-brand-blue" />
+                </div>
+                <div>
+                  <CardTitle>Hero Video</CardTitle>
+                  <CardDescription>Optional video shown instead of the image (muted autoplay loop). Great for demos and motion showcases.</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex flex-col gap-4">
+                <Input id="heroVideo" value={formData.heroVideo || ''} onChange={handleChange} placeholder="Video URL e.g. https://...mp4 or Firebase Storage URL" className="border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white transition-colors" />
+
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <input 
+                      type="file" 
+                      accept="video/*" 
+                      onChange={handleVideoUpload} 
+                      ref={videoInputRef} 
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                      disabled={isVideoUploading}
+                    />
+                    <Button type="button" variant="outline" className="border-zinc-200 border-brand-blue/30 text-brand-blue hover:bg-brand-blue/5" disabled={isVideoUploading}>
+                      {isVideoUploading ? (
+                        <>
+                          <div className="w-4 h-4 mr-2 border-2 border-brand-blue/50 border-t-brand-blue rounded-full animate-spin"></div>
+                          Uploading Video...
+                        </>
+                      ) : (
+                        <>
+                          <Video className="w-4 h-4 mr-2" />
+                          Upload Video
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <span className="text-sm text-zinc-500">or paste a video URL above</span>
+                </div>
+              </div>
+
+              {formData.heroVideo && (
+                <div className="mt-4 border border-zinc-200 rounded-xl overflow-hidden max-w-md relative group">
+                  <video
+                    src={formData.heroVideo}
+                    controls
+                    className="w-full h-auto"
+                    preload="metadata"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFormData((prev: any) => ({ ...prev, heroVideo: '' }))}
+                    className="absolute top-2 right-2 w-7 h-7 bg-black/60 hover:bg-black text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <XIcon className="w-3.5 h-3.5" />
+                  </button>
+                  <div className="px-4 py-2 bg-zinc-50 border-t border-zinc-200">
+                    <p className="text-xs text-zinc-500 font-medium">✅ Video uploaded — it will autoplay (muted) on the live site</p>
+                  </div>
+                </div>
+              )}
+
+              {!formData.heroVideo && (
+                <div className="p-4 rounded-xl bg-zinc-50 border border-dashed border-zinc-200 text-sm text-zinc-500">
+                  💡 <strong>Tip:</strong> When a video is set, it plays automatically (muted, looping) in portfolio cards and the project detail page. The hero image will be used as a fallback thumbnail.
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
         </TabsContent>
 
         {/* SEO Tab */}

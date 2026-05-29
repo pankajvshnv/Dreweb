@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers } from 'lucide-react';
+import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers, Play } from 'lucide-react';
 import { PROJECTS } from '../lib/data';
 import { useCollection } from '../lib/useCollection';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Counter, Magnetic, Float, Parallax, SlideReveal, LineReveal, ScaleIn } from '../components/motion/Animations';
@@ -164,14 +164,43 @@ export default function Home() {
               <FadeIn key={project.slug || idx} delay={idx * 0.1}>
                 <Link to={`/work/${project.slug}`} className="group block" data-cursor="View">
                   <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-zinc-900 mb-6">
-                    {project.heroImage ? (
+                    {project.heroVideo ? (
+                      <>
+                        <video
+                          src={project.heroVideo}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          poster={project.heroImage || undefined}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <motion.div
+                            className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center shadow-xl"
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            whileHover={{ scale: 1 }}
+                            animate={{}}
+                            whileInView={{}}
+                          >
+                            <Play size={20} strokeWidth={2.5} fill="currentColor" />
+                          </motion.div>
+                        </div>
+                        {/* Video badge */}
+                        <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs font-bold rounded-full">
+                          <Play size={10} fill="currentColor" /> VIDEO
+                        </div>
+                      </>
+                    ) : project.heroImage ? (
                       <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover" whileHover={{ scale: 1.08 }} transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }} />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-display text-3xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                     )}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <motion.div className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center" initial={{ scale: 0.5, opacity: 0 }} whileHover={{ scale: 1 }} animate={{}} whileInView={{}}><ArrowUpRight size={24} strokeWidth={2.5} /></motion.div>
-                    </div>
+                    {!project.heroVideo && (
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <motion.div className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center" initial={{ scale: 0.5, opacity: 0 }} whileHover={{ scale: 1 }} animate={{}} whileInView={{}}><ArrowUpRight size={24} strokeWidth={2.5} /></motion.div>
+                      </div>
+                    )}
                   </div>
                   <div className="flex justify-between items-start">
                     <div>
