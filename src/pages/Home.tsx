@@ -1,10 +1,11 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers, Play } from 'lucide-react';
+import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers, Play, Sparkles, TrendingUp, Bot, Smartphone, Globe, Zap, BarChart3 } from 'lucide-react';
 import { PROJECTS } from '../lib/data';
 import { useCollection } from '../lib/useCollection';
-import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Counter, Magnetic, Float, Parallax, SlideReveal, LineReveal, ScaleIn } from '../components/motion/Animations';
+import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Counter, Magnetic, Float, Parallax, SlideReveal, LineReveal, ScaleIn, MouseGradient } from '../components/motion/Animations';
 import { FloatingShowcase } from '../components/home/FloatingShowcase';
+import { CutoutCorner } from '../components/ui/CutoutCorner';
 import SEO from '../components/seo/SEO';
 import { useRef, useEffect, useState } from 'react';
 
@@ -40,7 +41,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      <MouseGradient className="opacity-40" />
       <SEO
         title="Dreweb - Premium Web Design & Development Agency"
         description="We create visually refined digital experiences with modern UI/UX, fast and scalable development, and SEO optimization to help brands grow."
@@ -77,95 +79,181 @@ export default function Home() {
       </section>
 
       {/* ━━━ SERVICES BENTO ━━━ */}
-      <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-7xl mx-auto relative">
+        {/* Glow effect in background */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-lime/5 rounded-full blur-[100px] pointer-events-none" />
+        
         <FadeIn>
-          <div className="mb-10 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="mb-12 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
             <div className="max-w-2xl">
-              <SlideReveal><span className="text-brand-indigo font-semibold tracking-wide uppercase text-sm mb-3 block">Our Expertise</span></SlideReveal>
-              <TextReveal as="h3" className="font-display text-4xl lg:text-5xl font-bold tracking-tighter" delay={0.1}>Everything you need to dominate your market.</TextReveal>
+              <SlideReveal><span className="flex items-center gap-2 text-brand-indigo font-bold tracking-widest uppercase text-xs mb-4"><Sparkles className="w-4 h-4" /> Core Capabilities</span></SlideReveal>
+              <TextReveal as="h3" className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter leading-[1.1]" delay={0.1}>Everything you need to dominate your market.</TextReveal>
             </div>
-            <Magnetic><Link to="/services" className="inline-flex items-center gap-2 font-medium border-b border-black pb-1 hover:text-brand-lime hover:border-brand-lime transition-colors whitespace-nowrap">View All Services <ArrowRight className="w-4 h-4" /></Link></Magnetic>
+            <Magnetic><Link to="/services" className="inline-flex items-center gap-2 font-bold text-sm bg-black text-white px-6 py-3 rounded-full hover:bg-brand-lime hover:text-black transition-all duration-300 shadow-xl hover:shadow-brand-lime/20 hover:-translate-y-1 whitespace-nowrap">Explore All Services <ArrowRight className="w-4 h-4" /></Link></Magnetic>
           </div>
         </FadeIn>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)]" stagger={0.12}>
-          <StaggerItem className="md:col-span-2">
-            <TiltCard className="h-full bg-brand-lime rounded-[24px] p-8 relative overflow-hidden group border border-surface-border flex flex-col">
-              <div className="absolute top-0 right-0 p-8 text-black/20 group-hover:text-black/50 transition-colors"><Code2 size={48} strokeWidth={2} /></div>
-              <div className="flex justify-between items-start"><span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.05em] bg-black text-white">Featured Service</span><span className="font-bold">01</span></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[280px] md:auto-rows-[320px] relative z-10">
+          
+          {/* Card 1: Web & App Dev (Large) */}
+          <FadeIn direction="right" distance={60} delay={0.1} once={false} className="md:col-span-2 lg:col-span-2 row-span-2 h-full">
+            <TiltCard className="h-full bg-zinc-950 text-white rounded-[2rem] p-8 md:p-10 relative overflow-hidden group flex flex-col shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-black z-0"></div>
+              {/* Animated background grid */}
+              <div className="absolute inset-0 opacity-[0.03] z-0" style={{ backgroundImage: 'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+              <motion.div className="absolute -right-20 -top-20 w-64 h-64 bg-brand-lime/20 rounded-full blur-[80px] group-hover:bg-brand-lime/30 transition-colors duration-700 z-0" />
+              
+              <div className="relative z-10 flex justify-between items-start">
+                <span className="px-4 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-white/10 backdrop-blur-md text-white border border-white/10">Flagship</span>
+                <Globe className="text-white/30 w-8 h-8 group-hover:text-brand-lime group-hover:rotate-12 transition-all duration-500" />
+              </div>
+              
               <div className="relative z-10 flex flex-col justify-end mt-auto pt-20">
-                <h4 className="font-display text-3xl font-extrabold mb-2">Web & App Development</h4>
-                <p className="text-black/70 max-w-md font-medium mb-6">Custom SaaS platforms, corporate websites, e-commerce stores, and high-performance applications built with modern stacks.</p>
-                <Link to="/services/custom-website" className="inline-flex items-center gap-2 font-bold text-sm w-fit group-hover:translate-x-2 transition-transform duration-300">Explore Engineering <ArrowRight className="w-4 h-4" /></Link>
+                <Float duration={4} distance={8} className="mb-6 w-16 h-16 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center justify-center shadow-2xl">
+                  <Code2 className="text-brand-lime w-8 h-8" />
+                </Float>
+                <h4 className="font-display text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-white">Web & App<br/>Development</h4>
+                <p className="text-zinc-400 max-w-md font-medium text-sm md:text-base mb-8 leading-relaxed">Custom SaaS platforms, corporate websites, e-commerce stores, and high-performance applications built with modern frameworks and flawless architecture.</p>
+                <Link to="/services/custom-website" className="inline-flex items-center gap-2 font-bold text-sm w-fit text-brand-lime hover:text-white transition-colors duration-300 group/link">
+                  Explore Engineering <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
               </div>
             </TiltCard>
-          </StaggerItem>
+          </FadeIn>
 
-          <StaggerItem>
-            <TiltCard className="h-full bg-surface-gray rounded-[24px] p-8 relative overflow-hidden group border border-surface-border flex flex-col">
-              <div className="flex justify-between items-start"><span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.05em] bg-white text-black border border-surface-border">Design</span><span className="font-bold">02</span></div>
-              <div className="relative z-10 flex flex-col justify-end mt-auto pt-12">
-                <PenTool size={32} className="text-brand-blue mb-4 group-hover:rotate-12 transition-transform duration-500" />
-                <h4 className="font-display text-3xl font-extrabold mb-2">UI/UX</h4>
-                <p className="text-zinc-500 mb-6 text-sm font-medium">Crafting premium, conversion-focused interfaces.</p>
-                <Link to="/services/ui-ux-design" className="inline-flex items-center gap-2 font-bold text-sm w-fit text-brand-blue hover:text-black transition-colors">View Design <ArrowRight className="w-4 h-4" /></Link>
-              </div>
-            </TiltCard>
-          </StaggerItem>
-
-          <StaggerItem>
-            <TiltCard className="h-full bg-black text-white rounded-[24px] p-8 relative group border border-black overflow-hidden flex flex-col">
-              <motion.div className="absolute -right-20 -bottom-20 w-40 h-40 bg-brand-lime/10 rounded-full blur-[60px] group-hover:scale-[2] transition-transform duration-700" />
-              <div className="flex justify-between items-start"><span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.05em] bg-white/10 text-white">Growth</span><span className="font-bold">03</span></div>
-              <div className="relative z-10 flex flex-col justify-end mt-auto pt-12">
-                <Megaphone size={32} className="text-brand-lime mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500" />
-                <h4 className="font-display text-3xl font-extrabold mb-2">Marketing</h4>
-                <p className="text-zinc-400 mb-6 text-sm font-medium">Data-driven marketing and SEO to scale traffic.</p>
-                <Link to="/services/seo-optimization" className="inline-flex items-center gap-2 font-bold text-sm w-fit text-white hover:text-brand-lime transition-colors">Explore Growth <ArrowRight className="w-4 h-4" /></Link>
-              </div>
-            </TiltCard>
-          </StaggerItem>
-
-          <StaggerItem className="md:col-span-2">
-            <TiltCard className="h-full bg-brand-indigo rounded-[24px] p-8 relative overflow-hidden group flex flex-col">
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-indigo to-blue-600"></div>
-              <motion.div className="absolute -right-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-[50px] group-hover:scale-150 transition-transform duration-700" />
-              <div className="relative z-10 flex justify-between items-start"><div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white"><Layers size={24} /></div><span className="font-bold text-white/50">04</span></div>
-              <div className="relative z-10 flex flex-col justify-end mt-auto pt-16">
-                <div className="flex justify-between items-center mb-8">
-                  <div className="flex -space-x-3"><div className="w-10 h-10 rounded-full border-2 border-brand-indigo bg-gray-300"></div><div className="w-10 h-10 rounded-full border-2 border-brand-indigo bg-gray-400"></div><div className="w-10 h-10 rounded-full border-2 border-brand-indigo bg-gray-500"></div></div>
-                  <span className="text-[11px] font-bold uppercase tracking-[0.05em] text-white/80 italic">Design • Develop • Deliver</span>
+          {/* Card 2: UI/UX */}
+          <FadeIn direction="left" distance={60} delay={0.2} once={false} className="md:col-span-1 lg:col-span-1 row-span-1 h-full">
+            <TiltCard className="h-full bg-surface-gray rounded-[2rem] p-8 relative overflow-hidden group flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-500">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center border border-zinc-100 mb-auto">
+                  <PenTool className="text-brand-blue w-6 h-6" />
                 </div>
-                <div>
-                  <h4 className="font-display text-2xl md:text-3xl font-semibold mb-6 text-white text-balance leading-snug">"dreweb transformed our entire digital ecosystem and helped us scale faster."</h4>
-                  <Link to="/work" className="inline-flex items-center gap-2 font-bold text-sm w-fit text-white hover:text-brand-lime transition-colors">Read Case Studies <ArrowRight className="w-4 h-4" /></Link>
+                <div className="pt-8">
+                  <h4 className="font-display text-2xl font-bold mb-2">UI/UX Design</h4>
+                  <p className="text-zinc-500 text-sm font-medium mb-4">Crafting premium, conversion-focused digital interfaces.</p>
+                  <Link to="/services/ui-ux-design" className="inline-flex items-center gap-1 font-bold text-xs uppercase tracking-wider text-brand-blue hover:text-black transition-colors">View Design <ArrowRight className="w-3 h-3" /></Link>
                 </div>
               </div>
             </TiltCard>
-          </StaggerItem>
-        </StaggerContainer>
+          </FadeIn>
+
+          {/* Card 3: AI Agents (New) */}
+          <FadeIn direction="left" distance={60} delay={0.3} once={false} className="md:col-span-1 lg:col-span-1 row-span-1 h-full">
+            <TiltCard className="h-full bg-brand-indigo rounded-[2rem] p-8 relative overflow-hidden group flex flex-col shadow-xl">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent z-0"></div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 mb-auto text-white">
+                  <Bot className="w-6 h-6" />
+                </div>
+                <div className="pt-8 text-white">
+                  <h4 className="font-display text-2xl font-bold mb-2 text-white">AI Automation</h4>
+                  <p className="text-white/70 text-sm font-medium mb-4">Smart agents & workflow automation to 10x your output.</p>
+                  <Link to="/services/ai-automation" className="inline-flex items-center gap-1 font-bold text-xs uppercase tracking-wider text-brand-lime hover:text-white transition-colors">Integrate AI <ArrowRight className="w-3 h-3" /></Link>
+                </div>
+              </div>
+            </TiltCard>
+          </FadeIn>
+
+          {/* Card 4: Brand Identity (New) */}
+          <FadeIn direction="left" distance={60} delay={0.4} once={false} className="md:col-span-1 lg:col-span-1 row-span-1 h-full">
+            <TiltCard className="h-full bg-brand-lime rounded-[2rem] p-8 relative overflow-hidden group flex flex-col shadow-lg">
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-white/20 rounded-full blur-[20px] group-hover:scale-150 transition-transform duration-500"></div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center mb-auto text-white">
+                  <Zap className="w-6 h-6" />
+                </div>
+                <div className="pt-8 text-black">
+                  <h4 className="font-display text-2xl font-extrabold mb-2">Brand Identity</h4>
+                  <p className="text-black/70 text-sm font-medium mb-4">Unforgettable visual systems that capture attention.</p>
+                  <Link to="/services/branding" className="inline-flex items-center gap-1 font-bold text-xs uppercase tracking-wider text-black/60 hover:text-black transition-colors">See Branding <ArrowRight className="w-3 h-3" /></Link>
+                </div>
+              </div>
+            </TiltCard>
+          </FadeIn>
+
+          {/* Card 5: Growth & SEO */}
+          <FadeIn direction="left" distance={60} delay={0.5} once={false} className="md:col-span-1 lg:col-span-1 row-span-1 h-full">
+            <TiltCard className="h-full bg-white rounded-[2rem] p-8 relative overflow-hidden group flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-500">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center border border-orange-100 mb-auto">
+                  <TrendingUp className="w-6 h-6" />
+                </div>
+                <div className="pt-8">
+                  <h4 className="font-display text-2xl font-bold mb-2">SEO & Growth</h4>
+                  <p className="text-zinc-500 text-sm font-medium mb-4">Data-driven marketing to dominate search rankings.</p>
+                  <Link to="/services/seo-optimization" className="inline-flex items-center gap-1 font-bold text-xs uppercase tracking-wider text-orange-600 hover:text-black transition-colors">Scale Traffic <ArrowRight className="w-3 h-3" /></Link>
+                </div>
+              </div>
+            </TiltCard>
+          </FadeIn>
+
+          {/* Card 6: Success / Testimonial (Wide) */}
+          <FadeIn direction="right" distance={60} delay={0.6} once={false} className="md:col-span-2 lg:col-span-4 row-span-1 h-full">
+            <TiltCard className="h-full bg-black text-white rounded-[2rem] p-8 md:p-10 relative overflow-hidden group flex flex-col shadow-2xl justify-between">
+              <div className="absolute right-0 bottom-0 w-1/2 h-full bg-gradient-to-l from-brand-indigo/20 to-transparent blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="relative z-10 flex justify-between items-start mb-6">
+                <div className="flex -space-x-3">
+                  <div className="w-10 h-10 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/150?u=1" alt="Client" className="w-full h-full object-cover grayscale" /></div>
+                  <div className="w-10 h-10 rounded-full border-2 border-black bg-zinc-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/150?u=2" alt="Client" className="w-full h-full object-cover grayscale" /></div>
+                  <div className="w-10 h-10 rounded-full border-2 border-black bg-zinc-600 flex items-center justify-center text-xs font-bold">+25</div>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest text-brand-lime">
+                  <BarChart3 className="w-3 h-3" /> Proven Results
+                </div>
+              </div>
+              <div className="relative z-10 mt-auto">
+                <h4 className="font-display text-xl md:text-2xl font-semibold mb-4 text-white text-balance leading-snug">"dreweb transformed our entire digital ecosystem, integrated custom AI agents, and helped us scale traffic by 300%."</h4>
+                <Link to="/work" className="inline-flex items-center gap-2 font-bold text-sm w-fit text-zinc-400 hover:text-white transition-colors group/link">
+                  Read Client Success Stories <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </TiltCard>
+          </FadeIn>
+
+        </div>
       </section>
 
       {/* ━━━ PORTFOLIO ━━━ */}
-      <section className="py-24 lg:py-32 bg-zinc-950 text-white rounded-t-[3rem] lg:rounded-t-[5rem]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="py-24 lg:py-32 bg-surface-gray text-black relative overflow-hidden rounded-t-[3rem] lg:rounded-t-[5rem]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          
           <FadeIn>
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            {/* Top Badge */}
+            <div className="inline-flex items-center justify-center px-4 py-1.5 border border-black/20 rounded-full mb-8 bg-white">
+              <span className="text-sm font-semibold tracking-wide">Our Work</span>
+            </div>
+
+            {/* Header Area */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
               <div className="max-w-2xl">
-                <TextReveal as="h2" className="font-display text-4xl lg:text-6xl font-bold tracking-tighter mb-6 text-white">Selected Work.</TextReveal>
-                <p className="text-zinc-400 text-lg sm:text-xl font-light">We partner with visionary companies to build digital products that shape industries.</p>
+                <h2 className="font-display text-5xl md:text-6xl font-extrabold tracking-tighter mb-6 text-black">Our Latest Work</h2>
+                <p className="text-zinc-600 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
+                  Our tailored solutions empower your online presence, ensuring growth and success in the digital landscape.
+                </p>
               </div>
-              <Magnetic><Link to="/work" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 rounded-full font-medium hover:bg-white hover:text-black transition-all whitespace-nowrap" data-cursor="View All">View All Projects</Link></Magnetic>
+              <Magnetic>
+                <Link to="/work" className="group inline-flex items-center justify-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-zinc-900 text-white rounded-full font-bold transition-colors duration-300 hover:bg-black whitespace-nowrap">
+                  <span>See more</span>
+                  <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                </Link>
+              </Magnetic>
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             {displayProjects.map((project: any, idx: number) => (
-              <FadeIn key={project.slug || idx} delay={idx * 0.1}>
-                <Link to={`/work/${project.slug}`} className="group block" data-cursor="View">
-                  <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-zinc-900 mb-6">
-                    {project.heroVideo ? (
-                      <>
+              <FadeIn direction={idx % 2 === 0 ? 'right' : 'left'} delay={0.1} distance={80} once={false} key={project.slug || idx} className="h-full">
+                <Link to={`/work/${project.slug}`} className="group block relative h-full">
+                  
+                  {/* Card Container */}
+                  <div className="relative aspect-video rounded-3xl bg-zinc-100 overflow-hidden">
+                    
+                    {/* Image / Video Wrapper */}
+                    <div className="absolute inset-0 rounded-3xl overflow-hidden">
+                      {project.heroVideo ? (
                         <video
                           src={project.heroVideo}
                           autoPlay
@@ -173,54 +261,34 @@ export default function Home() {
                           loop
                           playsInline
                           poster={project.heroImage || undefined}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <motion.div
-                            className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center shadow-xl"
-                            initial={{ scale: 0.5, opacity: 0 }}
-                            whileHover={{ scale: 1 }}
-                            animate={{}}
-                            whileInView={{}}
-                          >
-                            <Play size={20} strokeWidth={2.5} fill="currentColor" />
-                          </motion.div>
-                        </div>
-                        {/* Video badge */}
-                        <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs font-bold rounded-full">
-                          <Play size={10} fill="currentColor" /> VIDEO
-                        </div>
-                      </>
-                    ) : project.heroImage ? (
-                      <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover" whileHover={{ scale: 1.08 }} transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }} />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-display text-3xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
-                    )}
-                    {!project.heroVideo && (
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <motion.div className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center" initial={{ scale: 0.5, opacity: 0 }} whileHover={{ scale: 1 }} animate={{}} whileInView={{}}><ArrowUpRight size={24} strokeWidth={2.5} /></motion.div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="text-white font-display text-2xl font-bold mb-2 group-hover:text-brand-lime transition-colors duration-300">{project.title}</h3>
-                      <p className="text-zinc-500 font-medium">{project.industry}</p>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-zinc-500 border border-white/10 rounded-full px-3 py-1 text-sm">{project.year}</span>
-                      { (project.link || project.liveUrl) && (
-                        <a 
-                          href={project.link || project.liveUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link || project.liveUrl, '_blank'); }}
-                          className="flex items-center gap-1 text-xs font-bold text-white bg-white/10 hover:bg-white/20 hover:text-brand-lime px-3 py-1.5 rounded-full transition-all"
-                        >
-                          Visit Site <ArrowUpRight size={14} />
-                        </a>
+                      ) : project.heroImage ? (
+                        <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
+                      ) : (
+                         <div className="absolute inset-0 flex items-center justify-center bg-zinc-200 text-zinc-400 font-display text-5xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                       )}
+
+                      {/* Overlay for text */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+                      
+                      {/* Project Data Overlay */}
+                      <div className="absolute bottom-8 left-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 translate-y-4 group-hover:translate-y-0 pointer-events-none pr-24">
+                        <h3 className="font-display text-2xl font-bold mb-1 tracking-tight">{project.title}</h3>
+                        <p className="text-xs uppercase tracking-widest text-white/80 font-bold">{project.industry}</p>
+                      </div>
                     </div>
+                    
+                    {/* Perfect SVG Cutout Corner Mask */}
+                    <CutoutCorner backgroundColor="#F9FAFB" />
+                    
+                    {/* Floating Circular Button inside the cutout */}
+                    <div className="absolute bottom-2 right-2 z-30 transition-transform duration-500 group-hover:scale-110">
+                      <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-white group-hover:bg-black transition-colors duration-300">
+                        <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform duration-500" strokeWidth={2} />
+                      </div>
+                    </div>
+
                   </div>
                 </Link>
               </FadeIn>
@@ -251,48 +319,59 @@ export default function Home() {
       </section>
 
       {/* ━━━ TESTIMONIALS ━━━ */}
-      <section className="py-24 overflow-hidden bg-white">
-        <ScaleIn>
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-16 max-w-3xl text-center">
-            <TextReveal as="h2" className="font-display text-4xl lg:text-5xl font-bold tracking-tighter text-black">Don't just take our word for it.</TextReveal>
+      <section className="py-32 overflow-hidden bg-zinc-950 relative">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02] mix-blend-overlay"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-brand-lime/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <FadeIn distance={40} once={false}>
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-20 max-w-3xl text-center relative z-10">
+            <span className="flex items-center justify-center gap-2 text-brand-lime font-bold tracking-widest uppercase text-xs mb-6">
+              <Sparkles className="w-4 h-4" /> Client Stories
+            </span>
+            <TextReveal as="h2" className="font-display text-4xl lg:text-5xl lg:text-6xl font-extrabold tracking-tighter text-white">Don't just take our word for it.</TextReveal>
           </div>
-        </ScaleIn>
-        <div className="relative flex overflow-x-hidden group">
-          <div className="animate-marquee flex gap-6 pr-6 min-w-max shrink-0 hover:[animation-play-state:paused]">
-            {displayTestimonials.map((item: any, idx: number) => (
-              <motion.div key={idx} whileHover={{ y: -8, transition: { duration: 0.3 } }} className="w-[350px] md:w-[400px] shrink-0 bg-surface-gray rounded-3xl p-8 flex flex-col justify-between border border-surface-border hover:border-brand-lime/30 transition-colors duration-300">
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    {item.authorImage ? (<img src={item.authorImage} alt={item.author} className="w-10 h-10 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />) : (<div className="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center font-bold text-black">{item.author?.[0]}</div>)}
+        </FadeIn>
+
+        <FadeIn direction="up" distance={80} delay={0.2} once={false}>
+          <div className="relative flex overflow-x-hidden group z-10">
+            <div className="animate-marquee flex gap-6 pr-6 min-w-max shrink-0 hover:[animation-play-state:paused]">
+              {displayTestimonials.map((item: any, idx: number) => (
+                <TiltCard key={`t1-${idx}`} className="w-[350px] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
+                  <div>
+                    <div className="flex items-center gap-4 mb-8">
+                      {item.authorImage ? (<img src={item.authorImage} alt={item.author} className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" />) : (<div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xl">{item.author?.[0]}</div>)}
+                      <div>
+                        <p className="font-display font-bold text-base tracking-wider uppercase text-white">{item.author}</p>
+                        <p className="text-sm text-brand-lime mt-1 font-medium">{item.role}</p>
+                      </div>
+                    </div>
+                    <p className="text-xl md:text-2xl font-medium leading-relaxed text-zinc-300 tracking-tight">"{item.quote}"</p>
                   </div>
-                  <p className="text-lg font-medium leading-relaxed text-black mb-8">{item.quote}</p>
-                </div>
-                <div>
-                  <p className="font-display font-bold text-sm tracking-widest uppercase text-black">{item.author}</p>
-                  <p className="text-sm text-zinc-500 mt-1">{item.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          <div className="animate-marquee flex gap-6 pr-6 min-w-max shrink-0 hover:[animation-play-state:paused]" aria-hidden="true">
-            {displayTestimonials.map((item: any, idx: number) => (
-              <motion.div key={idx} whileHover={{ y: -8, transition: { duration: 0.3 } }} className="w-[350px] md:w-[400px] shrink-0 bg-surface-gray rounded-3xl p-8 flex flex-col justify-between border border-surface-border hover:border-brand-lime/30 transition-colors duration-300">
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    {item.authorImage ? (<img src={item.authorImage} alt={item.author} className="w-10 h-10 rounded-full object-cover grayscale" />) : (<div className="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center font-bold text-black">{item.author?.[0]}</div>)}
+                </TiltCard>
+              ))}
+            </div>
+            
+            <div className="animate-marquee flex gap-6 pr-6 min-w-max shrink-0 hover:[animation-play-state:paused]" aria-hidden="true">
+              {displayTestimonials.map((item: any, idx: number) => (
+                <TiltCard key={`t2-${idx}`} className="w-[350px] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
+                  <div>
+                    <div className="flex items-center gap-4 mb-8">
+                      {item.authorImage ? (<img src={item.authorImage} alt={item.author} className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" />) : (<div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xl">{item.author?.[0]}</div>)}
+                      <div>
+                        <p className="font-display font-bold text-base tracking-wider uppercase text-white">{item.author}</p>
+                        <p className="text-sm text-brand-lime mt-1 font-medium">{item.role}</p>
+                      </div>
+                    </div>
+                    <p className="text-xl md:text-2xl font-medium leading-relaxed text-zinc-300 tracking-tight">"{item.quote}"</p>
                   </div>
-                  <p className="text-lg font-medium leading-relaxed text-black mb-8">{item.quote}</p>
-                </div>
-                <div>
-                  <p className="font-display font-bold text-sm tracking-widest uppercase text-black">{item.author}</p>
-                  <p className="text-sm text-zinc-500 mt-1">{item.role}</p>
-                </div>
-              </motion.div>
-            ))}
+                </TiltCard>
+              ))}
+            </div>
+            
+            <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none"></div>
           </div>
-          <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ━━━ PROCESS ━━━ */}

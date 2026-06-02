@@ -15,7 +15,7 @@ interface FadeInProps {
   once?: boolean;
 }
 
-export function FadeIn({ children, delay = 0, duration = 0.8, className = '', direction = 'up', distance = 40, once = true }: FadeInProps) {
+export function FadeIn({ children, delay = 0, duration = 0.8, className = '', direction = 'up', distance = 40, once = false }: FadeInProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once, margin: '-80px' });
 
@@ -31,8 +31,8 @@ export function FadeIn({ children, delay = 0, duration = 0.8, className = '', di
     <motion.div
       ref={ref}
       initial={{ opacity: 0, filter: 'blur(8px)', ...directionMap[direction] }}
-      animate={isInView ? { opacity: 1, filter: 'blur(0px)', x: 0, y: 0 } : {}}
-      transition={{ duration, delay, ease: [0.25, 0.4, 0.25, 1] }}
+      animate={isInView ? { opacity: 1, filter: 'blur(0px)', x: 0, y: 0 } : { opacity: 0, filter: 'blur(8px)', ...directionMap[direction] }}
+      transition={{ duration, delay: isInView ? delay : 0, ease: [0.25, 0.4, 0.25, 1] }}
       className={className}
     >
       {children}
@@ -52,14 +52,14 @@ interface ScaleInProps {
 
 export function ScaleIn({ children, delay = 0, className = '' }: ScaleInProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: false, margin: '-60px' });
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, scale: 0.85, filter: 'blur(10px)' }}
-      animate={isInView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.9, delay, ease: [0.25, 0.4, 0.25, 1] }}
+      animate={isInView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: 0, scale: 0.85, filter: 'blur(10px)' }}
+      transition={{ duration: 0.9, delay: isInView ? delay : 0, ease: [0.25, 0.4, 0.25, 1] }}
       className={className}
     >
       {children}
@@ -80,7 +80,7 @@ interface StaggerProps {
 
 export function StaggerContainer({ children, className = '', stagger = 0.1, delay = 0 }: StaggerProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: false, margin: '-60px' });
 
   return (
     <motion.div
@@ -125,7 +125,7 @@ interface TextRevealProps {
 
 export function TextReveal({ children, className = '', delay = 0, as: Tag = 'h2' }: TextRevealProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: false, margin: '-60px' });
   const words = children.split(' ');
 
   return (
@@ -134,10 +134,10 @@ export function TextReveal({ children, className = '', delay = 0, as: Tag = 'h2'
         <motion.span
           key={i}
           initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-          animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 20, filter: 'blur(4px)' }}
           transition={{
             duration: 0.5,
-            delay: delay + i * 0.06,
+            delay: isInView ? delay + i * 0.06 : 0,
             ease: [0.25, 0.4, 0.25, 1],
           }}
           className="inline-block"
@@ -156,7 +156,7 @@ export function TextReveal({ children, className = '', delay = 0, as: Tag = 'h2'
 
 export function CharReveal({ children, className = '', delay = 0 }: { children: string; className?: string; delay?: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: false, margin: '-60px' });
   const chars = children.split('');
 
   return (
@@ -165,10 +165,10 @@ export function CharReveal({ children, className = '', delay = 0 }: { children: 
         <motion.span
           key={i}
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{
             duration: 0.4,
-            delay: delay + i * 0.025,
+            delay: isInView ? delay + i * 0.025 : 0,
             ease: [0.25, 0.4, 0.25, 1],
           }}
           className="inline-block"
@@ -285,13 +285,13 @@ export function Parallax({ children, className = '', speed = 0.3 }: { children: 
 
 export function ImageReveal({ src, alt, className = '' }: { src: string; alt: string; className?: string }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: false, margin: '-60px' });
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
         initial={{ scale: 1.3, opacity: 0 }}
-        animate={isInView ? { scale: 1, opacity: 1 } : {}}
+        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 1.3, opacity: 0 }}
         transition={{ duration: 1.2, ease: [0.25, 0.4, 0.25, 1] }}
       >
         <img src={src} alt={alt} className="w-full h-full object-cover" />
@@ -366,14 +366,14 @@ export function Counter({ value, suffix = '', className = '' }: { value: number;
 
 export function SlideReveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: false, margin: '-60px' });
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
         initial={{ y: '100%' }}
-        animate={isInView ? { y: 0 } : {}}
-        transition={{ duration: 0.8, delay, ease: [0.25, 0.4, 0.25, 1] }}
+        animate={isInView ? { y: 0 } : { y: '100%' }}
+        transition={{ duration: 0.8, delay: isInView ? delay : 0, ease: [0.25, 0.4, 0.25, 1] }}
       >
         {children}
       </motion.div>
@@ -437,14 +437,14 @@ export function PageTransition({ children, className = '' }: { children: ReactNo
 
 export function LineReveal({ className = '', delay = 0 }: { className?: string; delay?: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: false });
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
         initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : {}}
-        transition={{ duration: 1, delay, ease: [0.25, 0.4, 0.25, 1] }}
+        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 1, delay: isInView ? delay : 0, ease: [0.25, 0.4, 0.25, 1] }}
         className="h-px bg-zinc-200 origin-left"
       />
     </div>
