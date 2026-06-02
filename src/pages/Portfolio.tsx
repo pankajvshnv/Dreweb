@@ -4,6 +4,7 @@ import { useCollection } from '../lib/useCollection';
 import { PROJECTS } from '../lib/data';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, Magnetic } from '../components/motion/Animations';
 import { motion } from 'motion/react';
+import { CutoutCorner } from '../components/ui/CutoutCorner';
 import SEO from '../components/seo/SEO';
 
 export default function Portfolio() {
@@ -28,75 +29,58 @@ export default function Portfolio() {
         </FadeIn>
       </section>
 
-      <section className="px-6 lg:px-8 max-w-7xl mx-auto">
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-10" stagger={0.1}>
-          {projects.map((project: any) => (
-            <StaggerItem key={project.slug || project.id}>
-              <Link to={`/work/${project.slug}`} className="group block" data-cursor="View">
-                <motion.div whileHover={{ y: -8 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                  <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-zinc-100 mb-6">
+      <section className="px-6 lg:px-8 pb-32 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+          {projects.map((project: any, idx: number) => (
+            <FadeIn direction={idx % 2 === 0 ? 'right' : 'left'} delay={0.1} distance={80} once={false} key={project.slug || project.id || idx} className="h-full">
+              <Link to={`/work/${project.slug}`} className="group block relative h-full">
+                
+                {/* Card Container */}
+                <div className="relative aspect-video rounded-3xl bg-zinc-100 overflow-hidden">
+                  
+                  {/* Image / Video Wrapper */}
+                  <div className="absolute inset-0 rounded-3xl overflow-hidden">
                     {project.heroVideo ? (
-                      <>
-                        <video
-                          src={project.heroVideo}
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          poster={project.heroImage || undefined}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            whileHover={{ scale: 1, opacity: 1 }}
-                            className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-50 transition-all duration-300"
-                          >
-                            <Play size={20} strokeWidth={2.5} fill="currentColor" />
-                          </motion.div>
-                        </div>
-                        <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs font-bold rounded-full">
-                          <Play size={10} fill="currentColor" /> VIDEO
-                        </div>
-                      </>
+                      <video
+                        src={project.heroVideo}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        poster={project.heroImage || undefined}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
+                      />
                     ) : project.heroImage ? (
-                      <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover" whileHover={{ scale: 1.06 }} transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }} />
+                      <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-zinc-300 font-display text-4xl font-bold uppercase tracking-widest">{project.title?.substring(0,2)}</div>
+                       <div className="absolute inset-0 flex items-center justify-center bg-zinc-200 text-zinc-400 font-display text-5xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                     )}
-                    {!project.heroVideo && (
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                        <motion.div initial={{ scale: 0, opacity: 0 }} whileHover={{ scale: 1, opacity: 1 }} className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-50 transition-all duration-300">
-                          <ArrowUpRight size={24} strokeWidth={2.5}/>
-                        </motion.div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-display text-2xl font-bold mb-1 group-hover:text-brand-indigo transition-colors duration-300">{project.title}</h3>
-                      <p className="text-zinc-500 font-medium text-sm">{project.industry}</p>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-zinc-400 border border-zinc-200 rounded-full px-3 py-1 text-sm">{project.year}</span>
-                      { (project.link || project.liveUrl) && (
-                        <a 
-                          href={project.link || project.liveUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link || project.liveUrl, '_blank'); }}
-                          className="flex items-center gap-1 text-xs font-bold text-zinc-600 bg-white border border-zinc-200 hover:border-black hover:text-black px-3 py-1.5 rounded-full transition-all shadow-sm"
-                        >
-                          Visit Site <ArrowUpRight size={14} />
-                        </a>
-                      )}
+
+                    {/* Overlay for text */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+                    
+                    {/* Project Data Overlay */}
+                    <div className="absolute bottom-8 left-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 translate-y-4 group-hover:translate-y-0 pointer-events-none pr-24">
+                      <h3 className="font-display text-2xl font-bold mb-1 tracking-tight">{project.title}</h3>
+                      <p className="text-xs uppercase tracking-widest text-white/80 font-bold">{project.industry}</p>
                     </div>
                   </div>
-                </motion.div>
+                  
+                  {/* Perfect SVG Cutout Corner Mask */}
+                  <CutoutCorner backgroundColor="#FFFFFF" />
+                  
+                  {/* Floating Circular Button inside the cutout */}
+                  <div className="absolute bottom-2 right-2 z-30 transition-transform duration-500 group-hover:scale-110">
+                    <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-white group-hover:bg-black transition-colors duration-300">
+                      <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform duration-500" strokeWidth={2} />
+                    </div>
+                  </div>
+
+                </div>
               </Link>
-            </StaggerItem>
+            </FadeIn>
           ))}
-        </StaggerContainer>
+        </div>
       </section>
 
       <section className="mt-32 max-w-4xl mx-auto px-6 lg:px-8 text-center">
