@@ -12,7 +12,7 @@ interface SEOProps {
 }
 
 export default function SEO({
-  title = 'Dreweb - Web Design & Development Agency',
+  title = 'dreweb',
   description = 'Dreweb is a premium digital agency specializing in website design, development, and SEO for speed, clarity, and conversion.',
   keywords = 'web design, web development, SEO agency, UI/UX design',
   canonicalUrl,
