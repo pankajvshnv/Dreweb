@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers, Play, Sparkles, TrendingUp, Bot, Smartphone, Globe, Zap, BarChart3 } from 'lucide-react';
+import { ArrowRight, Code2, PenTool, Megaphone, ArrowUpRight, Layers, Play, Sparkles, TrendingUp, Bot, Smartphone, Globe, Zap, BarChart3, Star } from 'lucide-react';
 import { PROJECTS } from '../lib/data';
 import { useCollection } from '../lib/useCollection';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Counter, Magnetic, Float, Parallax, SlideReveal, LineReveal, ScaleIn, MouseGradient } from '../components/motion/Animations';
@@ -10,18 +10,23 @@ import SEO from '../components/seo/SEO';
 import { useRef, useEffect, useState } from 'react';
 
 export default function Home() {
-  const { data: testimonials } = useCollection<any>('testimonials');
+  const { data: dbTestimonials } = useCollection<any>('testimonials');
+  
+  const fallbackTestimonials = [
+    { id: 1, quote: "The custom agentic workflows they built reduced our manual data entry by 90%, saving us hundreds of hours weekly.", author: "Marcus Cheng", role: "Head of AI, Aetna", authorImage: "https://i.pravatar.cc/150?u=1" },
+    { id: 2, quote: "Their team didn't just provide tools; they provided a roadmap for AI integration that actually makes sense for ROI.", author: "David Rossi", role: "Lead Dev, Cigna", authorImage: "https://i.pravatar.cc/150?u=2" },
+    { id: 3, quote: "A game-changer for our R&D. The neural infrastructure is robust, secure, and perfectly tailored to our niche stack.", author: "Sarah Jenkins", role: "CTO, Anthem Group", authorImage: "https://i.pravatar.cc/150?u=3" },
+    { id: 4, quote: "Incredible technical depth. They handled our complex RAG implementation with ease and delivered ahead of schedule.", author: "Elena Vance", role: "VP Eng, UnitedHealth", authorImage: "https://i.pravatar.cc/150?u=4" },
+  ];
+
+  const allTestimonials = [...(dbTestimonials || []), ...fallbackTestimonials];
+  const displayCount = Math.max(4, (dbTestimonials || []).length);
+  const displayTestimonials = allTestimonials.slice(0, displayCount);
+
   const { data: dynamicProjects } = useCollection<any>('projects');
   const displayProjects = dynamicProjects && dynamicProjects.length > 0
     ? dynamicProjects.filter((p: any) => p.isPublic !== false).slice(0, 4)
     : PROJECTS.slice(0, 4);
-
-  const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : [
-    { id: 1, quote: "The custom agentic workflows they built reduced our manual data entry by 90%, saving us hundreds of hours weekly.", author: "MARCUS CHENG", role: "Head of AI, Aetna", authorImage: "https://i.pravatar.cc/150?u=1" },
-    { id: 2, quote: "Their team didn't just provide tools; they provided a roadmap for AI integration that actually makes sense for ROI.", author: "DAVID ROSSI", role: "Lead Dev, Cigna", authorImage: "https://i.pravatar.cc/150?u=2" },
-    { id: 3, quote: "A game-changer for our R&D. The neural infrastructure is robust, secure, and perfectly tailored to our niche stack.", author: "SARAH JENKINS", role: "CTO, Anthem Group", authorImage: "https://i.pravatar.cc/150?u=3" },
-    { id: 4, quote: "Incredible technical depth. They handled our complex RAG implementation with ease and delivered ahead of schedule.", author: "ELENA VANCE", role: "VP Eng, UnitedHealth", authorImage: "https://i.pravatar.cc/150?u=4" },
-  ];
 
   // Mouse parallax for hero
   const mouseX = useMotionValue(0);
@@ -221,10 +226,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           
           <FadeIn>
-            {/* Top Badge */}
-            <div className="inline-flex items-center justify-center px-4 py-1.5 border border-black/20 rounded-full mb-8 bg-white">
-              <span className="text-sm font-semibold tracking-wide">Our Work</span>
-            </div>
+
 
             {/* Header Area */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -249,7 +251,7 @@ export default function Home() {
                 <Link to={`/work/${project.slug}`} className="group block relative h-full">
                   
                   {/* Card Container */}
-                  <div className="relative aspect-video rounded-3xl bg-zinc-100 overflow-hidden">
+                  <div className="relative aspect-[16/10] rounded-3xl bg-zinc-100 overflow-hidden">
                     
                     {/* Image / Video Wrapper */}
                     <div className="absolute inset-0 rounded-3xl overflow-hidden">
@@ -269,14 +271,8 @@ export default function Home() {
                          <div className="absolute inset-0 flex items-center justify-center bg-zinc-200 text-zinc-400 font-display text-5xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                       )}
 
-                      {/* Overlay for text */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                      
-                      {/* Project Data Overlay */}
-                      <div className="absolute bottom-8 left-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 translate-y-4 group-hover:translate-y-0 pointer-events-none pr-24">
-                        <h3 className="font-display text-2xl font-bold mb-1 tracking-tight">{project.title}</h3>
-                        <p className="text-xs uppercase tracking-widest text-white/80 font-bold">{project.industry}</p>
-                      </div>
+                      {/* Overlay for hover effect */}
+                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                     </div>
                     
                     {/* Perfect SVG Cutout Corner Mask */}
@@ -289,6 +285,12 @@ export default function Home() {
                       </div>
                     </div>
 
+                  </div>
+                  
+                  {/* Text Below Card */}
+                  <div className="mt-6 flex flex-col">
+                    <h3 className="font-display text-2xl md:text-3xl font-bold mb-2 tracking-tight group-hover:text-brand-lime transition-colors duration-300 text-zinc-900">{project.title}</h3>
+                    <p className="text-xs md:text-sm uppercase tracking-widest text-zinc-500 font-bold">{project.industry}</p>
                   </div>
                 </Link>
               </FadeIn>
@@ -323,81 +325,141 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02] mix-blend-overlay"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-brand-lime/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-        <FadeIn distance={40} once={false}>
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-20 max-w-3xl text-center relative z-10">
-            <span className="flex items-center justify-center gap-2 text-brand-lime font-bold tracking-widest uppercase text-xs mb-6">
-              <Sparkles className="w-4 h-4" /> Client Stories
-            </span>
-            <TextReveal as="h2" className="font-display text-4xl lg:text-5xl lg:text-6xl font-extrabold tracking-tighter text-white">Don't just take our word for it.</TextReveal>
+        <FadeIn distance={40} once={true}>
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-20 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="text-left md:w-1/2">
+               <h2 className="font-display text-5xl lg:text-7xl font-extrabold tracking-tighter text-white">
+                 <span className="text-brand-lime">Reviews</span><br/>
+                 from Industry Leaders
+               </h2>
+            </div>
+            <div className="flex flex-col items-start md:items-end text-left md:text-right gap-6 md:w-1/2">
+              <div className="flex -space-x-4">
+                {[1,2,3,4,5].map(i => (
+                  <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full border-2 border-zinc-950 object-cover" alt="avatar" />
+                ))}
+              </div>
+              <p className="text-xl lg:text-2xl text-zinc-300 max-w-sm font-medium">Industry leaders are already scaling with our premium solutions.</p>
+              <div className="flex flex-wrap gap-4 mt-2">
+                <Link to="/contact" className="px-6 py-3 bg-brand-lime text-black font-bold rounded-full hover:bg-white transition-colors">Get a free trial</Link>
+                <Link to="/about" className="px-6 py-3 bg-white/5 text-white font-bold rounded-full border border-white/10 hover:bg-white/10 transition-colors">Read more reviews</Link>
+              </div>
+            </div>
           </div>
         </FadeIn>
 
-        <FadeIn direction="up" distance={80} delay={0.2} once={false}>
-          <div className="relative flex overflow-x-hidden group z-10">
-            <div className="animate-marquee flex gap-6 pr-6 min-w-max shrink-0 hover:[animation-play-state:paused]">
-              {displayTestimonials.map((item: any, idx: number) => (
-                <TiltCard key={`t1-${idx}`} className="w-[350px] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
-                  <div>
-                    <div className="flex items-center gap-4 mb-8">
-                      {item.authorImage ? (<img src={item.authorImage} alt={item.author} className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" />) : (<div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xl">{item.author?.[0]}</div>)}
+        <FadeIn direction="up" distance={80} delay={0.2} once={true}>
+          <div className="relative flex overflow-x-hidden group z-10 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] pb-8 pt-4">
+            <div className="flex animate-marquee gap-6 pr-6 min-w-max shrink-0">
+              {[...displayTestimonials, ...displayTestimonials].map((item: any, idx: number) => (
+                <div key={`t1-${idx}`} className="w-[85vw] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
+                  <div className="flex flex-col h-full">
+                    <div className="flex justify-between items-center mb-6">
+                      <div className="flex gap-1 text-brand-lime">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-current" />)}
+                      </div>
+                      <span className="text-zinc-500 text-sm font-bold tracking-widest">{(4.5 + (idx % 5) * 0.1).toFixed(1)}/5.0</span>
+                    </div>
+                    
+                    <p className="text-lg md:text-xl font-medium leading-relaxed text-zinc-300 tracking-tight mb-8 whitespace-normal">"{item.quote}"</p>
+                    
+                    <div className="flex items-center gap-4 mt-auto pt-5 border-t border-white/5">
+                      <img 
+                        src={item.authorImage || `https://i.pravatar.cc/150?u=${item.author || idx}`} 
+                        alt={item.author} 
+                        className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" 
+                      />
                       <div>
-                        <p className="font-display font-bold text-base tracking-wider uppercase text-white">{item.author}</p>
+                        <p className="font-display font-bold text-base tracking-wider text-white capitalize">{item.author?.toLowerCase()}</p>
                         <p className="text-sm text-brand-lime mt-1 font-medium">{item.role}</p>
                       </div>
                     </div>
-                    <p className="text-xl md:text-2xl font-medium leading-relaxed text-zinc-300 tracking-tight">"{item.quote}"</p>
                   </div>
-                </TiltCard>
+                </div>
               ))}
             </div>
             
-            <div className="animate-marquee flex gap-6 pr-6 min-w-max shrink-0 hover:[animation-play-state:paused]" aria-hidden="true">
-              {displayTestimonials.map((item: any, idx: number) => (
-                <TiltCard key={`t2-${idx}`} className="w-[350px] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
-                  <div>
-                    <div className="flex items-center gap-4 mb-8">
-                      {item.authorImage ? (<img src={item.authorImage} alt={item.author} className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" />) : (<div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xl">{item.author?.[0]}</div>)}
+            <div className="flex animate-marquee gap-6 pr-6 min-w-max shrink-0" aria-hidden="true">
+              {[...displayTestimonials, ...displayTestimonials].map((item: any, idx: number) => (
+                <div key={`t2-${idx}`} className="w-[85vw] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
+                  <div className="flex flex-col h-full">
+                    <div className="flex justify-between items-center mb-6">
+                      <div className="flex gap-1 text-brand-lime">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-current" />)}
+                      </div>
+                      <span className="text-zinc-500 text-sm font-bold tracking-widest">{(4.5 + ((idx + 2) % 5) * 0.1).toFixed(1)}/5.0</span>
+                    </div>
+                    
+                    <p className="text-lg md:text-xl font-medium leading-relaxed text-zinc-300 tracking-tight mb-8 whitespace-normal">"{item.quote}"</p>
+                    
+                    <div className="flex items-center gap-4 mt-auto pt-5 border-t border-white/5">
+                      <img 
+                        src={item.authorImage || `https://i.pravatar.cc/150?u=${item.author || idx}`} 
+                        alt={item.author} 
+                        className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" 
+                      />
                       <div>
-                        <p className="font-display font-bold text-base tracking-wider uppercase text-white">{item.author}</p>
+                        <p className="font-display font-bold text-base tracking-wider text-white capitalize">{item.author?.toLowerCase()}</p>
                         <p className="text-sm text-brand-lime mt-1 font-medium">{item.role}</p>
                       </div>
                     </div>
-                    <p className="text-xl md:text-2xl font-medium leading-relaxed text-zinc-300 tracking-tight">"{item.quote}"</p>
                   </div>
-                </TiltCard>
+                </div>
               ))}
             </div>
-            
-            <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none"></div>
           </div>
         </FadeIn>
       </section>
 
       {/* ━━━ PROCESS ━━━ */}
-      <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-7xl mx-auto border-b border-zinc-100">
-        <ScaleIn>
-          <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24">
-            <TextReveal as="h2" className="font-display text-4xl lg:text-5xl font-bold tracking-tighter mb-6">How we operate.</TextReveal>
-            <p className="text-zinc-500 text-lg">A simple, transparent, and results-driven process designed to move fast and break records.</p>
-          </div>
-        </ScaleIn>
+      <section className="py-32 bg-zinc-950 relative overflow-hidden">
+        {/* Subtle Background Elements */}
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-brand-lime/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-brand-lime/5 blur-[100px] rounded-full pointer-events-none translate-x-1/3"></div>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-12" stagger={0.15}>
-          {[
-            { step: '01', title: 'Discovery & Strategy', desc: 'Understanding your business goals, target audience, and competitive landscape.' },
-            { step: '02', title: 'UX/UI Design', desc: 'Creating wireframes, prototypes, and a premium visual language that converts.' },
-            { step: '03', title: 'Development', desc: 'Building scalable, fast, and SEO-optimized architecture using modern frameworks.' },
-            { step: '04', title: 'Launch & Scale', desc: 'Rigorous QA, smooth deployment, and ongoing performance optimization.' }
-          ].map((item, idx) => (
-            <StaggerItem key={idx} className="relative group">
-              <div className="w-12 h-12 rounded-full border border-zinc-200 flex items-center justify-center font-display font-bold text-zinc-400 mb-6 group-hover:bg-brand-lime group-hover:text-black group-hover:border-brand-lime group-hover:scale-110 transition-all duration-300">{item.step}</div>
-              <h4 className="text-xl font-bold mb-3">{item.title}</h4>
-              <p className="text-zinc-500 leading-relaxed text-sm">{item.desc}</p>
-              {idx !== 3 && <div className="hidden md:block absolute top-6 left-16 right-0 h-px bg-zinc-200 -z-10"></div>}
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row gap-16 lg:gap-24">
+          
+          {/* Left Side: Sticky Title */}
+          <div className="w-full lg:w-1/3">
+            <div className="sticky top-32">
+              <ScaleIn>
+                <h2 className="font-display text-5xl lg:text-7xl font-extrabold tracking-tighter text-white mb-8">
+                  How we<br/><span className="text-brand-lime">operate.</span>
+                </h2>
+                <p className="text-xl lg:text-2xl text-zinc-400 font-medium leading-relaxed">
+                  A simple, transparent, and results-driven process designed to move fast and break records.
+                </p>
+              </ScaleIn>
+            </div>
+          </div>
+
+          {/* Right Side: Process List */}
+          <div className="w-full lg:w-2/3">
+            <StaggerContainer className="flex flex-col" stagger={0.2}>
+              {[
+                { step: '01', title: 'Discovery & Strategy', desc: 'Understanding your business goals, target audience, and competitive landscape.' },
+                { step: '02', title: 'UX/UI Design', desc: 'Creating wireframes, prototypes, and a premium visual language that converts.' },
+                { step: '03', title: 'Development', desc: 'Building scalable, fast, and SEO-optimized architecture using modern frameworks.' },
+                { step: '04', title: 'Launch & Scale', desc: 'Rigorous QA, smooth deployment, and ongoing performance optimization.' }
+              ].map((item, idx) => (
+                <StaggerItem key={idx} className="group border-b border-white/10 py-10 lg:py-16 first:pt-0 last:border-b-0 cursor-default">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-6 md:gap-12 transition-transform duration-500 group-hover:translate-x-4">
+                    <span 
+                      className="font-display text-4xl md:text-6xl font-extrabold text-transparent transition-all duration-500 group-hover:text-brand-lime w-24 shrink-0"
+                      style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}
+                    >
+                      {item.step}
+                    </span>
+                    <div className="flex-1">
+                      <h4 className="text-2xl md:text-4xl font-bold text-white mb-4 tracking-tight group-hover:text-brand-lime transition-colors duration-500">{item.title}</h4>
+                      <p className="text-lg md:text-xl text-zinc-400 leading-relaxed font-medium">{item.desc}</p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
       </section>
 
     </div>

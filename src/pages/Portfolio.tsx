@@ -36,7 +36,7 @@ export default function Portfolio() {
               <Link to={`/work/${project.slug}`} className="group block relative h-full">
                 
                 {/* Card Container */}
-                <div className="relative aspect-video rounded-3xl bg-zinc-100 overflow-hidden">
+                <div className="relative aspect-[16/10] rounded-3xl bg-zinc-100 overflow-hidden">
                   
                   {/* Image / Video Wrapper */}
                   <div className="absolute inset-0 rounded-3xl overflow-hidden">
@@ -56,14 +56,8 @@ export default function Portfolio() {
                        <div className="absolute inset-0 flex items-center justify-center bg-zinc-200 text-zinc-400 font-display text-5xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                     )}
 
-                    {/* Overlay for text */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                    
-                    {/* Project Data Overlay */}
-                    <div className="absolute bottom-8 left-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 translate-y-4 group-hover:translate-y-0 pointer-events-none pr-24">
-                      <h3 className="font-display text-2xl font-bold mb-1 tracking-tight">{project.title}</h3>
-                      <p className="text-xs uppercase tracking-widest text-white/80 font-bold">{project.industry}</p>
-                    </div>
+                    {/* Overlay for hover effect */}
+                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                   </div>
                   
                   {/* Perfect SVG Cutout Corner Mask */}
@@ -76,6 +70,12 @@ export default function Portfolio() {
                     </div>
                   </div>
 
+                </div>
+
+                {/* Text Below Card */}
+                <div className="mt-6 flex flex-col">
+                  <h3 className="font-display text-2xl md:text-3xl font-bold mb-2 tracking-tight group-hover:text-brand-lime transition-colors duration-300 text-zinc-900">{project.title}</h3>
+                  <p className="text-xs md:text-sm uppercase tracking-widest text-zinc-500 font-bold">{project.industry}</p>
                 </div>
               </Link>
             </FadeIn>

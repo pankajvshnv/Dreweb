@@ -57,9 +57,9 @@ export default function AdminSidebar({ onClose }: AdminSidebarProps) {
   return (
     <div className="flex flex-col h-full bg-white text-zinc-600">
       <div className="p-6 flex items-center justify-between border-b border-zinc-100">
-        <Link to="/admin" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-black text-brand-lime flex items-center justify-center font-display font-extrabold text-lg">d</div>
-          <span className="font-display font-extrabold text-xl tracking-tight text-black">admin</span>
+        <Link to="/admin" className="flex items-center gap-3">
+          <img src="/brand-logo.png" alt="Dreweb" className="h-6 w-auto" />
+          <span className="font-display font-extrabold text-xl tracking-tight text-black/40">admin</span>
         </Link>
         {onClose && (
           <button onClick={onClose} className="lg:hidden text-zinc-400 hover:text-black transition-colors p-1 rounded-lg hover:bg-zinc-100">

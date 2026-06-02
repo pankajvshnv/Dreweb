@@ -19,7 +19,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [logoUrl, setLogoUrl] = useState('');
   const location = useLocation();
   const { scrollY } = useScroll();
   const lastScrollY = useRef(0);
@@ -37,17 +36,7 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    async function loadLogo() {
-      const data = await getSettings('branding');
-      if (data && data.logoLight) {
-        setLogoUrl(data.logoLight);
-      }
-    }
-    loadLogo();
-    
-    const handleStorageChange = () => loadLogo();
-    window.addEventListener('local-storage-change', handleStorageChange);
-    return () => window.removeEventListener('local-storage-change', handleStorageChange);
+    // Other use effects removed
   }, []);
 
   // Close mobile menu on route change
@@ -73,14 +62,16 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2"
           >
-            {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="h-10 w-auto" />
-            ) : (
-              <>
-                <div className="w-10 h-10 bg-brand-lime rounded-xl flex items-center justify-center font-display font-extrabold text-xl text-black">d</div>
-                <span className="font-display font-extrabold text-2xl tracking-tight text-black">dreweb</span>
-              </>
-            )}
+              <div className={cn(
+                "transition-all duration-300 rounded-2xl",
+                !isScrolled && location.pathname === '/' ? "bg-white/90 backdrop-blur-md px-4 py-2 shadow-2xl" : ""
+              )}>
+                <img 
+                  src="/brand-logo.png" 
+                  alt="Dreweb" 
+                  className="h-8 md:h-10 w-auto" 
+                />
+              </div>
           </motion.div>
         </Link>
 

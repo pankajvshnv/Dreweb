@@ -182,7 +182,7 @@ export default function AdminSettings() {
       <Tabs defaultValue="general" className="w-full">
         <TabsList className="grid w-full grid-cols-5 sm:w-[620px] bg-zinc-100 p-1 rounded-xl">
           <TabsTrigger value="general" className="rounded-lg text-xs font-bold uppercase tracking-wider">General</TabsTrigger>
-          <TabsTrigger value="branding" className="rounded-lg text-xs font-bold uppercase tracking-wider">Branding</TabsTrigger>
+
           <TabsTrigger value="contact" className="rounded-lg text-xs font-bold uppercase tracking-wider">Contact</TabsTrigger>
           <TabsTrigger value="seo" className="rounded-lg text-xs font-bold uppercase tracking-wider">SEO & Tracking</TabsTrigger>
           <TabsTrigger value="github" className="rounded-lg text-xs font-bold uppercase tracking-wider">GitHub Sync</TabsTrigger>
@@ -211,112 +211,7 @@ export default function AdminSettings() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="branding" className="space-y-6 mt-6">
-          <Card className="border-zinc-200 rounded-2xl">
-            <CardHeader>
-              <CardTitle>Logos</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex flex-col sm:flex-row gap-6">
-                <div className="flex-1 space-y-4">
-                  <Label className="font-bold flex items-center justify-between">
-                    <span>Light Mode Logo</span>
-                    {isUploading && <span className="text-zinc-400 text-xs font-normal animate-pulse">Uploading...</span>}
-                  </Label>
-                  <div className="border border-zinc-200 rounded-2xl p-8 flex items-center justify-center bg-white shadow-sm relative group overflow-hidden h-40">
-                    {logoLight ? (
-                      <img src={logoLight} className="max-h-full w-auto" alt="Logo Light" />
-                    ) : (
-                      <span className="font-display font-bold text-2xl text-black">dreweb<span className="text-brand-lime">.</span></span>
-                    )}
-                    <div className="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <input 
-                        type="file" 
-                         accept="image/*" 
-                        onChange={(e) => handleUpload(e, 'light')} 
-                        ref={lightInputRef} 
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                        disabled={isUploading}
-                      />
-                      <Button variant="secondary" size="sm" className="rounded-full shadow-lg pointer-events-none"><Upload size={14} className="mr-2" /> Change</Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex-1 space-y-4">
-                  <Label className="font-bold flex items-center justify-between">
-                    <span>Dark Mode Logo</span>
-                    {isUploading && <span className="text-zinc-400 text-xs font-normal animate-pulse">Uploading...</span>}
-                  </Label>
-                  <div className="border border-zinc-700 rounded-2xl p-8 flex items-center justify-center bg-zinc-950 shadow-sm relative group overflow-hidden h-40">
-                    {logoDark ? (
-                      <img src={logoDark} className="max-h-full w-auto" alt="Logo Dark" />
-                    ) : (
-                      <span className="font-display font-bold text-2xl text-white">dreweb<span className="text-brand-lime">.</span></span>
-                    )}
-                    <div className="absolute inset-0 bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                       <input 
-                        type="file" 
-                         accept="image/*" 
-                        onChange={(e) => handleUpload(e, 'dark')} 
-                        ref={darkInputRef} 
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                        disabled={isUploading}
-                      />
-                      <Button variant="secondary" size="sm" className="rounded-full shadow-lg pointer-events-none"><Upload size={14} className="mr-2" /> Change</Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4 relative overflow-hidden">
-                <Label className="font-bold">Favicon (16x16 or 32x32)</Label>
-                <div className="flex items-center gap-4 relative group">
-                  <div className="w-12 h-12 border border-zinc-200 rounded-lg flex items-center justify-center bg-zinc-50 overflow-hidden">
-                     {favicon ? (
-                        <img src={favicon} className="w-full h-full object-cover" alt="Favicon" />
-                      ) : (
-                        <div className="w-6 h-6 bg-brand-lime rounded font-display font-extrabold text-[10px] flex items-center justify-center">d</div>
-                      )}
-                  </div>
-                   <div className="relative">
-                    <Button variant="outline" className="rounded-xl border-zinc-200 pointer-events-none">Upload New</Button>
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={(e) => handleUpload(e, 'favicon')} 
-                      ref={faviconInputRef} 
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                      disabled={isUploading}
-                    />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card className="border-zinc-200 rounded-2xl">
-            <CardHeader>
-              <CardTitle>Theme Colors</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase text-zinc-500">Primary Brand</Label>
-                  <div className="flex items-center gap-3 p-2 border border-zinc-200 rounded-xl">
-                    <div className="w-8 h-8 rounded shrink-0 bg-[#C6FF00] border border-black/10"></div>
-                    <span className="text-sm font-mono uppercase">#C6FF00</span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase text-zinc-500">Secondary Alt</Label>
-                  <div className="flex items-center gap-3 p-2 border border-zinc-200 rounded-xl">
-                    <div className="w-8 h-8 rounded shrink-0 bg-[#2563EB] border border-black/10"></div>
-                    <span className="text-sm font-mono uppercase">#2563EB</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+
 
         <TabsContent value="contact" className="space-y-6 mt-6">
           <Card className="border-zinc-200 rounded-2xl">

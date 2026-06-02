@@ -51,7 +51,7 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-brand-lime font-display font-extrabold text-3xl mb-6 shadow-xl shadow-black/10">d</div>
+          <img src="/brand-logo.png" alt="Dreweb" className="h-16 w-auto mb-6 drop-shadow-xl" />
           <h1 className="text-3xl font-display font-extrabold tracking-tight text-black text-center">Welcome back</h1>
           <p className="text-zinc-500 font-medium mt-1">Sign in to your CMS dashboard.</p>
         </div>
