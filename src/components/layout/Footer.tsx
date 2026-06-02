@@ -4,20 +4,10 @@ import { BRAND } from '../../lib/data';
 import { getSettings } from '../../lib/crud';
 
 export default function Footer() {
-  const [logoUrl, setLogoUrl] = useState('');
+
 
   useEffect(() => {
-    async function loadLogo() {
-      const data = await getSettings('branding');
-      if (data && data.logoLight) {
-        setLogoUrl(data.logoLight);
-      }
-    }
-    loadLogo();
-
-    const handleStorageChange = () => loadLogo();
-    window.addEventListener('local-storage-change', handleStorageChange);
-    return () => window.removeEventListener('local-storage-change', handleStorageChange);
+    // Dynamic logo removed
   }, []);
 
   return (
@@ -30,14 +20,7 @@ export default function Footer() {
             {/* Footer Logo */}
             <div className="mb-8">
               <Link to="/">
-                {logoUrl ? (
-                  <img src={logoUrl} alt="dreweb" className="h-20 w-auto" />
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <div className="w-14 h-14 bg-brand-lime rounded-2xl flex items-center justify-center font-display font-extrabold text-2xl text-black">d</div>
-                    <span className="font-display font-extrabold text-5xl tracking-tight text-black">dreweb</span>
-                  </div>
-                )}
+                <img src="/brand-logo.png" alt="Dreweb" className="h-12 md:h-16 w-auto" />
               </Link>
             </div>
             <h2 className="font-display text-5xl lg:text-7xl font-extrabold tracking-[-0.04em] mb-6">

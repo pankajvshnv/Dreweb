@@ -61,7 +61,7 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r;
   }
   .animate-marquee {
-    animation: marquee 25s linear infinite;
+    animation: marquee 50s linear infinite;
   }
 }
 
