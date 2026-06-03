@@ -47,11 +47,12 @@ export default function Portfolio() {
                         muted
                         loop
                         playsInline
+                        preload="none"
                         poster={project.heroImage || undefined}
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                       />
                     ) : project.heroImage ? (
-                      <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
+                      <motion.img src={project.heroImage} alt={project.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
                     ) : (
                        <div className="absolute inset-0 flex items-center justify-center bg-zinc-200 text-zinc-400 font-display text-5xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
                     )}

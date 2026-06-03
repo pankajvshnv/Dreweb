@@ -57,6 +57,20 @@
   .text-balance {
     text-wrap: balance;
   }
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px;
+  }
+  .hw-accelerate {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  .hw-accelerate-filter {
+    transform: translateZ(0);
+    will-change: transform, filter;
+    backface-visibility: hidden;
+  }
   .clip-text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r;
   }
