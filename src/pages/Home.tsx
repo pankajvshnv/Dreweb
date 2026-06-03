@@ -68,7 +68,7 @@ export default function Home() {
       <FloatingShowcase />
 
       {/* ━━━ MARQUEE ━━━ */}
-      <section className="py-10 bg-brand-lime text-black overflow-hidden rotate-[-1deg] scale-105 origin-center border-y border-black/5 relative z-10">
+      <section className="py-10 bg-brand-lime text-black overflow-hidden rotate-[-1deg] scale-105 origin-center border-y border-black/5 relative z-10 content-auto">
         <div className="whitespace-nowrap flex items-center select-none font-display text-3xl md:text-5xl uppercase font-extrabold tracking-wider">
           <div className="animate-marquee inline-block">
             <span>Mobile App Development</span><span className="mx-8 text-black/20">✦</span>
@@ -84,7 +84,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ SERVICES BENTO ━━━ */}
-      <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-7xl mx-auto relative">
+      <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-7xl mx-auto relative content-auto">
         {/* Glow effect in background */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-lime/5 rounded-full blur-[100px] pointer-events-none" />
         
@@ -109,12 +109,12 @@ export default function Home() {
               <motion.div className="absolute -right-20 -top-20 w-64 h-64 bg-brand-lime/20 rounded-full blur-[80px] group-hover:bg-brand-lime/30 transition-colors duration-700 z-0" />
               
               <div className="relative z-10 flex justify-between items-start">
-                <span className="px-4 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-white/10 backdrop-blur-md text-white border border-white/10">Flagship</span>
+                <span className="px-4 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-white/10 backdrop-blur-md hw-accelerate-filter text-white border border-white/10">Flagship</span>
                 <Globe className="text-white/30 w-8 h-8 group-hover:text-brand-lime group-hover:rotate-12 transition-all duration-500" />
               </div>
               
               <div className="relative z-10 flex flex-col justify-end mt-auto pt-20">
-                <Float duration={4} distance={8} className="mb-6 w-16 h-16 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center justify-center shadow-2xl">
+                <Float duration={4} distance={8} className="mb-6 w-16 h-16 bg-white/5 backdrop-blur-xl hw-accelerate-filter border border-white/10 rounded-2xl flex items-center justify-center shadow-2xl">
                   <Code2 className="text-brand-lime w-8 h-8" />
                 </Float>
                 <h4 className="font-display text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-white">Web & App<br/>Development</h4>
@@ -149,7 +149,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
               <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent z-0"></div>
               <div className="relative z-10 flex flex-col h-full">
-                <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 mb-auto text-white">
+                <div className="w-12 h-12 bg-white/10 backdrop-blur-md hw-accelerate-filter rounded-xl flex items-center justify-center border border-white/20 mb-auto text-white">
                   <Bot className="w-6 h-6" />
                 </div>
                 <div className="pt-8 text-white">
@@ -205,7 +205,7 @@ export default function Home() {
                   <div className="w-10 h-10 rounded-full border-2 border-black bg-zinc-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/150?u=2" alt="Client" className="w-full h-full object-cover grayscale" /></div>
                   <div className="w-10 h-10 rounded-full border-2 border-black bg-zinc-600 flex items-center justify-center text-xs font-bold">+25</div>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest text-brand-lime">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-md hw-accelerate-filter rounded-full text-[10px] font-bold uppercase tracking-widest text-brand-lime">
                   <BarChart3 className="w-3 h-3" /> Proven Results
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ PORTFOLIO ━━━ */}
-      <section className="py-24 lg:py-32 bg-surface-gray text-black relative overflow-hidden rounded-t-[3rem] lg:rounded-t-[5rem]">
+      <section className="py-24 lg:py-32 bg-surface-gray text-black relative overflow-hidden rounded-t-[3rem] lg:rounded-t-[5rem] content-auto">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           
           <FadeIn>
@@ -321,7 +321,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ TESTIMONIALS ━━━ */}
-      <section className="py-32 overflow-hidden bg-zinc-950 relative">
+      <section className="py-32 overflow-hidden bg-zinc-950 relative content-auto">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02] mix-blend-overlay"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-brand-lime/10 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -352,7 +352,7 @@ export default function Home() {
           <div className="relative flex overflow-x-hidden group z-10 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] pb-8 pt-4">
             <div className="flex animate-marquee gap-6 pr-6 min-w-max shrink-0">
               {[...displayTestimonials, ...displayTestimonials].map((item: any, idx: number) => (
-                <div key={`t1-${idx}`} className="w-[85vw] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
+                <div key={`t1-${idx}`} className="w-[85vw] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl hw-accelerate-filter rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
                   <div className="flex flex-col h-full">
                     <div className="flex justify-between items-center mb-6">
                       <div className="flex gap-1 text-brand-lime">
@@ -381,7 +381,7 @@ export default function Home() {
             
             <div className="flex animate-marquee gap-6 pr-6 min-w-max shrink-0" aria-hidden="true">
               {[...displayTestimonials, ...displayTestimonials].map((item: any, idx: number) => (
-                <div key={`t2-${idx}`} className="w-[85vw] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
+                <div key={`t2-${idx}`} className="w-[85vw] md:w-[450px] shrink-0 bg-white/5 backdrop-blur-xl hw-accelerate-filter rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-between border border-white/10 hover:border-brand-lime/30 transition-colors duration-500 shadow-2xl">
                   <div className="flex flex-col h-full">
                     <div className="flex justify-between items-center mb-6">
                       <div className="flex gap-1 text-brand-lime">
@@ -412,7 +412,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ PROCESS ━━━ */}
-      <section className="py-32 bg-zinc-950 relative overflow-hidden">
+      <section className="py-32 bg-zinc-950 relative overflow-hidden content-auto">
         {/* Subtle Background Elements */}
         <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-brand-lime/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2"></div>
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-brand-lime/5 blur-[100px] rounded-full pointer-events-none translate-x-1/3"></div>

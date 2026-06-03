@@ -68,6 +68,7 @@ export default function ProjectDetail() {
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   poster={project.heroImage || undefined}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -89,6 +90,7 @@ export default function ProjectDetail() {
               <motion.img 
                 src={project.heroImage} 
                 alt={project.title} 
+                fetchpriority="high"
                 className="w-full h-full object-cover relative z-10"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}

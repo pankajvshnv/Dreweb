@@ -189,7 +189,7 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
         zIndex: card.zIndex,
         perspective: 1200
       }}
-      className="absolute cursor-grab bg-white rounded-2xl shadow-[0_15px_35px_-12px_rgba(0,0,0,0.1)] overflow-hidden border border-black/5 transform-style-3d transition-shadow duration-500 -translate-x-1/2 -translate-y-1/2"
+      className="absolute cursor-grab bg-white rounded-2xl shadow-[0_15px_35px_-12px_rgba(0,0,0,0.1)] overflow-hidden border border-black/5 transform-style-3d transition-shadow duration-500 -translate-x-1/2 -translate-y-1/2 hw-accelerate"
     >
       <motion.div
         animate={{
