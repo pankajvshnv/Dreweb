@@ -62,16 +62,14 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2"
           >
-              <div className={cn(
-                "transition-all duration-300 rounded-2xl",
-                !isScrolled && location.pathname === '/' ? "bg-white/90 backdrop-blur-md px-4 py-2 shadow-2xl" : ""
-              )}>
-                <img 
-                  src="/brand-logo.png" 
-                  alt="Dreweb" 
-                  className="h-8 md:h-10 w-auto" 
-                />
-              </div>
+              <img 
+                src="/brand-logo.png" 
+                alt="Dreweb" 
+                className={cn(
+                  "h-8 md:h-10 w-auto transition-all duration-300", 
+                  !isScrolled && location.pathname === '/' ? "brightness-0 invert" : ""
+                )} 
+              />
           </motion.div>
         </Link>
 
