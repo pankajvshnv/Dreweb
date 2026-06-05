@@ -36,7 +36,7 @@ export default function AdminSettings() {
 
   // Contact & Social state
   const [contact, setContact] = useState({
-    email: 'hello@dreweb.com',
+    email: 'hello@dreweb.online',
     phone: '+91 123 456 7890',
     location: 'Indore, Madhya Pradesh, India',
     twitter: 'https://twitter.com/dreweb',

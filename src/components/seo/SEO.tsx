@@ -16,12 +16,12 @@ export default function SEO({
   description = 'Dreweb is a premium digital agency specializing in website design, development, and SEO for speed, clarity, and conversion.',
   keywords = 'web design, web development, SEO agency, UI/UX design',
   canonicalUrl,
-  ogImage = 'https://dreweb.com/og-image.jpg', // Placeholder, should be updated with actual absolute URL
+  ogImage = 'https://dreweb.online/og-image.jpg', // Placeholder, should be updated with actual absolute URL
   ogType = 'website',
   noIndex = false,
   schema,
 }: SEOProps) {
-  const siteUrl = 'https://dreweb.com'; // Replace with actual production URL
+  const siteUrl = 'https://dreweb.online'; // Replace with actual production URL
   const currentUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
 
   return (

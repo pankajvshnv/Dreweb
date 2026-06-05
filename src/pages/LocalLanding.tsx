@@ -25,7 +25,7 @@ export default function LocalLanding() {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "name": `Dreweb - ${formattedService} in ${formattedCity}`,
-          "image": "https://dreweb.com/og-image.jpg",
+          "image": "https://dreweb.online/og-image.jpg",
           "telephone": "+911234567890",
           "address": {
             "@type": "PostalAddress",
