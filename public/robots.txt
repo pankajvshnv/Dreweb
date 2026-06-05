@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /login
 
-Sitemap: https://dreweb.com/sitemap.xml
+Sitemap: https://dreweb.online/sitemap.xml
