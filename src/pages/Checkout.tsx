@@ -16,7 +16,8 @@ export default function Checkout() {
     price: 'Custom',
     paypalLink: '',
     upiQrCode: '',
-    upiId: ''
+    upiId: '',
+    accessLink: ''
   });
   
   const [loading, setLoading] = useState(true);
@@ -174,9 +175,19 @@ export default function Checkout() {
                       UPI ID: {selectedTemplate.upiId || 'dreweb@ybl'}
                     </p>
                     
-                    <div className="mt-6 pt-6 border-t border-zinc-100">
-                      {/* Removed manual email instruction as per user request */}
-                    </div>
+                    {selectedTemplate.accessLink && (
+                      <div className="mt-8 pt-6 border-t border-zinc-100">
+                        <p className="text-sm text-zinc-500 mb-4">Once you have completed the payment, click below to access your template.</p>
+                        <a 
+                          href={selectedTemplate.accessLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex w-full justify-center items-center py-4 px-6 bg-zinc-900 hover:bg-black text-white text-center rounded-xl font-bold text-lg transition-colors shadow-lg"
+                        >
+                          I have paid — Access Template
+                        </a>
+                      </div>
+                    )}
                   </div>
                 )}
 

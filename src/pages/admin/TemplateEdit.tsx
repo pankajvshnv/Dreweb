@@ -20,6 +20,7 @@ export default function AdminTemplateEdit() {
     paypalLink: '',
     upiQrCode: '',
     upiId: '',
+    accessLink: '',
     isPublic: true
   });
 
@@ -37,6 +38,7 @@ export default function AdminTemplateEdit() {
             paypalLink: data.paypalLink || '',
             upiQrCode: data.upiQrCode || '',
             upiId: data.upiId || '',
+            accessLink: data.accessLink || '',
             isPublic: data.isPublic !== false
           });
         }
@@ -208,6 +210,19 @@ export default function AdminTemplateEdit() {
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-200">
               <h3 className="font-bold text-lg mb-4">Payment Options</h3>
               
+              <div className="mb-6">
+                <label className="block text-sm font-bold text-zinc-700 mb-2">Template Access/Download Link</label>
+                <input 
+                  type="url" 
+                  name="accessLink" 
+                  value={formData.accessLink} 
+                  onChange={handleChange} 
+                  className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-brand-lime focus:outline-none transition-all text-sm"
+                  placeholder="https://drive.google.com/... or /downloads/..."
+                />
+                <p className="text-xs text-zinc-500 mt-2">Users will be directed here after UPI payment to access the template.</p>
+              </div>
+
               <div className="mb-6">
                 <label className="block text-sm font-bold text-zinc-700 mb-2">PayPal Link</label>
                 <input 
