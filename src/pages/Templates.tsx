@@ -80,7 +80,6 @@ export default function Templates() {
                     <div className="flex items-center justify-between mb-4 pt-2">
                       <p className="font-bold text-xl text-black">
                         {template.price}
-                        {template.priceINR && <span className="text-zinc-400 text-sm ml-2">| {template.priceINR}</span>}
                       </p>
                     </div>
                     <Link to={`/checkout?template=${template.id}`} className="inline-flex items-center justify-center w-full px-6 py-3 bg-zinc-900 text-white rounded-xl font-semibold hover:bg-black transition-colors">
