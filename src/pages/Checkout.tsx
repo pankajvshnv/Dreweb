@@ -69,12 +69,21 @@ export default function Checkout() {
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-100">
                 <h2 className="font-display text-2xl font-bold mb-6">Order Summary</h2>
                 
-                <div className="flex justify-between items-start pb-6 border-b border-zinc-100 mb-6">
-                  <div>
-                    <h3 className="font-semibold text-zinc-900">{selectedTemplate.title}</h3>
-                    <p className="text-sm text-zinc-500 mt-1">Digital Download / Access</p>
+                <div className="flex items-center gap-4 pb-6 border-b border-zinc-100 mb-6">
+                  {selectedTemplate.heroImage ? (
+                    <div className="w-20 h-16 rounded-xl overflow-hidden shrink-0 bg-zinc-100">
+                      <img src={selectedTemplate.heroImage} alt={selectedTemplate.title} className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-20 h-16 rounded-xl shrink-0 bg-zinc-100 flex items-center justify-center">
+                      <span className="text-[10px] text-zinc-400 font-bold uppercase">No Image</span>
+                    </div>
+                  )}
+                  <div className="flex-grow">
+                    <h3 className="font-semibold text-zinc-900 leading-tight">{selectedTemplate.title}</h3>
+                    <p className="text-xs text-zinc-500 mt-1">Digital Download / Access</p>
                   </div>
-                  <span className="font-bold text-lg">
+                  <span className="font-bold text-lg shrink-0">
                     {selectedTemplate.price}
                   </span>
                 </div>
