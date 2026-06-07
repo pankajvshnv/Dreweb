@@ -15,7 +15,8 @@ export default function Checkout() {
     title: 'Dreweb Service/Template',
     price: 'Custom',
     paypalLink: '',
-    upiQrCode: ''
+    upiQrCode: '',
+    upiId: ''
   });
   
   const [loading, setLoading] = useState(true);
@@ -166,7 +167,7 @@ export default function Checkout() {
                     )}
                     
                     <p className="text-sm font-medium text-zinc-800 bg-zinc-100 py-2 px-4 rounded-lg inline-block">
-                      UPI ID: dreweb@ybl
+                      UPI ID: {selectedTemplate.upiId || 'dreweb@ybl'}
                     </p>
                     
                     <div className="mt-6 pt-6 border-t border-zinc-100">

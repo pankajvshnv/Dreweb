@@ -18,6 +18,7 @@ export default function AdminTemplateEdit() {
     heroImage: '',
     paypalLink: '',
     upiQrCode: '',
+    upiId: '',
     isPublic: true
   });
 
@@ -33,6 +34,7 @@ export default function AdminTemplateEdit() {
             heroImage: data.heroImage || '',
             paypalLink: data.paypalLink || '',
             upiQrCode: data.upiQrCode || '',
+            upiId: data.upiId || '',
             isPublic: data.isPublic !== false
           });
         }
@@ -200,6 +202,18 @@ export default function AdminTemplateEdit() {
                   onChange={handleChange} 
                   className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-brand-lime focus:outline-none transition-all text-sm"
                   placeholder="https://www.paypal.com/..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-zinc-700 mb-2">UPI ID String</label>
+                <input 
+                  type="text" 
+                  name="upiId" 
+                  value={formData.upiId} 
+                  onChange={handleChange} 
+                  className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-brand-lime focus:outline-none transition-all text-sm mb-6"
+                  placeholder="e.g. dreweb@ybl"
                 />
               </div>
 
