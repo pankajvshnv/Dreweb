@@ -390,5 +390,20 @@
     "defaultMetaDesc": "We build digital experiences that convert & scale.",
     "googleAnalyticsId": "",
     "metaPixelId": ""
-  }
+  },
+  "templates": [
+    {
+      "id": "altitude-template",
+      "title": "Altitude — Cinematic Luxury Rooftop Cafe Website Template",
+      "category": "HTML/CSS/JS",
+      "price": "$10.00 USD",
+      "description": "Reusable UI (Navbar, Footer, MenuCard, Hero)\nPage files (Home, Menu, Contact, Reservations)\nGlobal CSS or Tailwind configuration\nmenu.json (stores your items, prices, descriptions)\nDependencies (React, Next.js, Framer Motion)\nProject documentation (crucial for your client)",
+      "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80",
+      "paypalLink": "https://www.paypal.com/ncp/payment/ZM6XXWCD95TX8",
+      "upiQrCode": "",
+      "isPublic": true,
+      "createdAt": "2026-06-07T17:33:22.312Z",
+      "updatedAt": "2026-06-07T17:33:22.312Z"
+    }
+  ]
 }

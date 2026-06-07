@@ -4,36 +4,13 @@ import { FadeIn, TextReveal, Magnetic } from '../components/motion/Animations';
 import { motion } from 'motion/react';
 import { CutoutCorner } from '../components/ui/CutoutCorner';
 import SEO from '../components/seo/SEO';
-
-// Hardcoded template data for now
-const TEMPLATES = [
-  {
-    id: 'premium-agency-portfolio',
-    title: 'Premium Agency Portfolio',
-    category: 'Agency Template',
-    price: '$49',
-    heroImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
-    features: ['React 19 & Vite', 'Tailwind CSS v4', 'Framer Motion Animations', 'Premium Dark/Light Design']
-  },
-  {
-    id: 'local-business-starter',
-    title: 'Local Business Starter',
-    category: 'Business Template',
-    price: '$29',
-    heroImage: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&q=80',
-    features: ['SEO Optimized', 'Fast Load Times', 'Contact Form Integration', 'Responsive Layout']
-  },
-  {
-    id: 'ecommerce-storefront',
-    title: 'E-Commerce Storefront',
-    category: 'E-Commerce',
-    price: '$79',
-    heroImage: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80',
-    features: ['Product Listings', 'Cart Functionality', 'Checkout Flow', 'Payment Integration Ready']
-  }
-];
+import { useCollection } from '../lib/useCollection';
 
 export default function Templates() {
+  const { data: dynamicTemplates } = useCollection<any>('templates');
+  const templates = dynamicTemplates && dynamicTemplates.length > 0
+    ? dynamicTemplates.filter((t: any) => t.isPublic !== false)
+    : [];
   return (
     <div className="w-full pb-24">
       <SEO 
@@ -52,8 +29,8 @@ export default function Templates() {
 
       <section className="px-6 lg:px-8 pb-32 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-          {TEMPLATES.map((template, idx) => (
-            <FadeIn direction="up" delay={0.1 * idx} distance={40} once={true} key={template.id} className="h-full flex flex-col">
+          {templates.map((template, idx) => (
+            <FadeIn direction="up" delay={0.1 * idx} distance={40} once={true} key={template.id || idx} className="h-full flex flex-col">
               <div className="group block relative h-full flex flex-col">
                 
                 {/* Card Container */}
@@ -91,10 +68,10 @@ export default function Templates() {
                   <p className="text-xs uppercase tracking-widest text-brand-lime font-bold mb-2">{template.category}</p>
                   <h3 className="font-display text-2xl font-bold mb-3 tracking-tight text-zinc-900">{template.title}</h3>
                   <ul className="space-y-2 mb-6 text-sm text-zinc-600">
-                    {template.features.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-center">
-                        <span className="w-1.5 h-1.5 bg-zinc-300 rounded-full mr-2"></span>
-                        {feature}
+                    {(template.description || '').split('\n').filter((f: string) => f.trim() !== '').map((feature: string, fIdx: number) => (
+                      <li key={fIdx} className="flex items-start">
+                        <span className="w-1.5 h-1.5 bg-zinc-300 rounded-full mr-2 mt-1.5 shrink-0"></span>
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>

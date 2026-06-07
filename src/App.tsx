@@ -30,6 +30,8 @@ const AdminSettings = lazy(() => import('./pages/admin/Settings'));
 const AdminServices = lazy(() => import('./pages/admin/Services'));
 const AdminShowcaseCards = lazy(() => import('./pages/admin/ShowcaseCards'));
 const AdminPricing = lazy(() => import('./pages/admin/Pricing'));
+const AdminTemplates = lazy(() => import('./pages/admin/Templates'));
+const AdminTemplateEdit = lazy(() => import('./pages/admin/TemplateEdit'));
 const AdminMedia = lazy(() => import('./pages/admin/Media'));
 const AdminBlog = lazy(() => import('./pages/admin/Blog'));
 const AdminLeads = lazy(() => import('./pages/admin/Leads'));
@@ -112,6 +114,8 @@ export default function App() {
               <Route path="showcase-cards" element={<AdminShowcaseCards />} />
               <Route path="services" element={<AdminServices />} />
               <Route path="pricing" element={<AdminPricing />} />
+              <Route path="templates" element={<AdminTemplates />} />
+              <Route path="templates/:id" element={<AdminTemplateEdit />} />
               <Route path="blog" element={<AdminBlog />} />
               <Route path="leads" element={<AdminLeads />} />
               <Route path="testimonials" element={<AdminTestimonials />} />
