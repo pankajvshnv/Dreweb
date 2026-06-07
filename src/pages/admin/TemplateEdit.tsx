@@ -14,6 +14,7 @@ export default function AdminTemplateEdit() {
     title: '',
     category: '',
     price: '',
+    priceINR: '',
     description: '',
     heroImage: '',
     paypalLink: '',
@@ -30,6 +31,7 @@ export default function AdminTemplateEdit() {
             title: data.title || '',
             category: data.category || '',
             price: data.price || '',
+            priceINR: data.priceINR || '',
             description: data.description || '',
             heroImage: data.heroImage || '',
             paypalLink: data.paypalLink || '',
@@ -133,16 +135,29 @@ export default function AdminTemplateEdit() {
                   placeholder="e.g. HTML/CSS/JS"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-bold text-zinc-700 mb-2">Price</label>
-                <input 
-                  type="text" 
-                  name="price" 
-                  value={formData.price} 
-                  onChange={handleChange} 
-                  className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-brand-lime focus:outline-none transition-all"
-                  placeholder="e.g. $10.00 USD"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-zinc-700 mb-2">Price (USD)</label>
+                  <input 
+                    type="text" 
+                    name="price" 
+                    value={formData.price} 
+                    onChange={handleChange} 
+                    className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-brand-lime focus:outline-none transition-all"
+                    placeholder="e.g. $10"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-zinc-700 mb-2">Price (INR)</label>
+                  <input 
+                    type="text" 
+                    name="priceINR" 
+                    value={formData.priceINR} 
+                    onChange={handleChange} 
+                    className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-brand-lime focus:outline-none transition-all"
+                    placeholder="e.g. ₹800"
+                  />
+                </div>
               </div>
             </div>
 
