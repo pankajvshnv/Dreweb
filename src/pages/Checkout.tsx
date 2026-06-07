@@ -14,6 +14,7 @@ export default function Checkout() {
     id: 'custom',
     title: 'Dreweb Service/Template',
     price: 'Custom',
+    currency: 'USD',
     paypalLink: '',
     upiQrCode: '',
     upiId: '',
@@ -29,6 +30,12 @@ export default function Checkout() {
         const found = templates.find((t: any) => t.id === templateId);
         if (found) {
           setSelectedTemplate(found);
+          // Auto-select payment method based on currency
+          if (found.currency === 'INR') {
+            setPaymentMethod('upi');
+          } else {
+            setPaymentMethod('paypal');
+          }
         }
       }
       setLoading(false);
@@ -68,14 +75,14 @@ export default function Checkout() {
                     <p className="text-sm text-zinc-500 mt-1">Digital Download / Access</p>
                   </div>
                   <span className="font-bold text-lg">
-                    {paymentMethod === 'upi' && selectedTemplate.priceINR ? selectedTemplate.priceINR : selectedTemplate.price}
+                    {selectedTemplate.price}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center text-lg font-bold">
                   <span>Total</span>
                   <span>
-                    {paymentMethod === 'upi' && selectedTemplate.priceINR ? selectedTemplate.priceINR : selectedTemplate.price}
+                    {selectedTemplate.price}
                   </span>
                 </div>
               </div>
@@ -89,52 +96,56 @@ export default function Checkout() {
             <FadeIn delay={0.2}>
               <div className="space-y-4 mb-8">
                 {/* PayPal Option */}
-                <label className={`block relative p-6 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'paypal' ? 'border-brand-lime bg-lime-50/30' : 'border-zinc-200 hover:border-zinc-300 bg-white'}`}>
-                  <input 
-                    type="radio" 
-                    name="payment" 
-                    value="paypal" 
-                    checked={paymentMethod === 'paypal'}
-                    onChange={() => setPaymentMethod('paypal')}
-                    className="sr-only"
-                  />
-                  <div className="flex items-center">
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'paypal' ? 'border-brand-lime' : 'border-zinc-300'}`}>
-                      {paymentMethod === 'paypal' && <div className="w-3 h-3 bg-brand-lime rounded-full" />}
+                {(!selectedTemplate.currency || selectedTemplate.currency === 'USD') && (
+                  <label className={`block relative p-6 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'paypal' ? 'border-brand-lime bg-lime-50/30' : 'border-zinc-200 hover:border-zinc-300 bg-white'}`}>
+                    <input 
+                      type="radio" 
+                      name="payment" 
+                      value="paypal" 
+                      checked={paymentMethod === 'paypal'}
+                      onChange={() => setPaymentMethod('paypal')}
+                      className="sr-only"
+                    />
+                    <div className="flex items-center">
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'paypal' ? 'border-brand-lime' : 'border-zinc-300'}`}>
+                        {paymentMethod === 'paypal' && <div className="w-3 h-3 bg-brand-lime rounded-full" />}
+                      </div>
+                      <div className="flex-grow">
+                        <h3 className="font-bold text-lg flex items-center">
+                          <CreditCard className="w-5 h-5 mr-2 text-blue-600" />
+                          PayPal / Credit Card
+                        </h3>
+                        <p className="text-sm text-zinc-500 mt-1">Pay securely via PayPal. Accepts all major cards.</p>
+                      </div>
                     </div>
-                    <div className="flex-grow">
-                      <h3 className="font-bold text-lg flex items-center">
-                        <CreditCard className="w-5 h-5 mr-2 text-blue-600" />
-                        PayPal / Credit Card
-                      </h3>
-                      <p className="text-sm text-zinc-500 mt-1">Pay securely via PayPal. Accepts all major cards.</p>
-                    </div>
-                  </div>
-                </label>
+                  </label>
+                )}
 
                 {/* UPI Option */}
-                <label className={`block relative p-6 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'upi' ? 'border-brand-lime bg-lime-50/30' : 'border-zinc-200 hover:border-zinc-300 bg-white'}`}>
-                  <input 
-                    type="radio" 
-                    name="payment" 
-                    value="upi" 
-                    checked={paymentMethod === 'upi'}
-                    onChange={() => setPaymentMethod('upi')}
-                    className="sr-only"
-                  />
-                  <div className="flex items-center">
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'upi' ? 'border-brand-lime' : 'border-zinc-300'}`}>
-                      {paymentMethod === 'upi' && <div className="w-3 h-3 bg-brand-lime rounded-full" />}
+                {(!selectedTemplate.currency || selectedTemplate.currency === 'INR') && (
+                  <label className={`block relative p-6 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'upi' ? 'border-brand-lime bg-lime-50/30' : 'border-zinc-200 hover:border-zinc-300 bg-white'}`}>
+                    <input 
+                      type="radio" 
+                      name="payment" 
+                      value="upi" 
+                      checked={paymentMethod === 'upi'}
+                      onChange={() => setPaymentMethod('upi')}
+                      className="sr-only"
+                    />
+                    <div className="flex items-center">
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'upi' ? 'border-brand-lime' : 'border-zinc-300'}`}>
+                        {paymentMethod === 'upi' && <div className="w-3 h-3 bg-brand-lime rounded-full" />}
+                      </div>
+                      <div className="flex-grow">
+                        <h3 className="font-bold text-lg flex items-center">
+                          <QrCode className="w-5 h-5 mr-2 text-zinc-800" />
+                          UPI (India Only)
+                        </h3>
+                        <p className="text-sm text-zinc-500 mt-1">Pay using Google Pay, PhonePe, Paytm, or any UPI app.</p>
+                      </div>
                     </div>
-                    <div className="flex-grow">
-                      <h3 className="font-bold text-lg flex items-center">
-                        <QrCode className="w-5 h-5 mr-2 text-zinc-800" />
-                        UPI (India Only)
-                      </h3>
-                      <p className="text-sm text-zinc-500 mt-1">Pay using Google Pay, PhonePe, Paytm, or any UPI app.</p>
-                    </div>
-                  </div>
-                </label>
+                  </label>
+                )}
               </div>
 
               {/* Action Area based on selection */}
