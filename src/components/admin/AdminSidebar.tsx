@@ -26,6 +26,7 @@ const SIDEBAR_SECTIONS = [
       { name: 'Projects', path: '/admin/projects', icon: FolderKanban },
       { name: 'Services', path: '/admin/services', icon: Briefcase },
       { name: 'Pricing Plans', path: '/admin/pricing', icon: Tag },
+      { name: 'Templates Shop', path: '/admin/templates', icon: Briefcase },
       { name: 'Blog', path: '/admin/blog', icon: PenTool },
       { name: 'Testimonials', path: '/admin/testimonials', icon: MessageSquare },
     ]

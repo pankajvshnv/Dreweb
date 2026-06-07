@@ -1,39 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { ArrowLeft, CreditCard, QrCode } from 'lucide-react';
 import { FadeIn, TextReveal } from '../components/motion/Animations';
 import SEO from '../components/seo/SEO';
-
-const TEMPLATES = [
-  {
-    id: 'premium-agency-portfolio',
-    title: 'Premium Agency Portfolio',
-    price: '$49',
-  },
-  {
-    id: 'local-business-starter',
-    title: 'Local Business Starter',
-    price: '$29',
-  },
-  {
-    id: 'ecommerce-storefront',
-    title: 'E-Commerce Storefront',
-    price: '$79',
-  }
-];
+import { getLocalData } from '../lib/crud';
 
 export default function Checkout() {
   const [searchParams] = useSearchParams();
   const templateId = searchParams.get('template');
   const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'upi' | null>(null);
-
-  const selectedTemplate = TEMPLATES.find(t => t.id === templateId) || {
+  
+  const [selectedTemplate, setSelectedTemplate] = useState<any>({
     id: 'custom',
     title: 'Dreweb Service/Template',
     price: 'Custom',
-  };
+    paypalLink: '',
+    upiQrCode: ''
+  });
+  
+  const [loading, setLoading] = useState(true);
 
-  const paypalLink = 'https://www.paypal.com/ncp/payment/ZM6XXWCD95TX8';
+  useEffect(() => {
+    async function load() {
+      if (templateId) {
+        const templates = await getLocalData('templates') || [];
+        const found = templates.find((t: any) => t.id === templateId);
+        if (found) {
+          setSelectedTemplate(found);
+        }
+      }
+      setLoading(false);
+    }
+    load();
+  }, [templateId]);
+
+  const paypalLink = selectedTemplate.paypalLink || 'https://www.paypal.com/ncp/payment/ZM6XXWCD95TX8';
+
+  if (loading) return <div className="p-8">Loading checkout...</div>;
 
   return (
     <div className="w-full min-h-[calc(100vh-80px)] bg-zinc-50 pb-24">
@@ -149,20 +152,25 @@ export default function Checkout() {
                     <h4 className="font-bold text-xl mb-2">Scan to Pay</h4>
                     <p className="text-zinc-500 text-sm mb-6">Open your UPI app and scan the QR code below.</p>
                     
-                    {/* Placeholder for UPI QR Code */}
-                    <div className="w-48 h-48 mx-auto bg-zinc-100 rounded-2xl flex items-center justify-center border-2 border-dashed border-zinc-300 mb-6">
-                      <div className="text-center">
-                        <QrCode className="w-12 h-12 mx-auto text-zinc-400 mb-2" />
-                        <span className="text-xs text-zinc-500 font-medium">QR Code<br/>Placeholder</span>
+                    {selectedTemplate.upiQrCode ? (
+                      <div className="w-64 mx-auto rounded-2xl overflow-hidden border-2 border-zinc-200 mb-6 bg-white p-2 shadow-sm">
+                        <img src={selectedTemplate.upiQrCode} alt="UPI QR Code" className="w-full h-auto object-contain mix-blend-multiply" />
                       </div>
-                    </div>
+                    ) : (
+                      <div className="w-48 h-48 mx-auto bg-zinc-100 rounded-2xl flex items-center justify-center border-2 border-dashed border-zinc-300 mb-6">
+                        <div className="text-center">
+                          <QrCode className="w-12 h-12 mx-auto text-zinc-400 mb-2" />
+                          <span className="text-xs text-zinc-500 font-medium">QR Code<br/>Not Available</span>
+                        </div>
+                      </div>
+                    )}
                     
                     <p className="text-sm font-medium text-zinc-800 bg-zinc-100 py-2 px-4 rounded-lg inline-block">
                       UPI ID: dreweb@ybl
                     </p>
                     
                     <div className="mt-6 pt-6 border-t border-zinc-100">
-                      <p className="text-sm text-zinc-600 mb-4">After successful payment, please take a screenshot and email us at <strong className="text-black">hello@dreweb.online</strong> to receive your assets.</p>
+                      {/* Removed manual email instruction as per user request */}
                     </div>
                   </div>
                 )}
