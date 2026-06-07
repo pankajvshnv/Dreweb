@@ -107,7 +107,7 @@ export default function Checkout() {
                       className="sr-only"
                     />
                     <div className="flex items-center">
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'paypal' ? 'border-brand-lime' : 'border-zinc-300'}`}>
+                      <div className={`shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'paypal' ? 'border-brand-lime' : 'border-zinc-300'}`}>
                         {paymentMethod === 'paypal' && <div className="w-3 h-3 bg-brand-lime rounded-full" />}
                       </div>
                       <div className="flex-grow">
@@ -133,7 +133,7 @@ export default function Checkout() {
                       className="sr-only"
                     />
                     <div className="flex items-center">
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'upi' ? 'border-brand-lime' : 'border-zinc-300'}`}>
+                      <div className={`shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${paymentMethod === 'upi' ? 'border-brand-lime' : 'border-zinc-300'}`}>
                         {paymentMethod === 'upi' && <div className="w-3 h-3 bg-brand-lime rounded-full" />}
                       </div>
                       <div className="flex-grow">
@@ -182,7 +182,7 @@ export default function Checkout() {
                       </div>
                     )}
                     
-                    <p className="text-sm font-medium text-zinc-800 bg-zinc-100 py-2 px-4 rounded-lg inline-block">
+                    <p className="text-sm font-medium text-zinc-800 bg-zinc-100 py-2 px-4 rounded-lg inline-block break-all">
                       UPI ID: {selectedTemplate.upiId || 'dreweb@ybl'}
                     </p>
                     
