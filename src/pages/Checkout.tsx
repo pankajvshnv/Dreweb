@@ -66,12 +66,16 @@ export default function Checkout() {
                     <h3 className="font-semibold text-zinc-900">{selectedTemplate.title}</h3>
                     <p className="text-sm text-zinc-500 mt-1">Digital Download / Access</p>
                   </div>
-                  <span className="font-bold text-lg">{selectedTemplate.price}</span>
+                  <span className="font-bold text-lg">
+                    {paymentMethod === 'upi' && selectedTemplate.priceINR ? selectedTemplate.priceINR : selectedTemplate.price}
+                  </span>
                 </div>
 
                 <div className="flex justify-between items-center text-lg font-bold">
                   <span>Total</span>
-                  <span>{selectedTemplate.price}</span>
+                  <span>
+                    {paymentMethod === 'upi' && selectedTemplate.priceINR ? selectedTemplate.priceINR : selectedTemplate.price}
+                  </span>
                 </div>
               </div>
             </FadeIn>
