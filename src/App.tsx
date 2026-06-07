@@ -15,6 +15,8 @@ const Portfolio = lazy(() => import('./pages/Portfolio'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Pricing = lazy(() => import('./pages/Pricing'));
+const Templates = lazy(() => import('./pages/Templates'));
+const Checkout = lazy(() => import('./pages/Checkout'));
 const LocalLanding = lazy(() => import('./pages/LocalLanding'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -93,6 +95,8 @@ export default function App() {
               <Route path="/locations/:city/:service" element={<LocalLanding />} />
               <Route path="/work" element={<Portfolio />} />
               <Route path="/work/:slug" element={<ProjectDetail />} />
+              <Route path="/templates" element={<Templates />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/pricing" element={<Pricing />} />
             </Route>
