@@ -53,12 +53,12 @@ export default function Portfolio() {
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       <span className="text-zinc-400 border border-zinc-200 rounded-full px-3 py-1 text-sm">{project.year}</span>
-                      {project.link && (
+                      { (project.link || project.liveUrl) && (
                         <a 
-                          href={project.link} 
+                          href={project.link || project.liveUrl} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link, '_blank'); }}
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link || project.liveUrl, '_blank'); }}
                           className="flex items-center gap-1 text-xs font-bold text-zinc-600 bg-white border border-zinc-200 hover:border-black hover:text-black px-3 py-1.5 rounded-full transition-all shadow-sm"
                         >
                           Visit Site <ArrowUpRight size={14} />
