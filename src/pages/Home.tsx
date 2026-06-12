@@ -178,7 +178,20 @@ export default function Home() {
                       <h3 className="text-white font-display text-2xl font-bold mb-2 group-hover:text-brand-lime transition-colors duration-300">{project.title}</h3>
                       <p className="text-zinc-500 font-medium">{project.industry}</p>
                     </div>
-                    <span className="text-zinc-500 border border-white/10 rounded-full px-3 py-1 text-sm">{project.year}</span>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-zinc-500 border border-white/10 rounded-full px-3 py-1 text-sm">{project.year}</span>
+                      {project.link && (
+                        <a 
+                          href={project.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link, '_blank'); }}
+                          className="flex items-center gap-1 text-xs font-bold text-white bg-white/10 hover:bg-white/20 hover:text-brand-lime px-3 py-1.5 rounded-full transition-all"
+                        >
+                          Visit Site <ArrowUpRight size={14} />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </Link>
               </FadeIn>

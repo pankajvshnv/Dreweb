@@ -25,12 +25,12 @@ export const SERVICES = [
 ];
 
 export const PROJECTS = [
-  { slug: "ad-global-impex", title: "AD Global Impex", industry: "Manufacturing", year: "2024" },
-  { slug: "career-pilot-hr", title: "Career Pilot HR", industry: "Human Resources", year: "2023" },
-  { slug: "shri-ram-healthcares", title: "Shri Ram Healthcares", industry: "Healthcare", year: "2023" },
-  { slug: "fusiontech-research", title: "Fusiontech Research", industry: "Technology", year: "2024" },
-  { slug: "ecommerce-brand", title: "E-commerce Brand Platform", industry: "Retail", year: "2024" },
-  { slug: "saas-dashboard", title: "SaaS Analytics Dashboard", industry: "Software", year: "2023" }
+  { slug: "ad-global-impex", title: "AD Global Impex", industry: "Manufacturing", year: "2024", link: "https://adglobalimpex.com" },
+  { slug: "career-pilot-hr", title: "Career Pilot HR", industry: "Human Resources", year: "2023", link: "https://careerpilot.hr" },
+  { slug: "shri-ram-healthcares", title: "Shri Ram Healthcares", industry: "Healthcare", year: "2023", link: "https://shriramhealthcares.com" },
+  { slug: "fusiontech-research", title: "Fusiontech Research", industry: "Technology", year: "2024", link: "https://fusiontechresearch.com" },
+  { slug: "ecommerce-brand", title: "E-commerce Brand Platform", industry: "Retail", year: "2024", link: "https://ecommerce-brand.com" },
+  { slug: "saas-dashboard", title: "SaaS Analytics Dashboard", industry: "Software", year: "2023", link: "https://saas-dashboard.com" }
 ];
 
 export const TESTIMONIALS = [

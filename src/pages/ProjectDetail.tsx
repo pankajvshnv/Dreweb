@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { useDocumentBySlug } from '../lib/useDocument';
 import NotFound from './NotFound';
 import { FadeIn, TextReveal, ScaleIn, Magnetic, ImageReveal } from '../components/motion/Animations';
@@ -45,6 +45,13 @@ export default function ProjectDetail() {
             <p className="text-xl text-zinc-600 font-light max-w-3xl text-balance leading-relaxed whitespace-pre-wrap">
               {project.shortDescription}
             </p>
+            {project.link && (
+              <div className="mt-8">
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-full font-bold hover:bg-zinc-800 transition-colors">
+                  Visit Website <ArrowUpRight className="w-5 h-5" />
+                </a>
+              </div>
+            )}
           </FadeIn>
         </div>
       </section>

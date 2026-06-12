@@ -51,7 +51,20 @@ export default function Portfolio() {
                       <h3 className="font-display text-2xl font-bold mb-1 group-hover:text-brand-indigo transition-colors duration-300">{project.title}</h3>
                       <p className="text-zinc-500 font-medium text-sm">{project.industry}</p>
                     </div>
-                    <span className="text-zinc-400 border border-zinc-200 rounded-full px-3 py-1 text-sm">{project.year}</span>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-zinc-400 border border-zinc-200 rounded-full px-3 py-1 text-sm">{project.year}</span>
+                      {project.link && (
+                        <a 
+                          href={project.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link, '_blank'); }}
+                          className="flex items-center gap-1 text-xs font-bold text-zinc-600 bg-white border border-zinc-200 hover:border-black hover:text-black px-3 py-1.5 rounded-full transition-all shadow-sm"
+                        >
+                          Visit Site <ArrowUpRight size={14} />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               </Link>
