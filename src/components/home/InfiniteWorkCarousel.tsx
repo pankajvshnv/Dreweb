@@ -3,29 +3,9 @@ import { motion, useAnimationControls } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
 export default function InfiniteWorkCarousel({ projects }: { projects: any[] }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  
   // Duplicate the array multiple times to ensure it fills ultra-wide screens
   // We need an EVEN multiplier so that translating by -50% shifts exactly half the total items.
   const duplicatedProjects = [...projects, ...projects, ...projects, ...projects];
-  
-  // Timeout for auto-resume logic
-  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleInteractionStart = () => {
-    setIsHovered(true);
-    if (resumeTimeoutRef.current) {
-      clearTimeout(resumeTimeoutRef.current);
-    }
-  };
-
-  const handleInteractionEnd = () => {
-    // 5 seconds delay before auto-resume after hover leaves
-    resumeTimeoutRef.current = setTimeout(() => {
-      setIsHovered(false);
-    }, 5000);
-  };
 
   return (
     <section className="py-24 lg:py-32 bg-zinc-950 text-white overflow-hidden relative rounded-t-[3rem] lg:rounded-t-[5rem]">
@@ -45,16 +25,9 @@ export default function InfiniteWorkCarousel({ projects }: { projects: any[] }) 
           maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
           WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
         }}
-        onMouseEnter={handleInteractionStart}
-        onMouseLeave={handleInteractionEnd}
-        onTouchStart={handleInteractionStart}
-        onTouchEnd={handleInteractionEnd}
       >
         <div 
-          className="flex w-max gap-6 px-4 animate-marquee-infinite hover:[animation-play-state:paused]"
-          style={{
-            animationPlayState: isHovered ? 'paused' : 'running',
-          }}
+          className="flex w-max gap-6 px-4 animate-marquee-infinite group-hover:[animation-play-state:paused]"
         >
           {duplicatedProjects.map((project, idx) => (
             <motion.div 
@@ -62,9 +35,7 @@ export default function InfiniteWorkCarousel({ projects }: { projects: any[] }) 
               className="relative w-[300px] sm:w-[400px] md:w-[500px] aspect-[16/9] flex-shrink-0 rounded-3xl overflow-hidden cursor-pointer bg-zinc-900 border border-white/5 transition-all duration-700 hover:z-10 group/card"
               whileHover={{ scale: 1.05 }}
               onClick={() => {
-                // Ensure interaction starts (and restarts the 5s timer) on click
-                handleInteractionStart();
-                handleInteractionEnd();
+                // Allows clicking on mobile to pause or interact
               }}
             >
               {/* Background Image/Fallback */}
