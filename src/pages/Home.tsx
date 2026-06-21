@@ -5,7 +5,6 @@ import { PROJECTS } from '../lib/data';
 import { useCollection } from '../lib/useCollection';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Counter, Magnetic, Float, Parallax, SlideReveal, LineReveal, ScaleIn } from '../components/motion/Animations';
 import { FloatingShowcase } from '../components/home/FloatingShowcase';
-import InfiniteWorkCarousel from '../components/home/InfiniteWorkCarousel';
 import SEO from '../components/seo/SEO';
 import { useRef, useEffect, useState } from 'react';
 
@@ -13,8 +12,8 @@ export default function Home() {
   const { data: testimonials } = useCollection<any>('testimonials');
   const { data: dynamicProjects } = useCollection<any>('projects');
   const displayProjects = dynamicProjects && dynamicProjects.length > 0
-    ? dynamicProjects.filter((p: any) => p.isPublic !== false).slice(0, 8)
-    : PROJECTS.slice(0, 8);
+    ? dynamicProjects.filter((p: any) => p.isPublic !== false).slice(0, 4)
+    : PROJECTS.slice(0, 4);
 
   const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : [
     { id: 1, quote: "The custom agentic workflows they built reduced our manual data entry by 90%, saving us hundreds of hours weekly.", author: "MARCUS CHENG", role: "Head of AI, Aetna", authorImage: "https://i.pravatar.cc/150?u=1" },
@@ -148,7 +147,59 @@ export default function Home() {
       </section>
 
       {/* ━━━ PORTFOLIO ━━━ */}
-      <InfiniteWorkCarousel projects={displayProjects} />
+      <section className="py-24 lg:py-32 bg-zinc-950 text-white rounded-t-[3rem] lg:rounded-t-[5rem]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <FadeIn>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+              <div className="max-w-2xl">
+                <TextReveal as="h2" className="font-display text-4xl lg:text-6xl font-bold tracking-tighter mb-6 text-white">Selected Work.</TextReveal>
+                <p className="text-zinc-400 text-lg sm:text-xl font-light">We partner with visionary companies to build digital products that shape industries.</p>
+              </div>
+              <Magnetic><Link to="/work" className="inline-flex items-center justify-center px-6 py-3 border border-white/20 rounded-full font-medium hover:bg-white hover:text-black transition-all whitespace-nowrap" data-cursor="View All">View All Projects</Link></Magnetic>
+            </div>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {displayProjects.map((project: any, idx: number) => (
+              <FadeIn key={project.slug || idx} delay={idx * 0.1}>
+                <Link to={`/work/${project.slug}`} className="group block" data-cursor="View">
+                  <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-zinc-900 mb-6">
+                    {project.heroImage ? (
+                      <motion.img src={project.heroImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover" whileHover={{ scale: 1.08 }} transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }} />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-display text-3xl font-bold uppercase tracking-widest">{project.title?.substring(0, 2)}</div>
+                    )}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <motion.div className="w-16 h-16 bg-brand-lime text-black rounded-full flex items-center justify-center" initial={{ scale: 0.5, opacity: 0 }} whileHover={{ scale: 1 }} animate={{}} whileInView={{}}><ArrowUpRight size={24} strokeWidth={2.5} /></motion.div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-white font-display text-2xl font-bold mb-2 group-hover:text-brand-lime transition-colors duration-300">{project.title}</h3>
+                      <p className="text-zinc-500 font-medium">{project.industry}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-zinc-500 border border-white/10 rounded-full px-3 py-1 text-sm">{project.year}</span>
+                      { (project.link || project.liveUrl) && (
+                        <a 
+                          href={project.link || project.liveUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(project.link || project.liveUrl, '_blank'); }}
+                          className="flex items-center gap-1 text-xs font-bold text-white bg-white/10 hover:bg-white/20 hover:text-brand-lime px-3 py-1.5 rounded-full transition-all"
+                        >
+                          Visit Site <ArrowUpRight size={14} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ━━━ STATS ━━━ */}
       <section className="py-16 bg-black text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
