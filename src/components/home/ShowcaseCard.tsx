@@ -48,6 +48,7 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
   const springMouseY = useSpring(mouseY, { stiffness: 40, damping: 20 });
 
   // Parallax based on global mouse position (giving depth)
+  // Higher zIndex = foreground = moves more (parallaxDepth is higher)
   const parallaxDepth = card.zIndex * 0.8; 
   const translateX = useTransform(springMouseX, v => v * parallaxDepth);
   const translateY = useTransform(springMouseY, v => v * parallaxDepth);
@@ -69,16 +70,16 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
     switch (card.type) {
       case 'website-preview':
         return (
-          <div className="w-full h-full bg-black/60 backdrop-blur-xl flex flex-col border border-white/10">
-            <div className="h-6 bg-white/5 flex items-center px-3 gap-1.5 shrink-0 border-b border-white/10">
-              <div className="w-2 h-2 rounded-full bg-white/20"></div>
-              <div className="w-2 h-2 rounded-full bg-white/20"></div>
-              <div className="w-2 h-2 rounded-full bg-white/20"></div>
+          <div className="w-full h-full bg-white flex flex-col">
+            <div className="h-6 bg-zinc-100 flex items-center px-3 gap-1.5 shrink-0 border-b border-zinc-200">
+              <div className="w-2 h-2 rounded-full bg-red-400"></div>
+              <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+              <div className="w-2 h-2 rounded-full bg-green-400"></div>
             </div>
             <div className="flex-1 relative overflow-hidden group">
-              <img src={card.imageUrl} alt={card.title} className="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110" />
+              <img src={card.imageUrl} alt={card.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <div className="w-10 h-10 glass-panel rounded-full flex items-center justify-center text-white">
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black">
                   <ExternalLink size={18} />
                 </div>
               </div>
@@ -88,30 +89,30 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
       
       case 'text-editorial':
         return (
-          <div className="w-full h-full relative overflow-hidden flex flex-col justify-between p-6 border border-white/10">
-            <img src={card.imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div className="w-full h-full relative overflow-hidden flex flex-col justify-between p-6">
+            <img src={card.imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="relative z-10 flex justify-between items-start">
-              <span className="px-3 py-1 glass-panel text-white text-[10px] font-bold tracking-widest uppercase rounded-sm border border-white/20">Modern</span>
+              <span className="px-3 py-1 bg-brand-lime text-black text-[10px] font-bold tracking-widest uppercase rounded-sm">Modern</span>
             </div>
             <div className="relative z-10">
-              <span className="text-white/60 text-xs font-bold tracking-widest uppercase block mb-1">{card.subtitle}</span>
-              <h3 className="text-white font-display text-4xl leading-none font-extrabold drop-shadow-xl">{card.title}</h3>
+              <span className="text-brand-lime text-xs font-bold tracking-widest uppercase block mb-1">{card.subtitle}</span>
+              <h3 className="text-white font-display text-4xl leading-none font-extrabold">{card.title}</h3>
             </div>
           </div>
         );
 
       case 'story-card':
         return (
-          <div className="w-full h-full bg-black/40 backdrop-blur-md p-4 flex gap-4 border border-white/10">
+          <div className="w-full h-full bg-white p-4 flex gap-4">
             <div className="w-1/3 h-full rounded-xl overflow-hidden shrink-0 relative">
-               <img src={card.imageUrl} alt="" className="w-full h-full object-cover opacity-80" />
+               <img src={card.imageUrl} alt="" className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 flex flex-col justify-center">
-              <h4 className="font-display font-bold text-lg mb-1 text-white">{card.title}</h4>
-              <p className="text-[10px] text-white/50 leading-relaxed mb-4">{card.subtitle}</p>
-              <div className="flex items-center gap-2 text-[10px] font-medium border-t border-white/10 pt-3 text-white/70">
-                <CheckCircle2 size={12} className="text-white/40" /> Clean Energy
+              <h4 className="font-display font-bold text-lg mb-1">{card.title}</h4>
+              <p className="text-[10px] text-zinc-500 leading-relaxed mb-4">{card.subtitle}</p>
+              <div className="flex items-center gap-2 text-[10px] font-medium border-t border-zinc-100 pt-3">
+                <CheckCircle2 size={12} className="text-brand-lime" /> Clean Energy
               </div>
             </div>
           </div>
@@ -119,17 +120,17 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
 
       case 'stats-card':
         return (
-          <div className="w-full h-full bg-black/60 backdrop-blur-xl border border-white/10 text-white p-6 flex flex-col justify-between rounded-2xl relative overflow-hidden">
-             <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/5 blur-2xl rounded-full"></div>
+          <div className="w-full h-full bg-zinc-900 text-white p-6 flex flex-col justify-between rounded-2xl relative overflow-hidden">
+             <div className="absolute -right-8 -top-8 w-32 h-32 bg-brand-lime/20 blur-2xl rounded-full"></div>
              <div>
-                <BarChart className="text-white/40 mb-4" size={24} />
-                <h4 className="font-bold text-lg text-white/90">{card.title}</h4>
+                <BarChart className="text-brand-lime mb-4" size={24} />
+                <h4 className="font-bold text-lg">{card.title}</h4>
              </div>
              <div className="grid grid-cols-2 gap-4">
                {card.stats && Object.entries(card.stats).map(([key, val]) => (
                  <div key={key}>
-                   <div className="text-2xl font-display font-light text-white">{val}</div>
-                   <div className="text-[10px] text-white/40 uppercase tracking-wider">Metric {key}</div>
+                   <div className="text-2xl font-display font-bold text-brand-lime">{val}</div>
+                   <div className="text-[10px] text-zinc-400 uppercase tracking-wider">Metric {key}</div>
                  </div>
                ))}
              </div>
@@ -138,27 +139,27 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
 
       case 'pricing-card':
         return (
-          <div className="w-full h-full bg-black/40 backdrop-blur-xl border border-white/10 p-5 flex flex-col">
-            <div className="flex justify-between items-start border-b border-white/10 pb-3 mb-3">
+          <div className="w-full h-full bg-white p-5 flex flex-col">
+            <div className="flex justify-between items-start border-b border-zinc-100 pb-3 mb-3">
               <div>
-                <h4 className="font-bold text-white">{card.title}</h4>
-                <p className="text-[10px] text-white/50">{card.subtitle}</p>
+                <h4 className="font-bold">{card.title}</h4>
+                <p className="text-[10px] text-zinc-500">{card.subtitle}</p>
               </div>
-              <div className="text-lg font-display font-light text-white">$990</div>
+              <div className="text-lg font-display font-bold">$990</div>
             </div>
             <div className="space-y-2 flex-1">
               {[1, 2, 3].map(i => (
-                <div key={i} className="flex items-center gap-2 text-[10px] text-white/60">
-                  <div className="w-1.5 h-1.5 rounded-full bg-white/40 shrink-0"></div> Feature {i} included
+                <div key={i} className="flex items-center gap-2 text-[10px] text-zinc-600">
+                  <div className="w-1.5 h-1.5 rounded-full bg-black shrink-0"></div> Feature {i} included
                 </div>
               ))}
             </div>
-            <button className="w-full py-2 glass-button text-[11px] font-bold mt-auto pointer-events-auto">Choose Plan</button>
+            <button className="w-full py-2 bg-black text-white text-[11px] font-bold rounded-lg mt-auto hover:bg-brand-lime hover:text-black transition-colors pointer-events-auto">Choose Plan</button>
           </div>
         );
 
       default:
-        return <div className="p-4 bg-black/40 text-white">{card.title}</div>;
+        return <div className="p-4">{card.title}</div>;
     }
   };
 
@@ -167,8 +168,8 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
       drag
       dragConstraints={{ left: -600, right: 600, top: -400, bottom: 400 }}
       dragElastic={0.2}
-      whileDrag={{ scale: 1.1, cursor: 'grabbing', zIndex: 50, boxShadow: "0 0 80px rgba(255,255,255,0.1)" }}
-      whileHover={{ scale: 1.05, zIndex: 40, boxShadow: "0 0 40px rgba(255,255,255,0.05)" }}
+      whileDrag={{ scale: 1.1, cursor: 'grabbing', zIndex: 50, boxShadow: "0 35px 75px -15px rgba(0,0,0,0.3)" }}
+      whileHover={{ scale: 1.05, zIndex: 40, boxShadow: "0 30px 60px -15px rgba(0,0,0,0.25)" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       initial={{ opacity: 0, scale: 0.8 }}
@@ -188,7 +189,7 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
         zIndex: card.zIndex,
         perspective: 1200
       }}
-      className="absolute cursor-grab bg-black/20 rounded-2xl shadow-2xl overflow-hidden transform-style-3d transition-shadow duration-500 -translate-x-1/2 -translate-y-1/2"
+      className="absolute cursor-grab bg-white rounded-2xl shadow-[0_15px_35px_-12px_rgba(0,0,0,0.1)] overflow-hidden border border-black/5 transform-style-3d transition-shadow duration-500 -translate-x-1/2 -translate-y-1/2"
     >
       <motion.div
         animate={{

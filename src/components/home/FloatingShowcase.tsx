@@ -9,7 +9,7 @@ import { SHOWCASE_CARDS } from '../../lib/data';
 export function FloatingShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Fetch cards from admin local storage, fallback to default
+  // Fetch cards from admin local storage, fallback to default (using new key to reset positions)
   const { data: dynamicCards } = useCollection<ShowcaseCardData>('showcase_hero_cards');
   const cards = dynamicCards && dynamicCards.length > 0 ? dynamicCards : SHOWCASE_CARDS;
 
@@ -37,13 +37,13 @@ export function FloatingShowcase() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full overflow-hidden bg-background flex items-center justify-center min-h-[95vh] pt-32 pb-24 lg:pt-40 lg:pb-32 select-none"
+      className="relative w-full overflow-hidden bg-white flex items-center justify-center pt-24 pb-32 lg:pt-24 lg:pb-40 select-none"
     >
-      {/* Background dark radial gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/[0.03] via-background to-background z-0"></div>
+      {/* Background radial gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-50 via-white to-white z-0"></div>
 
       {/* Render Floating Cards - Pushed lower and scaled to avoid text overlap - Hidden on mobile */}
-      <div className="hidden md:block absolute inset-0 z-10 overflow-hidden pointer-events-none translate-y-20 lg:translate-y-32 scale-90 md:scale-100 opacity-80 mix-blend-screen">
+      <div className="hidden md:block absolute inset-0 z-10 overflow-hidden pointer-events-none translate-y-20 lg:translate-y-32 scale-90 md:scale-100">
         <div className="relative w-full h-full pointer-events-auto">
           {cards.map((card, idx) => (
             <ShowcaseCard 
@@ -64,58 +64,53 @@ export function FloatingShowcase() {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-          className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-panel mb-10 pointer-events-auto shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 shadow-sm mb-8 pointer-events-auto"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shadow-[0_0_10px_rgba(255,255,255,1)]"></span>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/80">
-            Digital Excellence • Global Reach
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-lime animate-pulse"></span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+            Book a call {'>'} Finish project {'>'} Get more leads
           </span>
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1 
-          initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 1.2, ease: [0.25, 0.4, 0.25, 1] }}
-          className="font-display text-5xl md:text-7xl lg:text-[90px] font-light tracking-tighter leading-[1.05] text-white mb-8 drop-shadow-2xl"
+          initial={{ opacity: 0, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 1 }}
+          className="font-display text-5xl md:text-7xl lg:text-[80px] font-medium tracking-tight leading-[1.05] text-zinc-900 mb-6"
         >
-          Websites <em className="font-serif italic font-light tracking-normal text-white/80 px-2 mx-1">designed</em> for <br className="hidden md:block" /> speed, elegance, and <br className="hidden md:block" /> <em className="font-serif italic font-light tracking-normal text-white/80 px-2 ml-1">conversion.</em>
+          Websites <em className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 mx-1">developed</em> for <br className="hidden md:block" /> speed, clarity, and <br className="hidden md:block" /> <em className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 ml-1">conversion.</em>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="text-lg md:text-2xl text-white/50 font-light max-w-2xl text-balance mb-14 leading-relaxed"
+          transition={{ delay: 0.4 }}
+          className="text-lg md:text-xl text-zinc-500 font-light max-w-2xl text-balance mb-12"
         >
-          From cinematic structure to flawless launch, we build digital products that shape industries.
+          From structure to launch, we handle everything - creating a website that's simple to use, easy to trust, and built to convert.
         </motion.p>
 
         {/* CTAs */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-center gap-6 pointer-events-auto"
+          transition={{ delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-center gap-4 pointer-events-auto"
         >
           <Link 
             to="/contact" 
-            className="px-10 py-4 rounded-full bg-white text-black font-semibold tracking-widest text-sm uppercase hover:scale-105 hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all duration-500"
+            className="px-8 py-3.5 rounded-full bg-brand-lime text-black font-medium hover:scale-105 transition-transform"
           >
-            Start Your Project
+            Book a call today
           </Link>
           <Link 
             to="/work" 
-            className="glass-button px-10 py-4 font-semibold tracking-widest text-sm uppercase flex items-center gap-2 group"
+            className="px-8 py-3.5 rounded-full bg-white border border-zinc-200 text-zinc-700 font-medium hover:bg-zinc-50 transition-colors inline-flex items-center gap-2"
           >
-            View Our Work 
-            <motion.div
-               className="group-hover:translate-x-1 transition-transform"
-            >
-               <ArrowUpRight size={16} />
-            </motion.div>
+            Recent projects <ArrowUpRight size={16} />
           </Link>
         </motion.div>
         
