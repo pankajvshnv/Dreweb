@@ -157,7 +157,7 @@ export default function AdminProjects() {
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onSelect={(e) => { e.preventDefault(); handleDelete(project.id); }} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-semibold cursor-pointer">Delete</DropdownMenuItem>
+                            <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setTimeout(() => handleDelete(project.id), 50); }} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-semibold cursor-pointer">Delete</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
