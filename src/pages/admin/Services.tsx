@@ -255,7 +255,7 @@ export default function AdminServices() {
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => handleDelete(service.id)} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-bold cursor-pointer">Delete</DropdownMenuItem>
+                          <DropdownMenuItem onSelect={(e) => { e.preventDefault(); handleDelete(service.id); }} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-bold cursor-pointer">Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>

@@ -304,7 +304,7 @@ export default function AdminPricing() {
                             <DropdownMenuItem onClick={() => handleMakeFeatured(plan.id)} className="cursor-pointer font-medium text-brand-blue">Make Featured</DropdownMenuItem>
                           )}
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => handleDelete(plan.id)} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-bold cursor-pointer">Delete</DropdownMenuItem>
+                          <DropdownMenuItem onSelect={(e) => { e.preventDefault(); handleDelete(plan.id); }} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-bold cursor-pointer">Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>

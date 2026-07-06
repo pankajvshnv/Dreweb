@@ -332,7 +332,7 @@ export default function AdminBlog() {
                           <div className="px-2 py-1.5 text-sm font-semibold text-zinc-500">Actions</div>
                           <DropdownMenuItem onClick={() => handleEdit(post)} className="cursor-pointer font-medium">Edit Post</DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => handleDelete(post.id)} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-bold cursor-pointer">Delete</DropdownMenuItem>
+                          <DropdownMenuItem onSelect={(e) => { e.preventDefault(); handleDelete(post.id); }} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-bold cursor-pointer">Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>
