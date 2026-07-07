@@ -170,13 +170,7 @@ export async function getLocalData(path: string) {
       }
       const dbData = (db as any)[path];
       if (dbData) {
-        if (Array.isArray(dbData) && Array.isArray(data)) {
-          const missing = dbData.filter(dbItem => !data.some((item: any) => item.id === dbItem.id));
-          if (missing.length > 0) {
-            data = [...data, ...missing];
-            await localforage.setItem(path, data);
-          }
-        } else if (typeof dbData === 'object' && dbData !== null && typeof data === 'object' && data !== null) {
+        if (typeof dbData === 'object' && dbData !== null && typeof data === 'object' && data !== null && !Array.isArray(dbData)) {
           let updated = false;
           for (const key in dbData) {
             if (!(key in data)) {
