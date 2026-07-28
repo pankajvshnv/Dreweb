@@ -4,7 +4,7 @@ export const BRAND = {
   email: "info@dreweb.online",
   phone: "+91 6261029938",
   location: "Indore, Madhya Pradesh, India",
-  instagram: "@dreweb.agency",
+  instagram: "@dreweb.io",
   founded: 2022
 };
 
