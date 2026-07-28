@@ -1,33 +1,21 @@
-const CACHE_NAME = 'dreweb-v1';
+const CACHE_NAME = 'dreweb-v3';
 
-const STATIC_ASSETS = [
-  '/',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-];
-
-// Install: cache core static assets
+// Install: activate immediately
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
-  );
   self.skipWaiting();
 });
 
-// Activate: remove old caches
+// Activate: clear out old caches so new deployments load cleanly
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      )
+      Promise.all(keys.map(key => caches.delete(key)))
     )
   );
   self.clients.claim();
 });
 
-// Fetch: cache-first for static assets, network-first for everything else
+// Fetch: Network-first for all assets to prevent stale code blank screens
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
@@ -35,35 +23,14 @@ self.addEventListener('fetch', event => {
   // Skip non-GET and cross-origin requests
   if (request.method !== 'GET' || url.origin !== location.origin) return;
 
-  // Skip admin routes — always fetch fresh
-  if (url.pathname.startsWith('/admin')) return;
-
-  // Cache-first for static assets (images, fonts, icons)
-  if (
-    request.destination === 'image' ||
-    request.destination === 'font' ||
-    request.destination === 'style' ||
-    request.destination === 'script'
-  ) {
-    event.respondWith(
-      caches.match(request).then(cached => {
-        if (cached) return cached;
-        return fetch(request).then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  // Network-first for HTML pages (always fresh content)
+  // Network-first strategy
   event.respondWith(
     fetch(request)
       .then(response => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+        }
         return response;
       })
       .catch(() => caches.match(request))
