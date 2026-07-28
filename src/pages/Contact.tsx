@@ -32,6 +32,35 @@ export default function Contact() {
         status: 'new',
         createdAt: new Date().toISOString(),
       });
+
+      // Send Instant Email Notification via Web3Forms API
+      const web3FormsKey = (import.meta as any).env?.VITE_WEB3FORMS_KEY;
+      if (web3FormsKey) {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: web3FormsKey,
+            subject: `New Inquiry from ${formData.name} - Dreweb`,
+            from_name: 'Dreweb Website',
+            name: formData.name,
+            email: formData.email,
+            mobile: formData.mobile || 'N/A',
+            company: formData.company || 'N/A',
+            service: formData.service || 'N/A',
+            budget: `${formData.currency} ${formData.budget || 'N/A'}`,
+            message: formData.message,
+          }),
+        });
+        const result = await response.json();
+        if (!result.success) {
+          console.warn('Web3Forms email delivery warning:', result.message);
+        }
+      }
+
       setSuccess(true);
       // Reset form including currency
       setFormData({ name: '', email: '', mobile: '', company: '', service: '', currency: '$', budget: '', message: '' });
