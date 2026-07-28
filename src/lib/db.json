@@ -520,6 +520,20 @@
       "createdAt": "2026-07-28T14:31:44.790Z",
       "id": "1785249104790",
       "updatedAt": "2026-07-28T14:31:44.790Z"
+    },
+    {
+      "name": "Nick Vaishnav",
+      "email": "nickvshnv@gmail.com",
+      "mobile": "6261029938",
+      "company": "dreweb",
+      "service": "web",
+      "currency": "$",
+      "budget": "33",
+      "message": "33",
+      "status": "new",
+      "createdAt": "2026-07-28T15:32:47.393Z",
+      "id": "1785252767393",
+      "updatedAt": "2026-07-28T15:32:47.393Z"
     }
   ],
   "settings_general": {
