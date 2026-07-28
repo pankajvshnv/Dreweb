@@ -36,30 +36,49 @@ export default function Contact() {
       // Send Instant Email Notification via Web3Forms API
       const web3FormsKey = (import.meta as any).env?.VITE_WEB3FORMS_KEY;
       if (web3FormsKey) {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: web3FormsKey,
-            subject: `New Inquiry from ${formData.name} - Dreweb`,
-            from_name: 'Dreweb Website',
-            name: formData.name,
-            email: formData.email,
-            mobile: formData.mobile || 'N/A',
-            company: formData.company || 'N/A',
-            service: formData.service || 'N/A',
-            budget: `${formData.currency} ${formData.budget || 'N/A'}`,
-            message: formData.message,
-          }),
-        });
-        const result = await response.json();
-        if (!result.success) {
-          console.warn('Web3Forms email delivery warning:', result.message);
+        try {
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              access_key: web3FormsKey,
+              subject: `New Inquiry from ${formData.name} - Dreweb`,
+              from_name: 'Dreweb Website',
+              name: formData.name,
+              email: formData.email,
+              mobile: formData.mobile || 'N/A',
+              company: formData.company || 'N/A',
+              service: formData.service || 'N/A',
+              budget: `${formData.currency} ${formData.budget || 'N/A'}`,
+              message: formData.message,
+            }),
+          });
+          const result = await response.json();
+          if (!result.success) {
+            console.warn('Web3Forms email delivery warning:', result.message);
+          }
+        } catch (err) {
+          console.error('Web3Forms error:', err);
         }
       }
+
+      // Redirect user to Gmail / Mail app with pre-filled message
+      const mailtoSubject = encodeURIComponent(`New Inquiry from ${formData.name} - Dreweb`);
+      const mailtoBody = encodeURIComponent(
+        `Name: ${formData.name}\n` +
+        `Email: ${formData.email}\n` +
+        `Mobile: ${formData.mobile || 'N/A'}\n` +
+        `Company: ${formData.company || 'N/A'}\n` +
+        `Service Needed: ${formData.service || 'N/A'}\n` +
+        `Estimated Budget: ${formData.currency} ${formData.budget || 'N/A'}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      
+      const mailtoUrl = `mailto:${BRAND.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+      window.location.href = mailtoUrl;
 
       setSuccess(true);
       // Reset form including currency
