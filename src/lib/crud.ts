@@ -1,31 +1,31 @@
-import { supabase, isSupabaseConfigured } from './supabase';
 import localforage from 'localforage';
 
 export function triggerLocalEvent() {
   window.dispatchEvent(new Event('local-storage-change'));
 }
 
+// ----------------------------------------------------
+// UPLOAD FILE API (Express VPS)
+// ----------------------------------------------------
 export async function uploadFile(path: string, file: File): Promise<string> {
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
 
-      const { error: uploadError } = await supabase.storage
-        .from('media')
-        .upload(filePath, file);
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
 
-      if (!uploadError) {
-        const { data } = supabase.storage.from('media').getPublicUrl(filePath);
-        return data.publicUrl;
-      }
-    } catch (e) {
-      console.warn('Supabase storage upload fallback to Base64:', e);
+    if (res.ok) {
+      const data = await res.json();
+      return data.url;
     }
+  } catch (e) {
+    console.warn('VPS upload API error, fallback to Base64:', e);
   }
 
-  // Fallback to compressed base64 if storage bucket is not configured
+  // Base64 Compression Fallback
   return new Promise((resolve, reject) => {
     if (!file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -68,9 +68,7 @@ export async function uploadFile(path: string, file: File): Promise<string> {
           resolve(event.target?.result as string);
         }
       };
-      img.onerror = () => {
-        resolve(event.target?.result as string);
-      };
+      img.onerror = () => resolve(event.target?.result as string);
       img.src = event.target?.result as string;
     };
     reader.onerror = error => reject(error);
@@ -79,35 +77,21 @@ export async function uploadFile(path: string, file: File): Promise<string> {
 }
 
 // ----------------------------------------------------
-// READ DATA (PostgreSQL Supabase Table / Fallback)
+// READ DATA (API Query)
 // ----------------------------------------------------
 export async function getLocalData(path: string) {
-  const cleanTable = path.replace('settings_', '');
-
-  if (isSupabaseConfigured && supabase) {
-    try {
-      if (path.startsWith('settings_')) {
-        const { data, error } = await supabase
-          .from('settings')
-          .select('data')
-          .eq('key', cleanTable)
-          .single();
-        
-        if (!error && data) return data.data;
-        return {};
-      }
-
-      const { data, error } = await supabase
-        .from(cleanTable)
-        .select('*');
-
-      if (!error && data) return data;
-    } catch (e) {
-      console.warn(`Supabase fetch failed for ${path}, falling back to local cache`, e);
+  try {
+    const res = await fetch(`/api/${path}`);
+    if (res.ok) {
+      const data = await res.json();
+      await localforage.setItem(path, data);
+      return data;
     }
+  } catch (e) {
+    console.warn(`API fetch failed for /api/${path}, reading from local cache:`, e);
   }
 
-  // Localforage / Local Storage Fallback
+  // Fallback to local cache
   let data: any = await localforage.getItem(path);
   if (!data) {
     const legacy = localStorage.getItem(path);
@@ -119,10 +103,9 @@ export async function getLocalData(path: string) {
 }
 
 // ----------------------------------------------------
-// CREATE DOCUMENT (PostgreSQL Supabase Table)
+// CREATE DOCUMENT (API Post)
 // ----------------------------------------------------
 export async function createDocument(path: string, data: any) {
-  const cleanTable = path;
   const id = data.id || Date.now().toString();
   const newItem = {
     ...data,
@@ -131,16 +114,16 @@ export async function createDocument(path: string, data: any) {
     updatedAt: new Date().toISOString(),
   };
 
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase.from(cleanTable).insert([newItem]);
-      if (error) console.error(`Supabase insert error on ${cleanTable}:`, error);
-    } catch (e) {
-      console.error(`Supabase createDocument exception:`, e);
-    }
+  try {
+    await fetch(`/api/${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newItem),
+    });
+  } catch (e) {
+    console.error(`API create error for /api/${path}:`, e);
   }
 
-  // Update local cache & notify subscribers
   const items = (await getLocalData(path)) || [];
   if (Array.isArray(items)) {
     items.push(newItem);
@@ -151,23 +134,19 @@ export async function createDocument(path: string, data: any) {
 }
 
 // ----------------------------------------------------
-// UPDATE DOCUMENT (PostgreSQL Supabase Table)
+// UPDATE DOCUMENT (API Post)
 // ----------------------------------------------------
 export async function updateDocument(path: string, id: string, data: any) {
-  const cleanTable = path;
-  const updateData = { ...data, updatedAt: new Date().toISOString() };
+  const updateData = { ...data, id, updatedAt: new Date().toISOString() };
 
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase
-        .from(cleanTable)
-        .update(updateData)
-        .eq('id', id);
-      
-      if (error) console.error(`Supabase update error on ${cleanTable}:`, error);
-    } catch (e) {
-      console.error(`Supabase updateDocument exception:`, e);
-    }
+  try {
+    await fetch(`/api/${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updateData),
+    });
+  } catch (e) {
+    console.error(`API update error for /api/${path}:`, e);
   }
 
   const items = (await getLocalData(path)) || [];
@@ -182,22 +161,15 @@ export async function updateDocument(path: string, id: string, data: any) {
 }
 
 // ----------------------------------------------------
-// DELETE DOCUMENT (PostgreSQL Supabase Table)
+// DELETE DOCUMENT (API Delete)
 // ----------------------------------------------------
 export async function deleteDocument(path: string, id: string) {
-  const cleanTable = path;
-
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase
-        .from(cleanTable)
-        .delete()
-        .eq('id', id);
-      
-      if (error) console.error(`Supabase delete error on ${cleanTable}:`, error);
-    } catch (e) {
-      console.error(`Supabase deleteDocument exception:`, e);
-    }
+  try {
+    await fetch(`/api/${path}/${id}`, {
+      method: 'DELETE',
+    });
+  } catch (e) {
+    console.error(`API delete error for /api/${path}/${id}:`, e);
   }
 
   let items = (await getLocalData(path)) || [];
@@ -217,7 +189,7 @@ export async function getDocument(path: string, id: string) {
 }
 
 // ----------------------------------------------------
-// SETTINGS (PostgreSQL Supabase Table)
+// SETTINGS
 // ----------------------------------------------------
 export async function getSettings(key: string) {
   return await getLocalData(`settings_${key}`);
@@ -227,16 +199,14 @@ export async function saveSettings(key: string, data: any) {
   const existing = await getSettings(key);
   const newSettings = { ...existing, ...data };
 
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase
-        .from('settings')
-        .upsert({ key, data: newSettings, updatedAt: new Date().toISOString() }, { onConflict: 'key' });
-      
-      if (error) console.error(`Supabase saveSettings error:`, error);
-    } catch (e) {
-      console.error(`Supabase saveSettings exception:`, e);
-    }
+  try {
+    await fetch(`/api/settings_${key}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newSettings),
+    });
+  } catch (e) {
+    console.error(`API saveSettings error for settings_${key}:`, e);
   }
 
   await localforage.setItem(`settings_${key}`, newSettings);
