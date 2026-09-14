@@ -1,0 +1,27 @@
+# ==========================================================
+# DREWEB - Caddy Web Server Configuration for VPS
+# Replace 'dreweb.online' with your domain
+# ==========================================================
+
+dreweb.online {
+    # 1. Reverse proxy all /api/* requests to Express.js backend on port 5000
+    handle /api/* {
+        reverse_proxy localhost:5000
+    }
+
+    # 2. Serve uploaded media files
+    handle /uploads/* {
+        root * /var/www/dreweb
+        file_server
+    }
+
+    # 3. Serve static React frontend build (dist/) with SPA fallback
+    handle {
+        root * /var/www/dreweb/dist
+        file_server
+        try_files {path} {path}/ /index.html
+    }
+
+    # 4. Enable Gzip/Zstd compression
+    encode gzip zstd
+}
