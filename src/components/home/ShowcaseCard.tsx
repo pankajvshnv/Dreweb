@@ -24,6 +24,7 @@ interface ShowcaseCardProps {
   mouseX: any;
   mouseY: any;
   index: number;
+  key?: any;
 }
 
 export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps) {
@@ -50,8 +51,8 @@ export function ShowcaseCard({ card, mouseX, mouseY, index }: ShowcaseCardProps)
   // Parallax based on global mouse position (giving depth)
   // Higher zIndex = foreground = moves more (parallaxDepth is higher)
   const parallaxDepth = card.zIndex * 0.8; 
-  const translateX = useTransform(springMouseX, v => v * parallaxDepth);
-  const translateY = useTransform(springMouseY, v => v * parallaxDepth);
+  const translateX = useTransform(springMouseX, (v: any) => Number(v) * parallaxDepth);
+  const translateY = useTransform(springMouseY, (v: any) => Number(v) * parallaxDepth);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

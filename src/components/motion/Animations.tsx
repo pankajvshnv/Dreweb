@@ -13,6 +13,7 @@ interface FadeInProps {
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
   distance?: number;
   once?: boolean;
+  key?: any;
 }
 
 export function FadeIn({ children, delay = 0, duration = 0.8, className = '', direction = 'up', distance = 40, once = false }: FadeInProps) {
@@ -48,6 +49,7 @@ interface ScaleInProps {
   children: ReactNode;
   delay?: number;
   className?: string;
+  key?: any;
 }
 
 export function ScaleIn({ children, delay = 0, className = '' }: ScaleInProps) {
@@ -76,6 +78,7 @@ interface StaggerProps {
   className?: string;
   stagger?: number;
   delay?: number;
+  key?: any;
 }
 
 export function StaggerContainer({ children, className = '', stagger = 0.1, delay = 0 }: StaggerProps) {
@@ -98,7 +101,7 @@ export function StaggerContainer({ children, className = '', stagger = 0.1, dela
   );
 }
 
-export function StaggerItem({ children, className = '' }: { children: ReactNode; className?: string }) {
+export function StaggerItem({ children, className = '', key }: { children: ReactNode; className?: string; key?: any }) {
   return (
     <motion.div
       variants={{
@@ -117,16 +120,18 @@ export function StaggerItem({ children, className = '' }: { children: ReactNode;
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 interface TextRevealProps {
-  children: string;
+  children: any;
   className?: string;
   delay?: number;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span';
+  key?: any;
 }
 
 export function TextReveal({ children, className = '', delay = 0, as: Tag = 'h2' }: TextRevealProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: '-60px' });
-  const words = children.split(' ');
+  const textContent = typeof children === 'string' ? children : Array.isArray(children) ? children.join(' ') : String(children || '');
+  const words = textContent.split(' ');
 
   return (
     <Tag ref={ref} className={className}>
@@ -417,7 +422,7 @@ export function MouseGradient({ className = '' }: { className?: string }) {
 // PAGE TRANSITION WRAPPER
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export function PageTransition({ children, className = '' }: { children: ReactNode; className?: string }) {
+export function PageTransition({ children, className = '', key }: { children: ReactNode; className?: string; key?: any }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
