@@ -26,7 +26,7 @@ export default function AdminMedia() {
 
     setIsUploading(true);
     try {
-      for (const file of Array.from(files)) {
+      for (const file of Array.from(files) as File[]) {
         const url = await uploadFile(`media/${file.name}`, file);
         
         const fileType = file.type.startsWith('image/') ? 'image' 
