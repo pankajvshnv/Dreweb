@@ -126,7 +126,12 @@ export async function createDocument(path: string, data: any) {
 
   const items = (await getLocalData(path)) || [];
   if (Array.isArray(items)) {
-    items.push(newItem);
+    const idx = items.findIndex((item: any) => item.id === id);
+    if (idx >= 0) {
+      items[idx] = newItem;
+    } else {
+      items.unshift(newItem);
+    }
     await localforage.setItem(path, items);
   }
   triggerLocalEvent();
