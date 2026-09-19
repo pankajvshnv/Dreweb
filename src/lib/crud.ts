@@ -186,6 +186,16 @@ export async function deleteDocument(path: string, id: string) {
 }
 
 export async function getDocument(path: string, id: string) {
+  try {
+    const res = await fetch(`/api/${path}/${id}`);
+    if (res.ok) {
+      const item = await res.json();
+      if (item && item.id) return item;
+    }
+  } catch (e) {
+    console.warn(`Direct fetch for /api/${path}/${id} failed, falling back to cache:`, e);
+  }
+
   const items = await getLocalData(path);
   if (Array.isArray(items)) {
     return items.find((item: any) => item.id === id) || null;

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, Search, ExternalLink, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, MoreHorizontal, Search, ExternalLink, ChevronUp, ChevronDown, Edit, Trash2 } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -110,7 +110,7 @@ export default function AdminProjects() {
                   <tr key={project.id} className="hover:bg-zinc-50/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex gap-4 items-center">
-                        <div className="w-12 h-12 rounded-lg bg-zinc-100 flex items-center justify-center font-display font-bold text-zinc-400 text-xs shrink-0 overflow-hidden">
+                        <Link to={`/admin/projects/${project.id}`} className="w-12 h-12 rounded-lg bg-zinc-100 flex items-center justify-center font-display font-bold text-zinc-400 text-xs shrink-0 overflow-hidden hover:opacity-80 transition-opacity">
                           {project.heroImage ? (
                             <img src={project.heroImage} alt="" className="w-full h-full object-cover rounded-lg" />
                           ) : (
@@ -118,9 +118,11 @@ export default function AdminProjects() {
                               IMG
                             </div>
                           )}
-                        </div>
+                        </Link>
                         <div>
-                          <p className="font-bold text-black">{project.title}</p>
+                          <Link to={`/admin/projects/${project.id}`} className="font-bold text-black hover:text-brand-blue transition-colors">
+                            {project.title}
+                          </Link>
                           <p className="text-zinc-500 text-xs">/{project.slug}</p>
                         </div>
                       </div>
@@ -134,32 +136,26 @@ export default function AdminProjects() {
                       </Badge>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-1.5">
                         {!searchQuery && (
-                          <div className="flex flex-col gap-1 mr-2">
-                            <button disabled={idx === 0} onClick={() => moveProject(idx, 'up')} className="text-zinc-400 hover:text-black disabled:opacity-30 cursor-pointer"><ChevronUp size={16}/></button>
-                            <button disabled={idx === filteredProjects.length - 1} onClick={() => moveProject(idx, 'down')} className="text-zinc-400 hover:text-black disabled:opacity-30 cursor-pointer"><ChevronDown size={16}/></button>
+                          <div className="flex items-center gap-0.5 mr-2">
+                            <button disabled={idx === 0} onClick={() => moveProject(idx, 'up')} className="p-1 text-zinc-400 hover:text-black disabled:opacity-20 cursor-pointer" title="Move Up"><ChevronUp size={15}/></button>
+                            <button disabled={idx === filteredProjects.length - 1} onClick={() => moveProject(idx, 'down')} className="p-1 text-zinc-400 hover:text-black disabled:opacity-20 cursor-pointer" title="Move Down"><ChevronDown size={15}/></button>
                           </div>
                         )}
-                        <DropdownMenu>
-                          <DropdownMenuTrigger className="inline-flex h-8 w-8 items-center justify-center p-0 border border-zinc-200 rounded-lg hover:bg-zinc-100 transition-colors cursor-pointer">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="rounded-xl border-zinc-200">
-                            <div className="px-2 py-1.5 text-sm font-semibold text-zinc-500">Actions</div>
-                            <DropdownMenuItem>
-                              <Link to={`/admin/projects/${project.id}`} className="w-full text-left">Edit Project</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <Link to={`/work/${project.slug}`} className="flex w-full items-center justify-between cursor-pointer">
-                                View Live <ExternalLink size={14} />
-                              </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setTimeout(() => handleDelete(project.id), 50); }} className="text-red-600 focus:bg-red-50 focus:text-red-700 font-semibold cursor-pointer">Delete</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Link to={`/admin/projects/${project.id}`}>
+                          <Button variant="outline" size="icon" className="w-8 h-8 rounded-lg border-zinc-200 hover:bg-zinc-100 text-zinc-700" title="Edit Project">
+                            <Edit size={14} />
+                          </Button>
+                        </Link>
+                        <a href={`/work/${project.slug}`} target="_blank" rel="noreferrer">
+                          <Button variant="outline" size="icon" className="w-8 h-8 rounded-lg border-zinc-200 hover:bg-zinc-100 text-zinc-700" title="View Live">
+                            <ExternalLink size={14} />
+                          </Button>
+                        </a>
+                        <Button onClick={() => handleDelete(project.id)} variant="outline" size="icon" className="w-8 h-8 rounded-lg border-zinc-200 hover:bg-red-50 hover:text-red-600 text-zinc-400 transition-colors" title="Delete Project">
+                          <Trash2 size={14} />
+                        </Button>
                       </div>
                     </td>
                   </tr>

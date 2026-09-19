@@ -15,7 +15,7 @@ import { useToast } from '../../lib/ToastContext';
 export default function AdminProjectEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isNew = !id;
+  const isNew = !id || id === 'new';
   const { addToast } = useToast();
   
   const [isPublishing, setIsPublishing] = useState(false);
@@ -49,7 +49,7 @@ export default function AdminProjectEdit() {
   });
 
   useEffect(() => {
-    if (!isNew) {
+    if (!isNew && id && id !== 'new') {
       // Fetch existing project
       const fetchProject = async () => {
         const data = await getDocument('projects', id as string);

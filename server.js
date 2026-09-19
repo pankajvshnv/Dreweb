@@ -96,6 +96,44 @@ const allowedTables = [
   'users'
 ];
 
+// Helper function to map database snake_case to frontend camelCase
+function mapRowToCamelCase(row) {
+  if (!row) return null;
+  const item = { ...row };
+  if (row.short_description !== undefined) item.shortDescription = row.short_description;
+  if (row.hero_image !== undefined) item.heroImage = row.hero_image;
+  if (row.hero_video !== undefined) item.heroVideo = row.hero_video;
+  if (row.is_featured !== undefined) item.isFeatured = row.is_featured;
+  if (row.is_public !== undefined) item.isPublic = row.is_public;
+  if (row.is_published !== undefined) item.isPublished = row.is_published;
+  if (row.is_active !== undefined) item.isActive = row.is_active;
+  if (row.display_order !== undefined) item.order = row.display_order;
+  if (row.cover_image !== undefined) item.coverImage = row.cover_image;
+  if (row.read_time !== undefined) item.readTime = row.read_time;
+  if (row.image_url !== undefined) item.imageUrl = row.image_url;
+  if (row.initial_x !== undefined) item.initialX = row.initial_x;
+  if (row.initial_y !== undefined) item.initialY = row.initial_y;
+  if (row.float_speed !== undefined) item.floatSpeed = row.float_speed;
+  if (row.z_index !== undefined) item.zIndex = row.z_index;
+  if (row.paypal_link !== undefined) item.paypalLink = row.paypal_link;
+  if (row.upi_qr_code !== undefined) item.upiQrCode = row.upi_qr_code;
+  if (row.upi_id !== undefined) item.upiId = row.upi_id;
+  if (row.access_link !== undefined) item.accessLink = row.access_link;
+  if (row.meta_title !== undefined) item.metaTitle = row.meta_title;
+  if (row.meta_desc !== undefined) item.metaDesc = row.meta_desc;
+  if (row.keywords !== undefined) item.keywords = row.keywords;
+  if (row.download_url !== undefined) item.downloadUrl = row.download_url;
+  if (row.live_demo_url !== undefined) item.liveDemoUrl = row.live_demo_url;
+  if (row.thumbnail_url !== undefined) item.thumbnailUrl = row.thumbnail_url;
+  if (row.avatar !== undefined) {
+    item.avatar = row.avatar;
+    item.authorImage = row.avatar;
+  }
+  if (row.created_at !== undefined) item.createdAt = row.created_at;
+  if (row.updated_at !== undefined) item.updatedAt = row.updated_at;
+  return item;
+}
+
 // GET ALL ITEMS
 app.get('/api/:collection', async (req, res) => {
   const { collection } = req.params;
@@ -116,33 +154,25 @@ app.get('/api/:collection', async (req, res) => {
 
   try {
     const result = await pool.query(`SELECT * FROM ${collection} ORDER BY created_at DESC`);
-    // Map camelCase for frontend compatibility
-    const items = result.rows.map(row => {
-      const item = { ...row };
-      if (row.short_description !== undefined) item.shortDescription = row.short_description;
-      if (row.hero_image !== undefined) item.heroImage = row.hero_image;
-      if (row.hero_video !== undefined) item.heroVideo = row.hero_video;
-      if (row.is_featured !== undefined) item.isFeatured = row.is_featured;
-      if (row.is_public !== undefined) item.isPublic = row.is_public;
-      if (row.is_published !== undefined) item.isPublished = row.is_published;
-      if (row.is_active !== undefined) item.isActive = row.is_active;
-      if (row.display_order !== undefined) item.order = row.display_order;
-      if (row.cover_image !== undefined) item.coverImage = row.cover_image;
-      if (row.read_time !== undefined) item.readTime = row.read_time;
-      if (row.image_url !== undefined) item.imageUrl = row.image_url;
-      if (row.initial_x !== undefined) item.initialX = row.initial_x;
-      if (row.initial_y !== undefined) item.initialY = row.initial_y;
-      if (row.float_speed !== undefined) item.floatSpeed = row.float_speed;
-      if (row.z_index !== undefined) item.zIndex = row.z_index;
-      if (row.paypal_link !== undefined) item.paypalLink = row.paypal_link;
-      if (row.upi_qr_code !== undefined) item.upiQrCode = row.upi_qr_code;
-      if (row.upi_id !== undefined) item.upiId = row.upi_id;
-      if (row.access_link !== undefined) item.accessLink = row.access_link;
-      if (row.created_at !== undefined) item.createdAt = row.created_at;
-      if (row.updated_at !== undefined) item.updatedAt = row.updated_at;
-      return item;
-    });
+    const items = result.rows.map(row => mapRowToCamelCase(row));
     res.json(items);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// GET SINGLE ITEM BY ID
+app.get('/api/:collection/:id', async (req, res) => {
+  const { collection, id } = req.params;
+  if (!allowedTables.includes(collection)) {
+    return res.status(400).json({ error: 'Invalid collection' });
+  }
+  try {
+    const result = await pool.query(`SELECT * FROM ${collection} WHERE id = $1`, [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    res.json(mapRowToCamelCase(result.rows[0]));
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -207,51 +237,71 @@ app.post('/api/:collection', async (req, res) => {
   // Projects
   if (collection === 'projects') {
     try {
-      await pool.query(
-        `INSERT INTO projects (id, title, slug, client, industry, year, duration, short_description, challenge, solution, technologies, link, github, hero_image, gallery, hero_video, is_featured, is_public, display_order, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, NOW(), NOW())
-         ON CONFLICT (id) DO UPDATE SET
-           title = EXCLUDED.title,
-           slug = EXCLUDED.slug,
-           client = EXCLUDED.client,
-           industry = EXCLUDED.industry,
-           year = EXCLUDED.year,
-           duration = EXCLUDED.duration,
-           short_description = EXCLUDED.short_description,
-           challenge = EXCLUDED.challenge,
-           solution = EXCLUDED.solution,
-           technologies = EXCLUDED.technologies,
-           link = EXCLUDED.link,
-           github = EXCLUDED.github,
-           hero_image = EXCLUDED.hero_image,
-           gallery = EXCLUDED.gallery,
-           hero_video = EXCLUDED.hero_video,
-           is_featured = EXCLUDED.is_featured,
-           is_public = EXCLUDED.is_public,
-           display_order = EXCLUDED.display_order,
-           updated_at = NOW()`,
-        [
-          id,
-          data.title || '',
-          data.slug || id,
-          data.client || '',
-          data.industry || '',
-          data.year || '',
-          data.duration || '',
-          data.shortDescription || data.short_description || '',
-          data.challenge || '',
-          data.solution || '',
-          JSON.stringify(data.technologies || []),
-          data.link || '',
-          data.github || '',
-          data.heroImage || data.hero_image || '',
-          JSON.stringify(data.gallery || []),
-          data.heroVideo || data.hero_video || '',
-          data.isFeatured !== undefined ? data.isFeatured : (data.is_featured || false),
-          data.isPublic !== undefined ? data.isPublic : (data.is_public !== false),
-          data.order !== undefined ? data.order : (data.display_order || 0),
-        ]
-      );
+      const existing = await pool.query('SELECT * FROM projects WHERE id = $1', [id]);
+      if (existing.rows.length > 0) {
+        const cur = existing.rows[0];
+        const title = data.title !== undefined ? data.title : cur.title;
+        const slug = data.slug !== undefined ? data.slug : cur.slug;
+        const client = data.client !== undefined ? data.client : cur.client;
+        const industry = data.industry !== undefined ? data.industry : cur.industry;
+        const year = data.year !== undefined ? data.year : cur.year;
+        const duration = data.duration !== undefined ? data.duration : cur.duration;
+        const shortDescription = data.shortDescription !== undefined ? data.shortDescription : (data.short_description !== undefined ? data.short_description : cur.short_description);
+        const challenge = data.challenge !== undefined ? data.challenge : cur.challenge;
+        const solution = data.solution !== undefined ? data.solution : cur.solution;
+        const technologies = data.technologies !== undefined ? JSON.stringify(data.technologies) : (typeof cur.technologies === 'string' ? cur.technologies : JSON.stringify(cur.technologies || []));
+        const link = data.link !== undefined ? data.link : cur.link;
+        const github = data.github !== undefined ? data.github : cur.github;
+        const heroImage = data.heroImage !== undefined ? data.heroImage : (data.hero_image !== undefined ? data.hero_image : cur.hero_image);
+        const gallery = data.gallery !== undefined ? JSON.stringify(data.gallery) : (typeof cur.gallery === 'string' ? cur.gallery : JSON.stringify(cur.gallery || []));
+        const heroVideo = data.heroVideo !== undefined ? data.heroVideo : (data.hero_video !== undefined ? data.hero_video : cur.hero_video);
+        const isFeatured = data.isFeatured !== undefined ? data.isFeatured : (data.is_featured !== undefined ? data.is_featured : cur.is_featured);
+        const isPublic = data.isPublic !== undefined ? data.isPublic : (data.is_public !== undefined ? data.is_public : cur.is_public);
+        const displayOrder = data.order !== undefined ? data.order : (data.display_order !== undefined ? data.display_order : cur.display_order);
+        const metaTitle = data.metaTitle !== undefined ? data.metaTitle : (data.meta_title !== undefined ? data.meta_title : cur.meta_title);
+        const metaDesc = data.metaDesc !== undefined ? data.metaDesc : (data.meta_desc !== undefined ? data.meta_desc : cur.meta_desc);
+        const keywords = data.keywords !== undefined ? data.keywords : cur.keywords;
+
+        await pool.query(
+          `UPDATE projects SET 
+             title = $2, slug = $3, client = $4, industry = $5, year = $6, duration = $7,
+             short_description = $8, challenge = $9, solution = $10, technologies = $11,
+             link = $12, github = $13, hero_image = $14, gallery = $15, hero_video = $16,
+             is_featured = $17, is_public = $18, display_order = $19, meta_title = $20,
+             meta_desc = $21, keywords = $22, updated_at = NOW()
+           WHERE id = $1`,
+          [id, title, slug, client, industry, year, duration, shortDescription, challenge, solution, technologies, link, github, heroImage, gallery, heroVideo, isFeatured, isPublic, displayOrder, metaTitle, metaDesc, keywords]
+        );
+      } else {
+        await pool.query(
+          `INSERT INTO projects (id, title, slug, client, industry, year, duration, short_description, challenge, solution, technologies, link, github, hero_image, gallery, hero_video, is_featured, is_public, display_order, meta_title, meta_desc, keywords, created_at, updated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, NOW(), NOW())`,
+          [
+            id,
+            data.title || '',
+            data.slug || id,
+            data.client || '',
+            data.industry || '',
+            data.year || '',
+            data.duration || '',
+            data.shortDescription || data.short_description || '',
+            data.challenge || '',
+            data.solution || '',
+            JSON.stringify(data.technologies || []),
+            data.link || '',
+            data.github || '',
+            data.heroImage || data.hero_image || '',
+            JSON.stringify(data.gallery || []),
+            data.heroVideo || data.hero_video || '',
+            data.isFeatured !== undefined ? data.isFeatured : (data.is_featured || false),
+            data.isPublic !== undefined ? data.isPublic : (data.is_public !== false),
+            data.order !== undefined ? data.order : (data.display_order || 0),
+            data.metaTitle || data.meta_title || '',
+            data.metaDesc || data.meta_desc || '',
+            data.keywords || '',
+          ]
+        );
+      }
       return res.json({ success: true, id });
     } catch (e) {
       return res.status(500).json({ error: e.message });
@@ -265,12 +315,12 @@ app.post('/api/:collection', async (req, res) => {
         `INSERT INTO services (id, title, slug, category, short_description, description, image, is_published, display_order, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-           title = EXCLUDED.title,
-           slug = EXCLUDED.slug,
-           category = EXCLUDED.category,
-           short_description = EXCLUDED.short_description,
-           description = EXCLUDED.description,
-           image = EXCLUDED.image,
+           title = CASE WHEN EXCLUDED.title <> '' THEN EXCLUDED.title ELSE services.title END,
+           slug = CASE WHEN EXCLUDED.slug <> '' THEN EXCLUDED.slug ELSE services.slug END,
+           category = CASE WHEN EXCLUDED.category <> '' THEN EXCLUDED.category ELSE services.category END,
+           short_description = CASE WHEN EXCLUDED.short_description <> '' THEN EXCLUDED.short_description ELSE services.short_description END,
+           description = CASE WHEN EXCLUDED.description <> '' THEN EXCLUDED.description ELSE services.description END,
+           image = CASE WHEN EXCLUDED.image <> '' THEN EXCLUDED.image ELSE services.image END,
            is_published = EXCLUDED.is_published,
            display_order = EXCLUDED.display_order,
            updated_at = NOW()`,
@@ -299,15 +349,15 @@ app.post('/api/:collection', async (req, res) => {
         `INSERT INTO pricing (id, name, headline, price, description, features, nots, is_featured, is_active, cta, display_order, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-           name = EXCLUDED.name,
-           headline = EXCLUDED.headline,
-           price = EXCLUDED.price,
-           description = EXCLUDED.description,
-           features = EXCLUDED.features,
-           nots = EXCLUDED.nots,
+           name = CASE WHEN EXCLUDED.name <> '' THEN EXCLUDED.name ELSE pricing.name END,
+           headline = CASE WHEN EXCLUDED.headline <> '' THEN EXCLUDED.headline ELSE pricing.headline END,
+           price = CASE WHEN EXCLUDED.price <> '' THEN EXCLUDED.price ELSE pricing.price END,
+           description = CASE WHEN EXCLUDED.description <> '' THEN EXCLUDED.description ELSE pricing.description END,
+           features = CASE WHEN EXCLUDED.features::text <> '[]' THEN EXCLUDED.features ELSE pricing.features END,
+           nots = CASE WHEN EXCLUDED.nots::text <> '[]' THEN EXCLUDED.nots ELSE pricing.nots END,
            is_featured = EXCLUDED.is_featured,
            is_active = EXCLUDED.is_active,
-           cta = EXCLUDED.cta,
+           cta = CASE WHEN EXCLUDED.cta <> '' THEN EXCLUDED.cta ELSE pricing.cta END,
            display_order = EXCLUDED.display_order,
            updated_at = NOW()`,
         [
@@ -337,14 +387,14 @@ app.post('/api/:collection', async (req, res) => {
         `INSERT INTO blog (id, title, slug, author, excerpt, content, cover_image, category, read_time, is_published, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-           title = EXCLUDED.title,
-           slug = EXCLUDED.slug,
-           author = EXCLUDED.author,
-           excerpt = EXCLUDED.excerpt,
-           content = EXCLUDED.content,
-           cover_image = EXCLUDED.cover_image,
-           category = EXCLUDED.category,
-           read_time = EXCLUDED.read_time,
+           title = CASE WHEN EXCLUDED.title <> '' THEN EXCLUDED.title ELSE blog.title END,
+           slug = CASE WHEN EXCLUDED.slug <> '' THEN EXCLUDED.slug ELSE blog.slug END,
+           author = CASE WHEN EXCLUDED.author <> '' THEN EXCLUDED.author ELSE blog.author END,
+           excerpt = CASE WHEN EXCLUDED.excerpt <> '' THEN EXCLUDED.excerpt ELSE blog.excerpt END,
+           content = CASE WHEN EXCLUDED.content <> '' THEN EXCLUDED.content ELSE blog.content END,
+           cover_image = CASE WHEN EXCLUDED.cover_image <> '' THEN EXCLUDED.cover_image ELSE blog.cover_image END,
+           category = CASE WHEN EXCLUDED.category <> '' THEN EXCLUDED.category ELSE blog.category END,
+           read_time = CASE WHEN EXCLUDED.read_time <> '' THEN EXCLUDED.read_time ELSE blog.read_time END,
            is_published = EXCLUDED.is_published,
            updated_at = NOW()`,
         [
@@ -373,11 +423,11 @@ app.post('/api/:collection', async (req, res) => {
         `INSERT INTO testimonials (id, author, role, company, quote, avatar, rating, is_published, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-           author = EXCLUDED.author,
-           role = EXCLUDED.role,
-           company = EXCLUDED.company,
-           quote = EXCLUDED.quote,
-           avatar = EXCLUDED.avatar,
+           author = CASE WHEN EXCLUDED.author <> '' THEN EXCLUDED.author ELSE testimonials.author END,
+           role = CASE WHEN EXCLUDED.role <> '' THEN EXCLUDED.role ELSE testimonials.role END,
+           company = CASE WHEN EXCLUDED.company <> '' THEN EXCLUDED.company ELSE testimonials.company END,
+           quote = CASE WHEN EXCLUDED.quote <> '' THEN EXCLUDED.quote ELSE testimonials.quote END,
+           avatar = CASE WHEN EXCLUDED.avatar <> '' THEN EXCLUDED.avatar ELSE testimonials.avatar END,
            rating = EXCLUDED.rating,
            is_published = EXCLUDED.is_published,
            updated_at = NOW()`,
@@ -387,7 +437,7 @@ app.post('/api/:collection', async (req, res) => {
           data.role || '',
           data.company || '',
           data.quote || '',
-          data.avatar || '',
+          data.avatar || data.authorImage || '',
           data.rating || 5,
           data.isPublished !== undefined ? data.isPublished : (data.is_published !== false),
         ]
@@ -451,16 +501,16 @@ app.post('/api/:collection', async (req, res) => {
         `INSERT INTO templates (id, title, category, price, currency, description, hero_image, paypal_link, upi_qr_code, upi_id, access_link, is_public, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-           title = EXCLUDED.title,
-           category = EXCLUDED.category,
-           price = EXCLUDED.price,
-           currency = EXCLUDED.currency,
-           description = EXCLUDED.description,
-           hero_image = EXCLUDED.hero_image,
-           paypal_link = EXCLUDED.paypal_link,
-           upi_qr_code = EXCLUDED.upi_qr_code,
-           upi_id = EXCLUDED.upi_id,
-           access_link = EXCLUDED.access_link,
+           title = CASE WHEN EXCLUDED.title <> '' THEN EXCLUDED.title ELSE templates.title END,
+           category = CASE WHEN EXCLUDED.category <> '' THEN EXCLUDED.category ELSE templates.category END,
+           price = CASE WHEN EXCLUDED.price <> '' THEN EXCLUDED.price ELSE templates.price END,
+           currency = CASE WHEN EXCLUDED.currency <> '' THEN EXCLUDED.currency ELSE templates.currency END,
+           description = CASE WHEN EXCLUDED.description <> '' THEN EXCLUDED.description ELSE templates.description END,
+           hero_image = CASE WHEN EXCLUDED.hero_image <> '' THEN EXCLUDED.hero_image ELSE templates.hero_image END,
+           paypal_link = CASE WHEN EXCLUDED.paypal_link <> '' THEN EXCLUDED.paypal_link ELSE templates.paypal_link END,
+           upi_qr_code = CASE WHEN EXCLUDED.upi_qr_code <> '' THEN EXCLUDED.upi_qr_code ELSE templates.upi_qr_code END,
+           upi_id = CASE WHEN EXCLUDED.upi_id <> '' THEN EXCLUDED.upi_id ELSE templates.upi_id END,
+           access_link = CASE WHEN EXCLUDED.access_link <> '' THEN EXCLUDED.access_link ELSE templates.access_link END,
            is_public = EXCLUDED.is_public,
            updated_at = NOW()`,
         [
