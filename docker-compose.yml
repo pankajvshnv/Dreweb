@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------
+  # 1. PostgreSQL Database Service
+  # ----------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: dreweb_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dreweb_secret_123}
+      POSTGRES_DB: ${POSTGRES_DB:-dreweb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Automatically initialize all 11 tables and default admin seed on first run
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-dreweb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------
+  # 2. Node.js Express API Backend
+  # ----------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: dreweb_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 5000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-dreweb_secret_123}@db:5432/${POSTGRES_DB:-dreweb}
+      DATABASE_SSL: "false"
+      VITE_WEB3FORMS_KEY: ${VITE_WEB3FORMS_KEY:-}
+    volumes:
+      - uploads_data:/app/uploads
+    ports:
+      - "5000:5000"
+
+  # ----------------------------------------------------
+  # 3. Nginx Web Server (Frontend + Reverse Proxy)
+  # ----------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: dreweb_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+    driver: local
+  uploads_data:
+    driver: local

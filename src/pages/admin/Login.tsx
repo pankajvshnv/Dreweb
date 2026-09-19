@@ -21,12 +21,27 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
     try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        signIn(data.user.email);
+        navigate('/admin/dashboard');
+        return;
+      }
+
       if (email === 'info@dreweb.online' && password === 'Macbook@123') {
         signIn(email);
         navigate('/admin/dashboard');
-      } else {
-        throw new Error('Invalid email or password');
+        return;
       }
+
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error || 'Invalid email or password');
     } catch (err: any) {
       setError(err.message || 'Failed to login');
       setIsLoading(false);

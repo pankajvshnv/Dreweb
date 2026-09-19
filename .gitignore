@@ -1,9 +1,25 @@
+# Dependencies
 node_modules/
-build/
+
+# Production Build
 dist/
+build/
 coverage/
-.DS_Store
-*.log
+
+# Environment Files
 .env*
 !.env.example
+
+# Uploads (Keep folder, ignore user-uploaded files)
+uploads/*
+!uploads/.gitkeep
+
+# System & Editor Clutter
+.DS_Store
+*.log
+*.code-workspace
+.idea/
+.vscode/
+
+# Cloud Providers
 .vercel
