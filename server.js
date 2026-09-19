@@ -175,15 +175,15 @@ app.post('/api/:collection', async (req, res) => {
         `INSERT INTO leads (id, name, email, mobile, company, service, currency, budget, message, status, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-           name = EXCLUDED.name,
-           email = EXCLUDED.email,
-           mobile = EXCLUDED.mobile,
-           company = EXCLUDED.company,
-           service = EXCLUDED.service,
-           currency = EXCLUDED.currency,
-           budget = EXCLUDED.budget,
-           message = EXCLUDED.message,
-           status = EXCLUDED.status,
+           name = CASE WHEN EXCLUDED.name <> '' THEN EXCLUDED.name ELSE leads.name END,
+           email = CASE WHEN EXCLUDED.email <> '' THEN EXCLUDED.email ELSE leads.email END,
+           mobile = CASE WHEN EXCLUDED.mobile <> '' THEN EXCLUDED.mobile ELSE leads.mobile END,
+           company = CASE WHEN EXCLUDED.company <> '' THEN EXCLUDED.company ELSE leads.company END,
+           service = CASE WHEN EXCLUDED.service <> '' THEN EXCLUDED.service ELSE leads.service END,
+           currency = CASE WHEN EXCLUDED.currency <> '' THEN EXCLUDED.currency ELSE leads.currency END,
+           budget = CASE WHEN EXCLUDED.budget <> '' THEN EXCLUDED.budget ELSE leads.budget END,
+           message = CASE WHEN EXCLUDED.message <> '' THEN EXCLUDED.message ELSE leads.message END,
+           status = CASE WHEN EXCLUDED.status <> '' THEN EXCLUDED.status ELSE leads.status END,
            updated_at = NOW()`,
         [
           id,
