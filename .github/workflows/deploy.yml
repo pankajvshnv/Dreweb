@@ -1,0 +1,37 @@
+name: Deploy CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          port: 22
+
+          script: |
+            set -e
+
+            echo "Connected to VPS successfully!"
+
+            cd /opt/dreweb/Dreweb
+
+            echo "Pulling latest code..."
+            git pull origin main
+
+            echo "Building and restarting Docker containers..."
+            docker compose up -d --build
+
+            echo "Checking container status..."
+            docker compose ps
+
+            echo "Deployment completed successfully!"
