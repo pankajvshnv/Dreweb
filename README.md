@@ -3,7 +3,6 @@
 [![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=flat&logo=react)](https://react.dev/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-6.2.3-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
-[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-Deployment-F38020?style=flat&logo=cloudflare)](https://pages.cloudflare.com/)
 
 **Dreweb** is a premium, state-of-the-art web design and software engineering agency portfolio. Built with visual excellence in mind, the platform delivers high-end aesthetics (sleek dark/light modes, curated HSL color systems, glassmorphism, responsive grids) coupled with buttery smooth performance and cutting-edge frontend features.
 
