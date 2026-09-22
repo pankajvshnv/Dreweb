@@ -38,7 +38,7 @@ export default function AdminBlog() {
     excerpt: '',
     tags: [] as string[],
     coverImage: '',
-    status: 'Draft',
+    isPublished: false,
     metaTitle: '',
     metaDesc: '',
     featuredImagePrompt: '',
@@ -48,7 +48,7 @@ export default function AdminBlog() {
     setCurrentPost(null);
     setFormData({
       title: '', slug: '', author: '', category: 'Engineering', content: '',
-      excerpt: '', tags: [], coverImage: '', status: 'Draft', metaTitle: '', metaDesc: '', featuredImagePrompt: '',
+      excerpt: '', tags: [], coverImage: '', isPublished: false, metaTitle: '', metaDesc: '', featuredImagePrompt: '',
     });
     setIsEditing(true);
   };
@@ -64,7 +64,7 @@ export default function AdminBlog() {
       excerpt: post.excerpt || '',
       tags: post.tags || [],
       coverImage: post.coverImage || '',
-      status: post.status || 'Draft',
+      isPublished: post.isPublished || false,
       metaTitle: post.metaTitle || '',
       metaDesc: post.metaDesc || '',
       featuredImagePrompt: post.featuredImagePrompt || post.featured_image_prompt || '',
@@ -105,7 +105,7 @@ export default function AdminBlog() {
 
     setIsSaving(true);
     const dataToSave = { ...formData };
-    if (publishNow) dataToSave.status = 'Published';
+    if (publishNow) dataToSave.isPublished = true;
 
     try {
       if (currentPost?.id) {
@@ -133,7 +133,9 @@ export default function AdminBlog() {
   const filteredPosts = posts.filter((p: any) => {
     const matchesSearch = p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.category?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || p.status?.toLowerCase() === statusFilter.toLowerCase();
+    const matchesStatus = statusFilter === 'all' || 
+      (statusFilter === 'published' && p.isPublished) || 
+      (statusFilter === 'draft' && !p.isPublished);
     return matchesSearch && matchesStatus;
   });
 
@@ -325,8 +327,8 @@ export default function AdminBlog() {
                       <p className="text-zinc-500 text-xs">{post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Unknown'}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <Badge className={post.status === 'Published' ? "bg-brand-lime text-black px-2 py-0.5" : "bg-zinc-100 text-zinc-600 px-2 py-0.5"}>
-                        {post.status || 'Draft'}
+                      <Badge className={post.isPublished ? "bg-brand-lime text-black px-2 py-0.5" : "bg-zinc-100 text-zinc-600 px-2 py-0.5"}>
+                        {post.isPublished ? 'Published' : 'Draft'}
                       </Badge>
                     </td>
                     <td className="px-6 py-4 text-right">
