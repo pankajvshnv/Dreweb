@@ -114,6 +114,7 @@ function mapRowToCamelCase(row) {
   if (row.initial_x !== undefined) item.initialX = row.initial_x;
   if (row.initial_y !== undefined) item.initialY = row.initial_y;
   if (row.float_speed !== undefined) item.floatSpeed = row.float_speed;
+  if (row.featured_image_prompt !== undefined) item.featuredImagePrompt = row.featured_image_prompt;
   if (row.z_index !== undefined) item.zIndex = row.z_index;
   if (row.paypal_link !== undefined) item.paypalLink = row.paypal_link;
   if (row.upi_qr_code !== undefined) item.upiQrCode = row.upi_qr_code;
@@ -168,7 +169,11 @@ app.get('/api/:collection/:id', async (req, res) => {
     return res.status(400).json({ error: 'Invalid collection' });
   }
   try {
-    const result = await pool.query(`SELECT * FROM ${collection} WHERE id = $1`, [id]);
+    let query = `SELECT * FROM ${collection} WHERE id = $1`;
+    if (collection === 'blog') {
+      query = `SELECT * FROM ${collection} WHERE id = $1 OR slug = $1`;
+    }
+    const result = await pool.query(query, [id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Item not found' });
     }
