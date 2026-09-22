@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, MoreHorizontal, Search, ArrowLeft, Save, Edit2, X as XIcon } from 'lucide-react';
+import { Plus, MoreHorizontal, Search, ArrowLeft, Save, Edit2, X as XIcon, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu"
 import { useCollection } from '../../lib/useCollection';
-import { createDocument, updateDocument, deleteDocument } from '../../lib/crud';
+import { createDocument, updateDocument, deleteDocument, uploadFile } from '../../lib/crud';
 import { useToast } from '../../lib/ToastContext';
 
 export default function AdminBlog() {
@@ -28,6 +28,7 @@ export default function AdminBlog() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [isSaving, setIsSaving] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const [formData, setFormData] = useState<any>({
     title: '',
@@ -91,6 +92,22 @@ export default function AdminBlog() {
 
   const removeTag = (tag: string) => {
     setFormData((prev: any) => ({ ...prev, tags: prev.tags.filter((t: string) => t !== tag) }));
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const url = await uploadFile('media', file);
+      setFormData((prev: any) => ({ ...prev, coverImage: url }));
+      addToast('Image uploaded successfully', 'success');
+    } catch (error) {
+      addToast('Failed to upload image', 'error');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSave = async (publishNow = false) => {
@@ -229,8 +246,17 @@ export default function AdminBlog() {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="coverImage" className="font-bold">Cover Image URL</Label>
-                    <Input id="coverImage" value={formData.coverImage} onChange={handleChange} placeholder="https://..." className="border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white transition-colors" />
+                    <Label htmlFor="coverImage" className="font-bold">Cover Image</Label>
+                    <div className="flex gap-2">
+                      <Input id="coverImage" value={formData.coverImage} onChange={handleChange} placeholder="Image URL or upload..." className="border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white transition-colors flex-1" />
+                      <Label htmlFor="image-upload" className={`flex items-center justify-center px-4 rounded-xl border border-zinc-200 cursor-pointer hover:bg-zinc-100 transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        {isUploading ? <div className="w-4 h-4 border-2 border-zinc-300 border-t-black rounded-full animate-spin" /> : <Upload size={16} />}
+                      </Label>
+                      <input id="image-upload" type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={isUploading} />
+                    </div>
+                    {formData.coverImage && (
+                      <img src={formData.coverImage} alt="Cover preview" className="h-32 w-full object-cover rounded-xl mt-2 border border-zinc-200" />
+                    )}
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="featuredImagePrompt" className="font-bold text-brand-blue">AI Featured Image Prompt</Label>
