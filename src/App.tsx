@@ -18,6 +18,8 @@ const Pricing = lazy(() => import('./pages/Pricing'));
 const Templates = lazy(() => import('./pages/Templates'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const LocalLanding = lazy(() => import('./pages/LocalLanding'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Lazy loaded admin pages
@@ -101,6 +103,8 @@ export default function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
             </Route>
 
             {/* Admin Routes */}
