@@ -384,8 +384,8 @@ app.post('/api/:collection', async (req, res) => {
   if (collection === 'blog') {
     try {
       await pool.query(
-        `INSERT INTO blog (id, title, slug, author, excerpt, content, cover_image, category, read_time, is_published, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
+        `INSERT INTO blog (id, title, slug, author, excerpt, content, cover_image, category, read_time, featured_image_prompt, is_published, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
            title = CASE WHEN EXCLUDED.title <> '' THEN EXCLUDED.title ELSE blog.title END,
            slug = CASE WHEN EXCLUDED.slug <> '' THEN EXCLUDED.slug ELSE blog.slug END,
@@ -395,6 +395,7 @@ app.post('/api/:collection', async (req, res) => {
            cover_image = CASE WHEN EXCLUDED.cover_image <> '' THEN EXCLUDED.cover_image ELSE blog.cover_image END,
            category = CASE WHEN EXCLUDED.category <> '' THEN EXCLUDED.category ELSE blog.category END,
            read_time = CASE WHEN EXCLUDED.read_time <> '' THEN EXCLUDED.read_time ELSE blog.read_time END,
+           featured_image_prompt = CASE WHEN EXCLUDED.featured_image_prompt <> '' THEN EXCLUDED.featured_image_prompt ELSE blog.featured_image_prompt END,
            is_published = EXCLUDED.is_published,
            updated_at = NOW()`,
         [
@@ -407,6 +408,7 @@ app.post('/api/:collection', async (req, res) => {
           data.coverImage || data.cover_image || '',
           data.category || '',
           data.readTime || data.read_time || '',
+          data.featuredImagePrompt || data.featured_image_prompt || '',
           data.isPublished !== undefined ? data.isPublished : (data.is_published !== false),
         ]
       );
