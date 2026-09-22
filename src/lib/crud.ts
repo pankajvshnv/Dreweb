@@ -169,12 +169,12 @@ export async function updateDocument(path: string, id: string, data: any) {
 // DELETE DOCUMENT (API Delete)
 // ----------------------------------------------------
 export async function deleteDocument(path: string, id: string) {
-  try {
-    await fetch(`/api/${path}/${id}`, {
-      method: 'DELETE',
-    });
-  } catch (e) {
-    console.error(`API delete error for /api/${path}/${id}:`, e);
+  const res = await fetch(`/api/${path}/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || `Failed to delete ${id}`);
   }
 
   let items = (await getLocalData(path)) || [];

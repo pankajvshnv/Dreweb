@@ -125,8 +125,12 @@ export default function AdminBlog() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this post?')) {
-      await deleteDocument('blog', id);
-      addToast('Post deleted', 'success');
+      try {
+        await deleteDocument('blog', id);
+        addToast('Post deleted', 'success');
+      } catch (e: any) {
+        addToast(e.message || 'Failed to delete post', 'error');
+      }
     }
   };
 
