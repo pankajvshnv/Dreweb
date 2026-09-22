@@ -26,11 +26,17 @@ const pool = new Pool({
   ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
-pool.connect((err, client, release) => {
+pool.connect(async (err, client, release) => {
   if (err) {
     console.error('⚠️ PostgreSQL Connection Failed:', err.stack);
   } else {
     console.log('✅ Connected to PostgreSQL Database successfully!');
+    try {
+      await client.query('ALTER TABLE blog ADD COLUMN IF NOT EXISTS featured_image_prompt TEXT;');
+      console.log('✅ Database migration successful: ensured featured_image_prompt exists.');
+    } catch (e) {
+      console.error('⚠️ Database migration failed:', e.message);
+    }
     release();
   }
 });
