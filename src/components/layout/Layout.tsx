@@ -21,12 +21,8 @@ export default function Layout({ children }: LayoutProps) {
       {!loaded && <Loader onComplete={handleComplete} />}
 
       <Navbar />
-      <AnimatePresence mode="wait">
-        <PageTransition key={location.pathname}>
-          <main className="flex-grow pt-24">{children}</main>
-          <Footer />
-        </PageTransition>
-      </AnimatePresence>
+      <main className="flex-grow pt-24">{children}</main>
+      <Footer />
     </div>
   );
 }

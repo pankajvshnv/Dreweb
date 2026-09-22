@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
-import Lenis from 'lenis';
 import { AuthProvider } from './lib/AuthContext';
 import { ToastProvider } from './lib/ToastContext';
 
@@ -43,41 +42,12 @@ const AdminTestimonials = lazy(() => import('./pages/admin/Testimonials'));
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
-    if ((window as any).lenis) {
-      (window as any).lenis.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
   }, [pathname]);
   return null;
 }
 
 export default function App() {
-  // Initialize Lenis for smooth scrolling
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-    
-    (window as any).lenis = lenis;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-      delete (window as any).lenis;
-    };
-  }, []);
 
   return (
     <ToastProvider>
