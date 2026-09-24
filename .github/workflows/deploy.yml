@@ -26,7 +26,10 @@ jobs:
             cd /opt/dreweb/Dreweb
 
             echo "Pulling latest code..."
-            git pull origin main
+            git fetch --prune origin main
+            git reset --hard origin/main
+            git clean -fd
+
 
             echo "Building and restarting Docker containers..."
             docker compose up -d --build
