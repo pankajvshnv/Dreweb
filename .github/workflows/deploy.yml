@@ -30,11 +30,14 @@ jobs:
             git reset --hard origin/main
             git clean -fd
 
-            echo "Stopping existing containers..."
-            docker compose down --remove-orphans || true
+            echo "Stopping ALL docker containers to free ports..."
+            docker ps -q | xargs -r docker stop || true
+            docker ps -aq | xargs -r docker rm -f || true
 
             echo "Killing any process using port 80..."
-            fuser -k 80/tcp || true
+            sudo fuser -k 80/tcp || true
+            sudo systemctl stop nginx || true
+            sleep 2
 
             echo "Building and restarting Docker containers..."
             docker compose up -d --build
