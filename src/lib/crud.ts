@@ -1,8 +1,5 @@
 import localforage from 'localforage';
-
-export function triggerLocalEvent() {
-  window.dispatchEvent(new Event('local-storage-change'));
-}
+import { triggerCollectionRefresh } from './useCollection';
 
 // ----------------------------------------------------
 // UPLOAD FILE API (Express VPS)
@@ -114,27 +111,16 @@ export async function createDocument(path: string, data: any) {
     updatedAt: new Date().toISOString(),
   };
 
-  try {
-    await fetch(`/api/${path}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newItem),
-    });
-  } catch (e) {
-    console.error(`API create error for /api/${path}:`, e);
+  const res = await fetch(`/api/${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newItem),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to create document');
   }
-
-  const items = (await getLocalData(path)) || [];
-  if (Array.isArray(items)) {
-    const idx = items.findIndex((item: any) => item.id === id);
-    if (idx >= 0) {
-      items[idx] = newItem;
-    } else {
-      items.unshift(newItem);
-    }
-    await localforage.setItem(path, items);
-  }
-  triggerLocalEvent();
+  triggerCollectionRefresh();
   return id;
 }
 
@@ -144,25 +130,16 @@ export async function createDocument(path: string, data: any) {
 export async function updateDocument(path: string, id: string, data: any) {
   const updateData = { ...data, id, updatedAt: new Date().toISOString() };
 
-  try {
-    await fetch(`/api/${path}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updateData),
-    });
-  } catch (e) {
-    console.error(`API update error for /api/${path}:`, e);
+  const res = await fetch(`/api/${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updateData),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to update document');
   }
-
-  const items = (await getLocalData(path)) || [];
-  if (Array.isArray(items)) {
-    const index = items.findIndex((item: any) => item.id === id);
-    if (index > -1) {
-      items[index] = { ...items[index], ...updateData };
-      await localforage.setItem(path, items);
-    }
-  }
-  triggerLocalEvent();
+  triggerCollectionRefresh();
 }
 
 // ----------------------------------------------------
@@ -176,13 +153,7 @@ export async function deleteDocument(path: string, id: string) {
     const errorData = await res.json().catch(() => ({}));
     throw new Error(errorData.error || `Failed to delete ${id}`);
   }
-
-  let items = (await getLocalData(path)) || [];
-  if (Array.isArray(items)) {
-    items = items.filter((item: any) => item.id !== id);
-    await localforage.setItem(path, items);
-  }
-  triggerLocalEvent();
+  triggerCollectionRefresh();
 }
 
 export async function getDocument(path: string, id: string) {

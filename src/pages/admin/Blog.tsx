@@ -100,8 +100,13 @@ export default function AdminBlog() {
 
     setIsUploading(true);
     try {
-      const url = await uploadFile('media', file);
-      setFormData((prev: any) => ({ ...prev, coverImage: url }));
+      const formDataObj = new FormData();
+      formDataObj.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: formDataObj });
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      const imageUrl = data.url.startsWith('http') ? data.url : `${window.location.origin}${data.url}`;
+      setFormData((prev: any) => ({ ...prev, coverImage: imageUrl }));
       addToast('Image uploaded successfully', 'success');
     } catch (error) {
       addToast('Failed to upload image', 'error');
