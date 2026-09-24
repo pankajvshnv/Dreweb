@@ -25,15 +25,16 @@ jobs:
 
             cd /opt/dreweb/Dreweb
 
-            echo "Pulling latest code..."
+            echo "Synchronizing with origin/main..."
             git fetch --prune origin main
             git reset --hard origin/main
             git clean -fd
 
+            echo "Stopping existing containers..."
+            docker compose down --remove-orphans || true
 
-
-            echo "Stopping existing containers to free ports..."
-            docker compose down
+            echo "Killing any process using port 80..."
+            fuser -k 80/tcp || true
 
             echo "Building and restarting Docker containers..."
             docker compose up -d --build
