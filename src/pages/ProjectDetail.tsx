@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, ArrowUpRight, Play } from 'lucide-react';
 import { useDocumentBySlug } from '../lib/useDocument';
 import NotFound from './NotFound';
@@ -21,6 +22,16 @@ export default function ProjectDetail() {
 
   return (
     <div className="w-full bg-white pb-24">
+      <Helmet>
+        <title>{project.title} — Dreweb Portfolio</title>
+        <meta name="description" content={project.shortDescription || project.description || `${project.title} — A project by Dreweb, a modern web design and development agency.`} />
+        <link rel="canonical" href={`https://dreweb.online/work/${slug}`} />
+        <meta property="og:title" content={`${project.title} — Dreweb Portfolio`} />
+        <meta property="og:description" content={project.shortDescription || project.description || ''} />
+        {(project.heroImage || project.thumbnailUrl) && <meta property="og:image" content={project.heroImage || project.thumbnailUrl} />}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://dreweb.online/work/${slug}`} />
+      </Helmet>
       {/* Hero */}
       <section className="pt-24 pb-16 px-6 lg:px-8 max-w-7xl mx-auto">
         <FadeIn>
