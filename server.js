@@ -86,6 +86,8 @@ app.post('/api/auth/login', async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
 // Helper to escape XML special characters
 function escapeXml(unsafe) {
   if (!unsafe) return '';
