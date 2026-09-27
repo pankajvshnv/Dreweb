@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+# Prevent concurrent deployments — cancel any in-progress run when a new one starts
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,11 +35,11 @@ jobs:
             git reset --hard origin/main
             git clean -fd
 
-            echo "Building new images and performing rolling update..."
-            docker compose build --no-cache
+            echo "Building and deploying (containers stay alive during build)..."
+            docker compose build
 
-            echo "Restarting containers with new images (keeps port 80 alive during deploy)..."
-            docker compose up -d --force-recreate --no-deps backend frontend
+            echo "Applying updates (replaces only changed containers, no downtime)..."
+            docker compose up -d
 
             echo "Checking container status..."
             docker compose ps
