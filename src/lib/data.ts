@@ -28,14 +28,12 @@ export const PROJECTS = [
   { slug: "ad-global-impex", title: "AD Global Impex", industry: "Manufacturing", year: "2024", link: "https://adglobalimpex.com" },
   { slug: "career-pilot-hr", title: "Career Pilot HR", industry: "Human Resources", year: "2023", link: "https://careerpilot.hr" },
   { slug: "shri-ram-healthcares", title: "Shri Ram Healthcares", industry: "Healthcare", year: "2023", link: "https://shriramhealthcares.com" },
-  { slug: "fusiontech-research", title: "Fusiontech Research", industry: "Technology", year: "2024", link: "https://fusiontechresearch.com" },
   { slug: "ecommerce-brand", title: "E-commerce Brand Platform", industry: "Retail", year: "2024", link: "https://ecommerce-brand.com" },
   { slug: "saas-dashboard", title: "SaaS Analytics Dashboard", industry: "Software", year: "2023", link: "https://saas-dashboard.com" }
 ];
 
 export const TESTIMONIALS = [
   { quote: "dreweb transformed our digital presence entirely. Their design is world-class.", author: "Founder, AD Global Impex" },
-  { quote: "The best tech agency we have worked with. Delivered our SaaS platform 2 weeks early.", author: "CTO, Fusiontech Research" },
   { quote: "Our conversion rate doubled after the redesign by dreweb. Absolutely incredible team.", author: "Director, Career Pilot HR" }
 ];
 
