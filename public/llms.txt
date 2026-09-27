@@ -1,0 +1,34 @@
+# Dreweb — Digital Agency & Software Engineering
+
+> Premium Web Design, Full-Stack SaaS Engineering, UI/UX Design, and AI Automation Agency.
+
+## Overview
+Dreweb (https://dreweb.online) is a full-service digital agency and software engineering consultancy. We specialize in building high-converting websites, scalable custom web applications, SaaS platforms, and enterprise AI workflow automation.
+
+## Core Capabilities & Services
+- **Web & App Development**: Custom websites, SaaS applications, e-commerce stores, and high-performance React/Node.js/PostgreSQL platforms.
+- **UI/UX Design & Prototyping**: Modern, conversion-focused design systems with fluid micro-interactions, bento grid layouts, and mobile-first architecture.
+- **AI Automation & Agents**: Custom AI agent workflows, CRM integrations, and intelligent automation systems to eliminate repetitive operations.
+- **SEO & Growth Optimization**: Technical SEO, structured data markup, performance engineering, and conversion rate optimization (CRO).
+- **Brand Identity**: Logo design, typography systems, and cohesive digital design languages.
+
+## Key Links & Resources
+- **Homepage**: https://dreweb.online/
+- **Portfolio & Case Studies**: https://dreweb.online/work
+- **Services Directory**: https://dreweb.online/services
+- **Engineering & Insights Blog**: https://dreweb.online/blog
+- **Pricing & Packages**: https://dreweb.online/pricing
+- **Contact & Inquiry**: https://dreweb.online/contact
+
+## Published Insights & Technical Articles
+- [AI for Business Growth: A Practical Guide](https://dreweb.online/blog/ai-for-business-growth-a-practical-guide-dreweb): Framework for implementing AI in business workflows.
+- [Predictive AI CRM: Proactive Customer Engagement](https://dreweb.online/blog/predictive-ai-crm-proactive-customer-engagement): Architectural benefits of predictive lead scoring and CRM automation.
+- [Revolutionizing Revenue: AI Agents in the Sales Cycle](https://dreweb.online/blog/revolutionizing-revenue-how-ai-agents-are-transforming-the-sales-cycle-with-intelligent-automation): Automating multi-stage sales funnels.
+- [Custom AI vs. Off-the-Shelf APIs](https://dreweb.online/blog/custom-ai-vs-off-the-shelf-apis-strategic-decision): Evaluating engineering costs, data privacy, and ROI for enterprise AI.
+- [What Is Jev by TypeSafe? AI System One Explained](https://dreweb.online/blog/what-is-jev-by-typesafe-ai-typesafe-one): Deep dive into TypeSafe AI system architecture.
+
+## Contact Information
+- **Website**: https://dreweb.online
+- **Inquiry Form**: https://dreweb.online/contact
+- **Sitemap**: https://dreweb.online/sitemap.xml
+- **RSS Feed**: https://dreweb.online/rss.xml

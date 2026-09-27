@@ -86,7 +86,142 @@ app.post('/api/auth/login', async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+// Helper to escape XML special characters
+function escapeXml(unsafe) {
+  if (!unsafe) return '';
+  return String(unsafe).replace(/[<>&'"]/g, (c) => {
+    switch (c) {
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '&': return '&amp;';
+      case '\'': return '&apos;';
+      case '"': return '&quot;';
+      default: return c;
+    }
+  });
+}
+
+// ----------------------------------------------------
+// DYNAMIC XML SITEMAP (Automatically updates with DB)
+// ----------------------------------------------------
+app.get(['/api/sitemap.xml', '/sitemap.xml'], async (req, res) => {
+  try {
+    const baseUrl = 'https://dreweb.online';
+    const now = new Date().toISOString().split('T')[0];
+
+    const corePages = [
+      { loc: `${baseUrl}/`, changefreq: 'weekly', priority: '1.0', lastmod: now },
+      { loc: `${baseUrl}/services`, changefreq: 'weekly', priority: '0.9', lastmod: now },
+      { loc: `${baseUrl}/work`, changefreq: 'weekly', priority: '0.9', lastmod: now },
+      { loc: `${baseUrl}/templates`, changefreq: 'weekly', priority: '0.8', lastmod: now },
+      { loc: `${baseUrl}/blog`, changefreq: 'daily', priority: '0.9', lastmod: now },
+      { loc: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8', lastmod: now },
+      { loc: `${baseUrl}/pricing`, changefreq: 'monthly', priority: '0.8', lastmod: now },
+      { loc: `${baseUrl}/contact`, changefreq: 'yearly', priority: '0.8', lastmod: now },
+    ];
+
+    const [blogRes, projectsRes, servicesRes] = await Promise.all([
+      pool.query("SELECT slug, updated_at, created_at FROM blog WHERE is_published = true ORDER BY created_at DESC"),
+      pool.query("SELECT slug, updated_at, created_at FROM projects WHERE is_public = true ORDER BY created_at DESC"),
+      pool.query("SELECT slug, updated_at, created_at FROM services WHERE is_published = true ORDER BY display_order ASC"),
+    ]);
+
+    const blogPages = (blogRes.rows || []).filter(r => r.slug).map(r => ({
+      loc: `${baseUrl}/blog/${escapeXml(r.slug)}`,
+      lastmod: (r.updated_at || r.created_at ? new Date(r.updated_at || r.created_at).toISOString().split('T')[0] : now),
+      changefreq: 'weekly',
+      priority: '0.8'
+    }));
+
+    const projectPages = (projectsRes.rows || []).filter(r => r.slug).map(r => ({
+      loc: `${baseUrl}/work/${escapeXml(r.slug)}`,
+      lastmod: (r.updated_at || r.created_at ? new Date(r.updated_at || r.created_at).toISOString().split('T')[0] : now),
+      changefreq: 'monthly',
+      priority: '0.8'
+    }));
+
+    const servicePages = (servicesRes.rows || []).filter(r => r.slug).map(r => ({
+      loc: `${baseUrl}/services/${escapeXml(r.slug)}`,
+      lastmod: (r.updated_at || r.created_at ? new Date(r.updated_at || r.created_at).toISOString().split('T')[0] : now),
+      changefreq: 'monthly',
+      priority: '0.8'
+    }));
+
+    const allPages = [...corePages, ...servicePages, ...projectPages, ...blogPages];
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n`;
+    xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+    for (const page of allPages) {
+      xml += `  <url>\n`;
+      xml += `    <loc>${page.loc}</loc>\n`;
+      xml += `    <lastmod>${page.lastmod}</lastmod>\n`;
+      xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
+      xml += `    <priority>${page.priority}</priority>\n`;
+      xml += `  </url>\n`;
+    }
+
+    xml += `</urlset>`;
+
+    res.header('Content-Type', 'application/xml; charset=utf-8');
+    res.header('Cache-Control', 'public, max-age=3600');
+    return res.send(xml);
+  } catch (e) {
+    console.error('Error generating dynamic sitemap:', e);
+    return res.status(500).send('Error generating sitemap');
+  }
 });
+
+// ----------------------------------------------------
+// DYNAMIC RSS FEED (Fast indexing for Search & AI)
+// ----------------------------------------------------
+app.get(['/api/rss.xml', '/rss.xml', '/feed.xml'], async (req, res) => {
+  try {
+    const baseUrl = 'https://dreweb.online';
+    const result = await pool.query(
+      "SELECT title, slug, excerpt, author, created_at FROM blog WHERE is_published = true ORDER BY created_at DESC LIMIT 50"
+    );
+
+    let rss = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    rss += `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n`;
+    rss += `  <channel>\n`;
+    rss += `    <title>Dreweb Insights &amp; Engineering Blog</title>\n`;
+    rss += `    <link>${baseUrl}/blog</link>\n`;
+    rss += `    <description>Modern web development, AI automation, high-converting UI/UX architecture, and growth strategies by Dreweb.</description>\n`;
+    rss += `    <language>en-us</language>\n`;
+    rss += `    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n`;
+    rss += `    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />\n`;
+
+    for (const post of result.rows) {
+      const postUrl = `${baseUrl}/blog/${escapeXml(post.slug)}`;
+      const pubDate = new Date(post.created_at || Date.now()).toUTCString();
+      const description = escapeXml(post.excerpt || post.title);
+
+      rss += `    <item>\n`;
+      rss += `      <title>${escapeXml(post.title)}</title>\n`;
+      rss += `      <link>${postUrl}</link>\n`;
+      rss += `      <guid isPermaLink="true">${postUrl}</guid>\n`;
+      rss += `      <pubDate>${pubDate}</pubDate>\n`;
+      rss += `      <description>${description}</description>\n`;
+      if (post.author) {
+        rss += `      <author>${escapeXml(post.author)}</author>\n`;
+      }
+      rss += `    </item>\n`;
+    }
+
+    rss += `  </channel>\n`;
+    rss += `</rss>`;
+
+    res.header('Content-Type', 'application/rss+xml; charset=utf-8');
+    res.header('Cache-Control', 'public, max-age=3600');
+    return res.send(rss);
+  } catch (e) {
+    console.error('Error generating dynamic RSS feed:', e);
+    return res.status(500).send('Error generating RSS feed');
+  }
+});
+
 
 // Helper for dynamic table querying
 const allowedTables = [
