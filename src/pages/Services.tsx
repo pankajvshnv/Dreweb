@@ -31,18 +31,18 @@ export default function Services() {
         description="Explore Dreweb's core services: Frontend Engineering, UI/UX Design, Web Applications, and Technical SEO."
         canonicalUrl="/services"
       />
-      <section className="pt-24 pb-16 px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="max-w-4xl">
-          <TextReveal as="h1" className="font-display text-5xl md:text-7xl font-bold tracking-tighter mb-6">Services and Expertise.</TextReveal>
-          <FadeIn delay={0.4}>
-            <p className="text-xl text-zinc-500 font-light max-w-2xl text-balance">
+          <TextReveal as="h1" className="font-display text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-4 sm:mb-6">Services and Expertise.</TextReveal>
+          <FadeIn delay={0.3}>
+            <p className="text-base sm:text-xl text-zinc-500 font-light max-w-2xl text-balance">
               We provide end-to-end digital engineering and creative solutions for businesses that want to scale fast.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      <section className="px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12 sm:space-y-24">
         {loading ? (
           <div className="flex justify-center items-center py-20"><div className="w-8 h-8 border-4 border-brand-lime border-t-black rounded-full animate-spin"></div></div>
         ) : services.length === 0 ? (
@@ -50,23 +50,23 @@ export default function Services() {
         ) : (
           categories.map((category) => (
             <div key={category as string}>
-              <LineReveal className="mb-12" />
+              <LineReveal className="mb-8 sm:mb-12" />
               <FadeIn>
-                <h2 className="font-display text-3xl font-bold mb-12 flex items-center gap-4">
-                  {category === 'Design' && <PenTool className="text-brand-lime bg-black p-2 rounded-lg" size={40} />}
-                  {category === 'Development' && <Code2 className="text-brand-lime bg-black p-2 rounded-lg" size={40} />}
-                  {category === 'Marketing' && <Megaphone className="text-brand-lime bg-black p-2 rounded-lg" size={40} />}
-                  {category === 'Creative' && <LayoutTemplate className="text-brand-lime bg-black p-2 rounded-lg" size={40} />}
+                <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 flex items-center gap-3 sm:gap-4">
+                  {category === 'Design' && <PenTool className="text-brand-lime bg-black p-2 rounded-lg" size={36} />}
+                  {category === 'Development' && <Code2 className="text-brand-lime bg-black p-2 rounded-lg" size={36} />}
+                  {category === 'Marketing' && <Megaphone className="text-brand-lime bg-black p-2 rounded-lg" size={36} />}
+                  {category === 'Creative' && <LayoutTemplate className="text-brand-lime bg-black p-2 rounded-lg" size={36} />}
                   {category as string} Domain
                 </h2>
               </FadeIn>
               
-              <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.08}>
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" stagger={0.08}>
                 {services.filter((s: any) => s.category === category).map((service: any) => (
                   <StaggerItem key={service.id}>
                     <Link to={`/services/${service.slug}`} className="group block h-full" data-cursor="View">
                       <TiltCard className="h-full">
-                        <motion.div whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }} className="p-8 rounded-[2rem] bg-zinc-50 border border-zinc-100 hover:border-black hover:bg-white transition-all hover:shadow-xl h-full flex flex-col justify-between">
+                        <motion.div whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }} className="p-6 sm:p-8 rounded-[1.75rem] sm:rounded-[2rem] bg-zinc-50 border border-zinc-100 hover:border-black hover:bg-white transition-all hover:shadow-xl h-full flex flex-col justify-between">
                           <div>
                             <h3 className="font-display text-xl font-bold mb-4 pr-8 group-hover:text-brand-indigo transition-colors">{service.title}</h3>
                             <p className="text-zinc-500 text-sm mb-8">{service.shortDescription || `Complete ${service.title.toLowerCase()} tailored to your specific business requirements.`}</p>

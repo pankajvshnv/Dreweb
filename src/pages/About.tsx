@@ -13,44 +13,44 @@ export default function About() {
         canonicalUrl="/about"
       />
       {/* Hero */}
-      <section className="pt-24 pb-16 px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="max-w-4xl">
           <FadeIn>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 border border-zinc-200 text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-100 border border-zinc-200 text-xs sm:text-sm font-medium mb-6 sm:mb-8">
               Established {BRAND.founded} in {BRAND.location.split(',')[0]}
             </div>
           </FadeIn>
-          <TextReveal as="h1" className="font-display text-5xl md:text-7xl font-bold tracking-tighter leading-[1.05]">
+          <TextReveal as="h1" className="font-display text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] sm:leading-[1.05]">
             We are a collective of designers, engineers, and strategists.
           </TextReveal>
         </div>
       </section>
 
       {/* Intro */}
-      <section className="px-6 lg:px-8 max-w-7xl mx-auto py-12 md:py-24 border-t border-zinc-100">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-10 sm:py-16 md:py-24 border-t border-zinc-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16">
           <FadeIn direction="left">
-            <h2 className="font-display text-3xl font-bold mb-6">The dreweb philosophy.</h2>
-            <p className="text-zinc-600 text-lg leading-relaxed mb-6">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">The dreweb philosophy.</h2>
+            <p className="text-zinc-600 text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
               Founded in 2022, dreweb was born from a simple observation: most agency websites look the same, and most custom software takes too long to build. We bridge the gap between world-class premium design and agile engineering.
             </p>
-            <p className="text-zinc-600 text-lg leading-relaxed">
-              We specialize in the "SaaS aesthetic"—clean lines, massive typography, strict bento grids, and purposeful motion. We don't just build websites; we architect digital systems that position your brand strictly at the premium end of your market.
+            <p className="text-zinc-600 text-base sm:text-lg leading-relaxed">
+              We specialize in the "SaaS aesthetic"—clean lines, bold typography, strict bento grids, and purposeful motion. We don't just build websites; we architect digital systems that position your brand strictly at the premium end of your market.
             </p>
           </FadeIn>
           <FadeIn direction="right" delay={0.2}>
-            <TiltCard className="bg-brand-lime rounded-[2.5rem] p-12 flex flex-col justify-center h-full">
-              <h3 className="font-display text-4xl font-bold leading-tight mb-6">Design • Develop • Deliver</h3>
-              <p className="font-medium text-black/70">Our tagline isn't just a phrase, it's our exact operational sequence. We guarantee transparent communication and uncompromising technical standards.</p>
+            <TiltCard className="bg-brand-lime rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 md:p-12 flex flex-col justify-center h-full">
+              <h3 className="font-display text-3xl sm:text-4xl font-bold leading-tight mb-4 sm:mb-6">Design • Develop • Deliver</h3>
+              <p className="font-medium text-black/70 text-sm sm:text-base">Our tagline isn't just a phrase, it's our exact operational sequence. We guarantee transparent communication and uncompromising technical standards.</p>
             </TiltCard>
           </FadeIn>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center" stagger={0.1}>
+      <section className="py-12 sm:py-16 bg-black text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center" stagger={0.1}>
             {[
               { value: 25, suffix: '+', label: 'Clients Served' },
               { value: 50, suffix: '+', label: 'Projects Delivered' },
@@ -58,10 +58,10 @@ export default function About() {
               { value: 98, suffix: '%', label: 'Client Satisfaction' },
             ].map((stat, i) => (
               <StaggerItem key={i}>
-                <p className="font-display text-5xl md:text-6xl font-bold mb-2 text-brand-lime">
+                <p className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold mb-1 sm:mb-2 text-brand-lime">
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-zinc-400 text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
+                <p className="text-zinc-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -69,10 +69,10 @@ export default function About() {
       </section>
 
       {/* Core Values */}
-      <section className="py-24 bg-zinc-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <ScaleIn><h2 className="font-display text-4xl font-bold mb-16 text-center">Our Core Values</h2></ScaleIn>
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" stagger={0.1}>
+      <section className="py-16 sm:py-24 bg-zinc-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScaleIn><h2 className="font-display text-2xl sm:text-4xl font-bold mb-10 sm:mb-16 text-center">Our Core Values</h2></ScaleIn>
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8" stagger={0.1}>
             {[
               { title: 'Radical Quality', desc: 'If it\'s not the best in your industry, we don\'t ship it.' },
               { title: 'Speed of Execution', desc: 'We move fast. Agile sprints with transparent, weekly deliverables.' },
@@ -80,10 +80,10 @@ export default function About() {
               { title: 'Design as Strategy', desc: 'Aesthetics directly influence trust, conversion, and scale.' }
             ].map((v, i) => (
               <StaggerItem key={i}>
-                <TiltCard className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm h-full group hover:shadow-xl hover:border-brand-lime/30 transition-all duration-300">
-                  <motion.span whileHover={{ scale: 1.1 }} className="text-brand-lime font-display text-4xl font-bold mb-4 block">0{i+1}</motion.span>
-                  <h4 className="font-bold text-xl mb-3">{v.title}</h4>
-                  <p className="text-zinc-500 text-sm">{v.desc}</p>
+                <TiltCard className="bg-white p-6 sm:p-8 rounded-[1.75rem] sm:rounded-3xl border border-zinc-100 shadow-sm h-full group hover:shadow-xl hover:border-brand-lime/30 transition-all duration-300">
+                  <motion.span whileHover={{ scale: 1.1 }} className="text-brand-lime font-display text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 block">0{i+1}</motion.span>
+                  <h4 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3">{v.title}</h4>
+                  <p className="text-zinc-500 text-xs sm:text-sm">{v.desc}</p>
                 </TiltCard>
               </StaggerItem>
             ))}
@@ -92,11 +92,11 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-32 px-6 lg:px-8 text-center text-balance max-w-4xl mx-auto">
+      <section className="py-16 sm:py-32 px-4 sm:px-6 lg:px-8 text-center text-balance max-w-4xl mx-auto">
         <ScaleIn>
-          <TextReveal as="h2" className="font-display text-5xl md:text-6xl font-bold tracking-tighter mb-8">Ready to build something extraordinary?</TextReveal>
+          <TextReveal as="h2" className="font-display text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-6 sm:mb-8">Ready to build something extraordinary?</TextReveal>
           <Magnetic>
-            <Link to="/contact" className="inline-flex items-center justify-center px-8 py-4 bg-black text-white rounded-full font-semibold hover:bg-zinc-800 transition-colors text-lg" data-cursor="Let's Go">
+            <Link to="/contact" className="inline-flex items-center justify-center px-8 py-4 bg-black text-white rounded-full font-semibold hover:bg-zinc-800 transition-colors text-base sm:text-lg w-full sm:w-auto" data-cursor="Let's Go">
               Connect with our team
             </Link>
           </Magnetic>

@@ -1,10 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { ShowcaseCard, ShowcaseCardData } from './ShowcaseCard';
 import { useCollection } from '../../lib/useCollection';
 import { SHOWCASE_CARDS } from '../../lib/data';
+
+const MOBILE_PILLS = [
+  'Web & SaaS Apps',
+  'UI/UX Design',
+  'AI Automation',
+  'SEO & Growth'
+];
 
 export function FloatingShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,12 +44,12 @@ export function FloatingShowcase() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full overflow-hidden bg-white flex items-center justify-center pt-24 pb-32 lg:pt-24 lg:pb-40 select-none"
+      className="relative w-full overflow-hidden bg-white flex items-center justify-center pt-28 pb-16 sm:pt-32 sm:pb-24 md:pt-28 md:pb-36 lg:pb-40 select-none"
     >
       {/* Background radial gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-50 via-white to-white z-0"></div>
 
-      {/* Render Floating Cards - Pushed lower and scaled to avoid text overlap - Hidden on mobile */}
+      {/* Render Floating Cards - Hidden on mobile, visible from md up */}
       <div className="hidden md:block absolute inset-0 z-10 overflow-hidden pointer-events-none translate-y-20 lg:translate-y-32 scale-90 md:scale-100">
         <div className="relative w-full h-full pointer-events-auto">
           {cards.map((card, idx) => (
@@ -58,61 +65,82 @@ export function FloatingShowcase() {
       </div>
 
       {/* Central Content */}
-      <div className="relative z-20 flex flex-col items-center text-center w-full max-w-7xl px-4 md:px-8 pointer-events-none">
+      <div className="relative z-20 flex flex-col items-center text-center w-full max-w-7xl px-4 sm:px-6 md:px-8 pointer-events-none">
         
         {/* Top Tagline */}
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 shadow-sm mb-8 pointer-events-auto"
+          transition={{ delay: 0.15 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-zinc-200/80 shadow-sm mb-6 sm:mb-8 pointer-events-auto"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-lime animate-pulse"></span>
-          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">
-            Book a call {'>'} Finish project {'>'} Get more leads
+          <span className="w-2 h-2 rounded-full bg-brand-lime animate-pulse"></span>
+          <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+            Book Call &bull; Build Fast &bull; Convert Leads
           </span>
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1 
-          initial={{ opacity: 0, filter: 'blur(10px)' }}
+          initial={{ opacity: 0, filter: 'blur(8px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 1 }}
-          className="font-display text-5xl md:text-7xl lg:text-[80px] font-medium tracking-tight leading-[1.05] text-zinc-900 mb-6"
+          transition={{ duration: 0.8 }}
+          className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-[80px] font-extrabold tracking-tight leading-[1.12] sm:leading-[1.05] text-zinc-950 mb-5 sm:mb-6 max-w-4xl"
         >
-          Websites <em className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 mx-1">developed</em> for <br className="hidden md:block" /> speed, clarity, and <br className="hidden md:block" /> <em className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 ml-1">conversion.</em>
+          Websites{' '}
+          <span className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 py-0.5 rounded-lg inline-block my-1">
+            developed
+          </span>{' '}
+          for speed, clarity, and{' '}
+          <span className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 py-0.5 rounded-lg inline-block my-1">
+            conversion.
+          </span>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-lg md:text-xl text-zinc-500 font-light max-w-2xl text-balance mb-12"
+          transition={{ delay: 0.3 }}
+          className="text-sm sm:text-base md:text-xl text-zinc-600 font-normal max-w-2xl text-balance mb-8 sm:mb-10 px-2 leading-relaxed"
         >
-          From structure to launch, we handle everything - creating a website that's simple to use, easy to trust, and built to convert.
+          From strategy to deployment, we build digital products and high-converting websites engineered to turn visitors into loyal clients.
         </motion.p>
 
         {/* CTAs */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center gap-4 pointer-events-auto"
+          transition={{ delay: 0.45 }}
+          className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto px-4 sm:px-0 pointer-events-auto mb-10 sm:mb-0"
         >
           <Link 
             to="/contact" 
-            className="px-8 py-3.5 rounded-full bg-brand-lime text-black font-medium hover:scale-105 transition-transform"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-lime text-black font-extrabold text-sm sm:text-base shadow-lg shadow-brand-lime/20 active:scale-95 hover:scale-105 transition-all text-center"
           >
-            Book a call today
+            Start Your Project
           </Link>
           <Link 
             to="/work" 
-            className="px-8 py-3.5 rounded-full bg-white border border-zinc-200 text-zinc-700 font-medium hover:bg-zinc-50 transition-colors inline-flex items-center gap-2"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-zinc-200 text-zinc-900 font-bold text-sm sm:text-base hover:bg-zinc-50 active:scale-95 transition-all inline-flex items-center justify-center gap-2"
           >
-            Recent projects <ArrowUpRight size={16} />
+            <span>Explore Work</span>
+            <ArrowUpRight size={16} />
           </Link>
         </motion.div>
+
+        {/* Mobile-Only Feature Highlights Pill Strip */}
+        <div className="flex md:hidden flex-wrap items-center justify-center gap-2 max-w-sm pointer-events-auto">
+          {MOBILE_PILLS.map((pill) => (
+            <span
+              key={pill}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/60 text-[11px] font-bold text-zinc-700"
+            >
+              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+              {pill}
+            </span>
+          ))}
+        </div>
         
       </div>
       

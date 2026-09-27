@@ -16,26 +16,26 @@ export default function Pricing() {
 
   return (
     <div className="w-full pb-24">
-      <section className="pt-24 pb-16 px-6 lg:px-8 max-w-7xl mx-auto text-center">
+      <section className="pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <FadeIn>
-          <TextReveal as="h1" className="font-display text-5xl md:text-7xl font-bold tracking-tighter mb-6">Simple, transparent pricing.</TextReveal>
+          <TextReveal as="h1" className="font-display text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-4 sm:mb-6">Simple, transparent pricing.</TextReveal>
         </FadeIn>
         <FadeIn delay={0.3}>
-          <p className="text-xl text-zinc-500 font-light max-w-2xl mx-auto text-balance">
+          <p className="text-base sm:text-xl text-zinc-500 font-light max-w-2xl mx-auto text-balance">
             No hidden fees. We price purely on value, scope, and the dedicated engineering power required to deliver world-class results.
           </p>
         </FadeIn>
       </section>
 
-      <section className="px-6 lg:px-8 max-w-7xl mx-auto pt-8">
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start" stagger={0.15}>
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pt-4 sm:pt-8">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-start" stagger={0.15}>
           {tiers.map((tier: any, idx: number) => (
             <StaggerItem key={tier.name || idx}>
               <TiltCard>
                 <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  className={`rounded-[2.5rem] p-8 md:p-10 border transition-all ${tier.isFeatured ? 'bg-zinc-950 text-white border-zinc-900 shadow-2xl md:-translate-y-8 relative z-10' : 'bg-white text-black border-zinc-200 mt-4'
+                  className={`rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 md:p-10 border transition-all ${tier.isFeatured ? 'bg-zinc-950 text-white border-zinc-900 shadow-2xl md:-translate-y-8 relative z-10' : 'bg-white text-black border-zinc-200 mt-0 sm:mt-4'
                     }`}
                 >
                   {tier.isFeatured && (

@@ -84,25 +84,25 @@ export default function Home() {
       </section>
 
       {/* ━━━ SERVICES BENTO ━━━ */}
-      <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-7xl mx-auto relative content-auto">
+      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative content-auto overflow-hidden">
         {/* Glow effect in background */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-lime/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-brand-lime/5 rounded-full blur-[80px] sm:blur-[100px] pointer-events-none" />
         
         <FadeIn>
-          <div className="mb-12 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
+          <div className="mb-10 sm:mb-16 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
             <div className="max-w-2xl">
-              <SlideReveal><span className="flex items-center gap-2 text-brand-indigo font-bold tracking-widest uppercase text-xs mb-4"><Sparkles className="w-4 h-4" /> Core Capabilities</span></SlideReveal>
-              <TextReveal as="h3" className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter leading-[1.1]" delay={0.1}>Everything you need to dominate your market.</TextReveal>
+              <SlideReveal><span className="flex items-center gap-2 text-brand-indigo font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4"><Sparkles className="w-4 h-4" /> Core Capabilities</span></SlideReveal>
+              <TextReveal as="h3" className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter leading-[1.12]" delay={0.1}>Everything you need to dominate your market.</TextReveal>
             </div>
-            <Magnetic><Link to="/services" className="inline-flex items-center gap-2 font-bold text-sm bg-black text-white px-6 py-3 rounded-full hover:bg-brand-lime hover:text-black transition-all duration-300 shadow-xl hover:shadow-brand-lime/20 hover:-translate-y-1 whitespace-nowrap">Explore All Services <ArrowRight className="w-4 h-4" /></Link></Magnetic>
+            <Magnetic><Link to="/services" className="inline-flex items-center justify-center gap-2 font-bold text-sm bg-black text-white px-6 py-3.5 rounded-full hover:bg-brand-lime hover:text-black transition-all duration-300 shadow-xl hover:shadow-brand-lime/20 hover:-translate-y-1 w-full sm:w-auto">Explore All Services <ArrowRight className="w-4 h-4" /></Link></Magnetic>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[280px] md:auto-rows-[320px] relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto md:auto-rows-[320px] relative z-10">
           
           {/* Card 1: Web & App Dev (Large) */}
-          <FadeIn direction="right" distance={60} delay={0.1} once={false} className="md:col-span-2 lg:col-span-2 row-span-2 h-full">
-            <TiltCard className="h-full bg-zinc-950 text-white rounded-[2rem] p-8 md:p-10 relative overflow-hidden group flex flex-col shadow-2xl">
+          <FadeIn direction="right" distance={40} delay={0.1} once={false} className="md:col-span-2 lg:col-span-2 md:row-span-2 h-full">
+            <TiltCard className="h-full bg-zinc-950 text-white rounded-[2rem] p-6 sm:p-8 md:p-10 relative overflow-hidden group flex flex-col shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-black z-0"></div>
               {/* Animated background grid */}
               <div className="absolute inset-0 opacity-[0.03] z-0" style={{ backgroundImage: 'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
@@ -222,24 +222,22 @@ export default function Home() {
       </section>
 
       {/* ━━━ PORTFOLIO ━━━ */}
-      <section className="py-24 lg:py-32 bg-surface-gray text-black relative overflow-hidden rounded-t-[3rem] lg:rounded-t-[5rem] content-auto">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <section className="py-16 sm:py-24 lg:py-32 bg-surface-gray text-black relative overflow-hidden rounded-t-[2.5rem] sm:rounded-t-[3rem] lg:rounded-t-[5rem] content-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <FadeIn>
-
-
             {/* Header Area */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-6 md:gap-8">
               <div className="max-w-2xl">
-                <h2 className="font-display text-5xl md:text-6xl font-extrabold tracking-tighter mb-6 text-black">Our Latest Work</h2>
-                <p className="text-zinc-600 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
+                <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter mb-4 sm:mb-6 text-black">Our Latest Work</h2>
+                <p className="text-zinc-600 text-base sm:text-lg md:text-xl font-medium max-w-lg leading-relaxed">
                   Our tailored solutions empower your online presence, ensuring growth and success in the digital landscape.
                 </p>
               </div>
               <Magnetic>
-                <Link to="/work" className="group inline-flex items-center justify-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-zinc-900 text-white rounded-full font-bold transition-colors duration-300 hover:bg-black whitespace-nowrap">
+                <Link to="/work" className="group inline-flex items-center justify-center gap-3 px-6 py-3.5 md:px-8 md:py-4 bg-zinc-900 text-white rounded-full font-bold transition-colors duration-300 hover:bg-black w-full sm:w-auto">
                   <span>See more</span>
-                  <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                  <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                 </Link>
               </Magnetic>
             </div>
@@ -280,17 +278,17 @@ export default function Home() {
                     
                     {/* Floating Circular Button inside the cutout */}
                     <div className="absolute bottom-2 right-2 z-30 transition-transform duration-500 group-hover:scale-110">
-                      <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-white group-hover:bg-black transition-colors duration-300">
-                        <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform duration-500" strokeWidth={2} />
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-zinc-900 rounded-full flex items-center justify-center text-white group-hover:bg-black transition-colors duration-300">
+                        <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:rotate-45 transition-transform duration-500" strokeWidth={2} />
                       </div>
                     </div>
 
                   </div>
                   
                   {/* Text Below Card */}
-                  <div className="mt-6 flex flex-col">
-                    <h3 className="font-display text-2xl md:text-3xl font-bold mb-2 tracking-tight group-hover:text-brand-lime transition-colors duration-300 text-zinc-900">{project.title}</h3>
-                    <p className="text-xs md:text-sm uppercase tracking-widest text-zinc-500 font-bold">{project.industry}</p>
+                  <div className="mt-5 sm:mt-6 flex flex-col">
+                    <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold mb-1.5 sm:mb-2 tracking-tight group-hover:text-brand-lime transition-colors duration-300 text-zinc-900">{project.title}</h3>
+                    <p className="text-[11px] sm:text-xs md:text-sm uppercase tracking-widest text-zinc-500 font-bold">{project.industry}</p>
                   </div>
                 </Link>
               </FadeIn>
@@ -300,9 +298,9 @@ export default function Home() {
       </section>
 
       {/* ━━━ STATS ━━━ */}
-      <section className="py-16 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center" stagger={0.1}>
+      <section className="py-12 sm:py-16 bg-black text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center" stagger={0.1}>
             {[
               { value: 25, suffix: '+', label: 'Clients Served' },
               { value: 50, suffix: '+', label: 'Projects Delivered' },
@@ -310,10 +308,10 @@ export default function Home() {
               { value: 98, suffix: '%', label: 'Client Satisfaction' },
             ].map((stat, i) => (
               <StaggerItem key={i}>
-                <p className="font-display text-5xl md:text-6xl font-bold mb-2 text-brand-lime">
+                <p className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold mb-1 sm:mb-2 text-brand-lime">
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-zinc-400 text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
+                <p className="text-zinc-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -321,28 +319,28 @@ export default function Home() {
       </section>
 
       {/* ━━━ TESTIMONIALS ━━━ */}
-      <section className="py-32 overflow-hidden bg-zinc-950 relative content-auto">
+      <section className="py-16 sm:py-24 lg:py-32 overflow-hidden bg-zinc-950 relative content-auto">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02] mix-blend-overlay"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-brand-lime/10 blur-[120px] rounded-full pointer-events-none"></div>
 
         <FadeIn distance={40} once={true}>
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-20 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-12">
             <div className="text-left md:w-1/2">
-               <h2 className="font-display text-5xl lg:text-7xl font-extrabold tracking-tighter text-white">
+               <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tighter text-white leading-tight">
                  <span className="text-brand-lime">Reviews</span><br/>
                  from Industry Leaders
                </h2>
             </div>
-            <div className="flex flex-col items-start md:items-end text-left md:text-right gap-6 md:w-1/2">
-              <div className="flex -space-x-4">
+            <div className="flex flex-col items-start md:items-end text-left md:text-right gap-4 sm:gap-6 md:w-1/2">
+              <div className="flex -space-x-3 sm:-space-x-4">
                 {[1,2,3,4,5].map(i => (
-                  <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="w-12 h-12 lg:w-16 lg:h-16 rounded-full border-2 border-zinc-950 object-cover" alt="avatar" />
+                  <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full border-2 border-zinc-950 object-cover" alt="avatar" />
                 ))}
               </div>
-              <p className="text-xl lg:text-2xl text-zinc-300 max-w-sm font-medium">Industry leaders are already scaling with our premium solutions.</p>
-              <div className="flex flex-wrap gap-4 mt-2">
-                <Link to="/contact" className="px-6 py-3 bg-brand-lime text-black font-bold rounded-full hover:bg-white transition-colors">Get a free trial</Link>
-                <Link to="/about" className="px-6 py-3 bg-white/5 text-white font-bold rounded-full border border-white/10 hover:bg-white/10 transition-colors">Read more reviews</Link>
+              <p className="text-base sm:text-xl lg:text-2xl text-zinc-300 max-w-sm font-medium">Industry leaders are already scaling with our premium solutions.</p>
+              <div className="flex flex-col sm:flex-row gap-3 mt-2 w-full sm:w-auto">
+                <Link to="/contact" className="px-6 py-3.5 bg-brand-lime text-black font-bold rounded-full hover:bg-white transition-colors text-center text-sm sm:text-base">Get a free trial</Link>
+                <Link to="/about" className="px-6 py-3.5 bg-white/5 text-white font-bold rounded-full border border-white/10 hover:bg-white/10 transition-colors text-center text-sm sm:text-base">Read more reviews</Link>
               </div>
             </div>
           </div>
@@ -412,21 +410,21 @@ export default function Home() {
       </section>
 
       {/* ━━━ PROCESS ━━━ */}
-      <section className="py-32 bg-zinc-950 relative overflow-hidden content-auto">
+      <section className="py-16 sm:py-24 lg:py-32 bg-zinc-950 relative overflow-hidden content-auto">
         {/* Subtle Background Elements */}
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-brand-lime/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-brand-lime/5 blur-[100px] rounded-full pointer-events-none translate-x-1/3"></div>
+        <div className="absolute top-1/2 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-brand-lime/5 blur-[80px] sm:blur-[120px] rounded-full pointer-events-none -translate-x-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-brand-lime/5 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none translate-x-1/3"></div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row gap-16 lg:gap-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row gap-10 sm:gap-16 lg:gap-24">
           
           {/* Left Side: Sticky Title */}
           <div className="w-full lg:w-1/3">
-            <div className="sticky top-32">
+            <div className="lg:sticky lg:top-32">
               <ScaleIn>
-                <h2 className="font-display text-5xl lg:text-7xl font-extrabold tracking-tighter text-white mb-8">
+                <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tighter text-white mb-4 sm:mb-8 leading-tight">
                   How we<br/><span className="text-brand-lime">operate.</span>
                 </h2>
-                <p className="text-xl lg:text-2xl text-zinc-400 font-medium leading-relaxed">
+                <p className="text-base sm:text-xl lg:text-2xl text-zinc-400 font-medium leading-relaxed">
                   A simple, transparent, and results-driven process designed to move fast and break records.
                 </p>
               </ScaleIn>
@@ -435,24 +433,24 @@ export default function Home() {
 
           {/* Right Side: Process List */}
           <div className="w-full lg:w-2/3">
-            <StaggerContainer className="flex flex-col" stagger={0.2}>
+            <StaggerContainer className="flex flex-col" stagger={0.15}>
               {[
                 { step: '01', title: 'Discovery & Strategy', desc: 'Understanding your business goals, target audience, and competitive landscape.' },
                 { step: '02', title: 'UX/UI Design', desc: 'Creating wireframes, prototypes, and a premium visual language that converts.' },
                 { step: '03', title: 'Development', desc: 'Building scalable, fast, and SEO-optimized architecture using modern frameworks.' },
                 { step: '04', title: 'Launch & Scale', desc: 'Rigorous QA, smooth deployment, and ongoing performance optimization.' }
               ].map((item, idx) => (
-                <StaggerItem key={idx} className="group border-b border-white/10 py-10 lg:py-16 first:pt-0 last:border-b-0 cursor-default">
-                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-6 md:gap-12 transition-transform duration-500 group-hover:translate-x-4">
+                <StaggerItem key={idx} className="group border-b border-white/10 py-6 sm:py-10 lg:py-16 first:pt-0 last:border-b-0 cursor-default">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6 md:gap-12 transition-transform duration-500 group-hover:translate-x-3">
                     <span 
-                      className="font-display text-4xl md:text-6xl font-extrabold text-transparent transition-all duration-500 group-hover:text-brand-lime w-24 shrink-0"
+                      className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold text-brand-lime sm:text-transparent transition-all duration-500 sm:group-hover:text-brand-lime w-16 sm:w-24 shrink-0"
                       style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}
                     >
                       {item.step}
                     </span>
                     <div className="flex-1">
-                      <h4 className="text-2xl md:text-4xl font-bold text-white mb-4 tracking-tight group-hover:text-brand-lime transition-colors duration-500">{item.title}</h4>
-                      <p className="text-lg md:text-xl text-zinc-400 leading-relaxed font-medium">{item.desc}</p>
+                      <h4 className="text-xl sm:text-2xl md:text-4xl font-bold text-white mb-2 sm:mb-4 tracking-tight group-hover:text-brand-lime transition-colors duration-500">{item.title}</h4>
+                      <p className="text-sm sm:text-base md:text-xl text-zinc-400 leading-relaxed font-medium">{item.desc}</p>
                     </div>
                   </div>
                 </StaggerItem>

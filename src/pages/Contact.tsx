@@ -8,6 +8,7 @@ import { motion } from 'motion/react';
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,6 +29,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage('');
     try {
       const leadPayload = {
         ...formData,
@@ -71,7 +73,7 @@ export default function Contact() {
       setFormData({ name: '', email: '', mobile: '', company: '', service: '', currency: '$', budget: '', message: '' });
     } catch (error) {
       console.error(error);
-      alert('Failed to send message: ' + (error as Error).message);
+      setErrorMessage((error as Error).message || 'Failed to submit inquiry. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -79,49 +81,49 @@ export default function Contact() {
 
   return (
     <div className="w-full">
-      <section className="pt-24 pb-16 px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <section className="pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
           <div>
-            <TextReveal as="h1" className="font-display text-5xl md:text-7xl font-bold tracking-tighter mb-6">
+            <TextReveal as="h1" className="font-display text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-4 sm:mb-6">
               Let's talk about your project.
             </TextReveal>
-            <FadeIn delay={0.4}>
-              <p className="text-xl text-zinc-500 font-light max-w-md text-balance mb-12">
+            <FadeIn delay={0.3}>
+              <p className="text-base sm:text-xl text-zinc-500 font-light max-w-md text-balance mb-8 sm:mb-12">
                 Ready to transform your business with a stunning website?
               </p>
             </FadeIn>
 
-            <StaggerContainer className="space-y-8" stagger={0.1}>
+            <StaggerContainer className="space-y-6 sm:space-y-8" stagger={0.1}>
               <StaggerItem>
                 <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-brand-lime transition-colors duration-300">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-brand-lime transition-colors duration-300">
                     <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <h4 className="font-bold mb-1">Email</h4>
-                    <a href={`mailto:${BRAND.email}`} className="text-zinc-500 hover:text-black transition-colors">{BRAND.email}</a>
+                    <h4 className="font-bold text-sm sm:text-base mb-0.5 sm:mb-1">Email</h4>
+                    <a href={`mailto:${BRAND.email}`} className="text-sm sm:text-base text-zinc-500 hover:text-black transition-colors">{BRAND.email}</a>
                   </div>
                 </div>
               </StaggerItem>
               <StaggerItem>
                 <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-brand-lime transition-colors duration-300">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-brand-lime transition-colors duration-300">
                     <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <h4 className="font-bold mb-1">Phone / WhatsApp</h4>
-                    <a href={`tel:${BRAND.phone.replace(/\s+/g, '')}`} className="text-zinc-500 hover:text-black transition-colors">{BRAND.phone}</a>
+                    <h4 className="font-bold text-sm sm:text-base mb-0.5 sm:mb-1">Phone / WhatsApp</h4>
+                    <a href={`tel:${BRAND.phone.replace(/\s+/g, '')}`} className="text-sm sm:text-base text-zinc-500 hover:text-black transition-colors">{BRAND.phone}</a>
                   </div>
                 </div>
               </StaggerItem>
               <StaggerItem>
                 <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-brand-lime transition-colors duration-300">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-brand-lime transition-colors duration-300">
                     <MapPin className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <h4 className="font-bold mb-1">Office</h4>
-                    <p className="text-zinc-500">{BRAND.location}</p>
+                    <h4 className="font-bold text-sm sm:text-base mb-0.5 sm:mb-1">Office</h4>
+                    <p className="text-sm sm:text-base text-zinc-500">{BRAND.location}</p>
                   </div>
                 </div>
               </StaggerItem>
@@ -129,7 +131,12 @@ export default function Contact() {
           </div>
 
           <ScaleIn delay={0.2}>
-            <div className="bg-zinc-50 rounded-[2.5rem] p-8 md:p-12 border border-zinc-200">
+            <div className="bg-zinc-50 rounded-[1.75rem] sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 border border-zinc-200">
+              {errorMessage && (
+                <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-medium">
+                  {errorMessage}
+                </div>
+              )}
               {success ? (
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center text-center h-full space-y-4 py-12">
                   <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 2.5 }} className="w-16 h-16 bg-brand-lime rounded-full flex items-center justify-center text-black shadow-lg shadow-brand-lime/20">
