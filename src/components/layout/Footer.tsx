@@ -84,7 +84,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-black/40 text-[10px] uppercase tracking-[0.15em] font-bold text-center sm:text-left">
           <p>© {new Date().getFullYear()} {BRAND.name.toUpperCase()} AGENCY · ALL RIGHTS RESERVED</p>
           <div className="flex items-center gap-4">
-            <Link to="/admin" className="hover:text-brand-blue transition-colors">Admin Login</Link>
+            <Link to="/admin" rel="nofollow" className="hover:text-brand-blue transition-colors">Admin Login</Link>
           </div>
         </div>
         

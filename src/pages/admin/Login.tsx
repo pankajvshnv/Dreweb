@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Lock } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -34,12 +35,6 @@ export default function AdminLogin() {
         return;
       }
 
-      if (email === 'info@dreweb.online' && password === 'Macbook@123') {
-        signIn(email);
-        navigate('/admin/dashboard');
-        return;
-      }
-
       const errData = await res.json().catch(() => ({}));
       throw new Error(errData.error || 'Invalid email or password');
     } catch (err: any) {
@@ -48,26 +43,32 @@ export default function AdminLogin() {
     }
   };
 
-
-
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center p-4">
+      <Helmet>
+        <title>Admin Portal Login — Dreweb CMS</title>
+        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+        <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
+      </Helmet>
+
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
           <img src="/brand-logo.png" alt="Dreweb" className="h-16 w-auto mb-6 drop-shadow-xl" />
-          <h1 className="text-3xl font-display font-extrabold tracking-tight text-black text-center">Welcome back</h1>
-          <p className="text-zinc-500 font-medium mt-1">Sign in to your CMS dashboard.</p>
+          <h1 className="text-3xl font-display font-bold tracking-tight text-black text-center">Welcome back</h1>
+          <p className="text-zinc-500 font-medium mt-1">Sign in to your Dreweb CMS dashboard.</p>
         </div>
 
         <div className="bg-white border border-zinc-200 rounded-[24px] p-8 shadow-sm">
           {error && <div className="p-3 mb-4 text-sm text-red-600 bg-red-50 rounded-xl">{error}</div>}
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6" method="POST" action="/api/auth/login">
             <div className="space-y-2">
               <Label htmlFor="email" className="font-bold text-sm">Email address</Label>
               <Input 
                 id="email" 
+                name="username"
                 type="email" 
                 required 
+                autoComplete="username"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="info@dreweb.online"
@@ -78,12 +79,13 @@ export default function AdminLogin() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="font-bold text-sm">Password</Label>
-                <a href="#" className="font-semibold text-xs text-brand-blue hover:underline">Forgot password?</a>
               </div>
               <Input 
                 id="password" 
+                name="password"
                 type="password" 
                 required 
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
