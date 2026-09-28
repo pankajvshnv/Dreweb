@@ -320,7 +320,7 @@ export default function Home() {
 
       {/* ━━━ TESTIMONIALS ━━━ */}
       <section className="py-16 sm:py-24 lg:py-32 overflow-hidden bg-zinc-950 relative content-auto">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02] mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.04] pointer-events-none"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-brand-lime/10 blur-[120px] rounded-full pointer-events-none"></div>
 
         <FadeIn distance={40} once={true}>
@@ -333,8 +333,14 @@ export default function Home() {
             </div>
             <div className="flex flex-col items-start md:items-end text-left md:text-right gap-4 sm:gap-6 md:w-1/2">
               <div className="flex -space-x-3 sm:-space-x-4">
-                {[1,2,3,4,5].map(i => (
-                  <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full border-2 border-zinc-950 object-cover" alt="avatar" />
+                {[
+                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120',
+                  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120',
+                  'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=120',
+                  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120',
+                  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120'
+                ].map((avatarUrl, i) => (
+                  <img key={i} src={avatarUrl} className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full border-2 border-zinc-950 object-cover" alt="avatar" />
                 ))}
               </div>
               <p className="text-base sm:text-xl lg:text-2xl text-zinc-300 max-w-sm font-medium">Industry leaders are already scaling with our premium solutions.</p>
@@ -363,7 +369,13 @@ export default function Home() {
                     
                     <div className="flex items-center gap-4 mt-auto pt-5 border-t border-white/5">
                       <img 
-                        src={item.authorImage || `https://i.pravatar.cc/150?u=${item.author || idx}`} 
+                        src={item.authorImage || [
+                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150'
+                        ][idx % 5]} 
                         alt={item.author} 
                         className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" 
                       />
@@ -392,7 +404,13 @@ export default function Home() {
                     
                     <div className="flex items-center gap-4 mt-auto pt-5 border-t border-white/5">
                       <img 
-                        src={item.authorImage || `https://i.pravatar.cc/150?u=${item.author || idx}`} 
+                        src={item.authorImage || [
+                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150',
+                          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150'
+                        ][(idx + 2) % 5]} 
                         alt={item.author} 
                         className="w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-2 border-white/10" 
                       />
