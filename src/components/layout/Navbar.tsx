@@ -183,7 +183,7 @@ export default function Navbar() {
             >
               {/* Drawer Top / Header */}
               <div className="p-6 pt-20 border-b border-zinc-100">
-                <p className="text-[11px] font-extrabold tracking-widest text-zinc-400 uppercase mb-4">
+                <p className="text-[11px] font-bold tracking-widest text-zinc-400 uppercase mb-4">
                   Navigation
                 </p>
                 <div className="space-y-1">
@@ -229,7 +229,7 @@ export default function Navbar() {
               <div className="p-6 bg-zinc-50/70 border-t border-zinc-100 space-y-4">
                 <Link
                   to="/contact"
-                  className="w-full flex items-center justify-between px-5 py-4 rounded-2xl bg-brand-lime text-black font-extrabold text-sm shadow-md active:scale-98 transition-transform"
+                  className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl bg-brand-lime text-black font-bold text-sm shadow-md active:scale-98 transition-transform"
                 >
                   <span>Start Your Project</span>
                   <ArrowRight className="w-4 h-4" />

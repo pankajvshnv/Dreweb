@@ -20,7 +20,7 @@ export default function Footer() {
                 <img src="/brand-logo.png" alt="Dreweb" className="h-9 sm:h-12 md:h-14 w-auto" />
               </Link>
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-[-0.03em] mb-6 leading-tight">
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-bold tracking-[-0.03em] mb-6 leading-tight">
               Let's build<br/>
               <span className="text-brand-blue italic font-normal">something great.</span>
             </h2>

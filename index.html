@@ -26,21 +26,114 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
     <link rel="shortcut icon" href="/favicon.ico" />
 
-    <!-- Default SEO Fallbacks (will be overridden by Helmet) -->
+    <!-- Default SEO Fallbacks (enhanced for Google, Bing, Safari, Edge, Brave) -->
     <title>Dreweb — Web Design & Development Agency</title>
-    <meta name="description" content="Dreweb creates visually refined digital experiences with modern UI/UX, smooth interactions, and conversion-focused layouts." />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Dreweb creates visually refined digital experiences with modern UI/UX, fast and scalable development, and conversion-focused design." />
+    <meta name="keywords" content="web design, web development, custom software, UI/UX design, SaaS development, technical SEO, digital agency" />
+    <meta name="author" content="Dreweb" />
+    <meta name="publisher" content="Dreweb" />
     <link rel="canonical" href="https://dreweb.online/" />
+
+    <!-- Crawlers & Indexing Directives -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Browser Colors & Appearance (Safari, Brave, Chrome, Edge) -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-navbutton-color" content="#000000" />
+
+    <!-- Open Graph (Facebook, LinkedIn, Discord, Slack) -->
+    <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dreweb.online/" />
     <meta property="og:site_name" content="Dreweb" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Dreweb — Web Design & Development Agency" />
+    <meta property="og:description" content="Dreweb creates visually refined digital experiences with modern UI/UX, smooth interactions, and conversion-focused layouts." />
+    <meta property="og:image" content="https://dreweb.online/brand-logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dreweb Digital Agency" />
 
-    <!-- PWA Manifest -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@dreweb" />
+    <meta name="twitter:creator" content="@dreweb" />
+    <meta name="twitter:title" content="Dreweb — Web Design & Development Agency" />
+    <meta name="twitter:description" content="Dreweb creates visually refined digital experiences with modern UI/UX, smooth interactions, and conversion-focused layouts." />
+    <meta name="twitter:image" content="https://dreweb.online/brand-logo.png" />
+
+    <!-- PWA & Apple Safari Specifics -->
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Dreweb" />
+
+    <!-- Structured Data (JSON-LD) Organization & WebSite for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://dreweb.online/#organization",
+          "name": "Dreweb",
+          "url": "https://dreweb.online/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://dreweb.online/brand-logo.png",
+            "caption": "Dreweb"
+          },
+          "image": "https://dreweb.online/brand-logo.png",
+          "description": "Dreweb is a modern digital agency specializing in website design, development, SaaS platforms, and SEO optimization.",
+          "email": "contact@dreweb.online",
+          "sameAs": [
+            "https://twitter.com/dreweb",
+            "https://linkedin.com/company/dreweb",
+            "https://github.com/pankajvshnv/Dreweb"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://dreweb.online/#website",
+          "url": "https://dreweb.online/",
+          "name": "Dreweb",
+          "publisher": {
+            "@id": "https://dreweb.online/#organization"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://dreweb.online/blog?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://dreweb.online/#service",
+          "name": "Dreweb",
+          "url": "https://dreweb.online/",
+          "priceRange": "$$",
+          "image": "https://dreweb.online/brand-logo.png",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,6 +1,7 @@
 import { Check, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCollection } from '../lib/useCollection';
+import SEO from '../components/seo/SEO';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, Magnetic, ScaleIn } from '../components/motion/Animations';
 import { motion } from 'motion/react';
 
@@ -16,6 +17,11 @@ export default function Pricing() {
 
   return (
     <div className="w-full pb-24">
+      <SEO
+        title="Pricing Plans | Transparent Web Development Packages"
+        description="Transparent, value-focused pricing for website design, SaaS development, and custom web applications. Choose the plan that fits your growth stage."
+        canonicalUrl="/pricing"
+      />
       <section className="pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <FadeIn>
           <TextReveal as="h1" className="font-display text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-4 sm:mb-6">Simple, transparent pricing.</TextReveal>

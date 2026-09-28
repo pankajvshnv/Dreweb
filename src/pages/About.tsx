@@ -58,7 +58,7 @@ export default function About() {
               { value: 98, suffix: '%', label: 'Client Satisfaction' },
             ].map((stat, i) => (
               <StaggerItem key={i}>
-                <p className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold mb-1 sm:mb-2 text-brand-lime">
+                <p className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-1 sm:mb-2 text-brand-lime">
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </p>
                 <p className="text-zinc-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">{stat.label}</p>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, MapPin, Phone, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { BRAND } from '../lib/data';
 import { createDocument } from '../lib/crud';
+import SEO from '../components/seo/SEO';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, ScaleIn, Magnetic } from '../components/motion/Animations';
 import { motion } from 'motion/react';
 
@@ -79,8 +80,32 @@ export default function Contact() {
     }
   };
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Dreweb",
+    "description": "Get in touch with the Dreweb team for web design, development, and digital strategy inquiries.",
+    "url": "https://dreweb.online/contact",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Dreweb",
+      "email": BRAND.email,
+      "telephone": BRAND.phone,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": BRAND.location
+      }
+    }
+  };
+
   return (
     <div className="w-full">
+      <SEO
+        title="Contact Us | Start Your Project"
+        description="Ready to transform your business with a stunning website? Contact Dreweb to discuss your web design, SaaS development, or branding project."
+        canonicalUrl="/contact"
+        schema={contactSchema}
+      />
       <section className="pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
           <div>

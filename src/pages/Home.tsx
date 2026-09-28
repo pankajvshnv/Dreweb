@@ -69,7 +69,7 @@ export default function Home() {
 
       {/* ━━━ MARQUEE ━━━ */}
       <section className="py-10 bg-brand-lime text-black overflow-hidden rotate-[-1deg] scale-105 origin-center border-y border-black/5 relative z-10 content-auto">
-        <div className="whitespace-nowrap flex items-center select-none font-display text-3xl md:text-5xl uppercase font-extrabold tracking-wider">
+        <div className="whitespace-nowrap flex items-center select-none font-display text-3xl md:text-5xl uppercase font-bold tracking-wider">
           <div className="animate-marquee inline-block">
             <span>Mobile App Development</span><span className="mx-8 text-black/20">✦</span>
             <span>Website Development</span><span className="mx-8 text-black/20">✦</span>
@@ -92,7 +92,7 @@ export default function Home() {
           <div className="mb-10 sm:mb-16 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
             <div className="max-w-2xl">
               <SlideReveal><span className="flex items-center gap-2 text-brand-indigo font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4"><Sparkles className="w-4 h-4" /> Core Capabilities</span></SlideReveal>
-              <TextReveal as="h3" className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter leading-[1.12]" delay={0.1}>Everything you need to dominate your market.</TextReveal>
+              <TextReveal as="h3" className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.12]" delay={0.1}>Everything you need to dominate your market.</TextReveal>
             </div>
             <Magnetic><Link to="/services" className="inline-flex items-center justify-center gap-2 font-bold text-sm bg-black text-white px-6 py-3.5 rounded-full hover:bg-brand-lime hover:text-black transition-all duration-300 shadow-xl hover:shadow-brand-lime/20 hover:-translate-y-1 w-full sm:w-auto">Explore All Services <ArrowRight className="w-4 h-4" /></Link></Magnetic>
           </div>
@@ -109,7 +109,7 @@ export default function Home() {
               <motion.div className="absolute -right-20 -top-20 w-64 h-64 bg-brand-lime/20 rounded-full blur-[80px] group-hover:bg-brand-lime/30 transition-colors duration-700 z-0" />
               
               <div className="relative z-10 flex justify-between items-start">
-                <span className="px-4 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-white/10 backdrop-blur-md hw-accelerate-filter text-white border border-white/10">Flagship</span>
+                <span className="px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md hw-accelerate-filter text-white border border-white/10">Flagship</span>
                 <Globe className="text-white/30 w-8 h-8 group-hover:text-brand-lime group-hover:rotate-12 transition-all duration-500" />
               </div>
               
@@ -117,7 +117,7 @@ export default function Home() {
                 <Float duration={4} distance={8} className="mb-6 w-16 h-16 bg-white/5 backdrop-blur-xl hw-accelerate-filter border border-white/10 rounded-2xl flex items-center justify-center shadow-2xl">
                   <Code2 className="text-brand-lime w-8 h-8" />
                 </Float>
-                <h4 className="font-display text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-white">Web & App<br/>Development</h4>
+                <h4 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight text-white">Web & App<br/>Development</h4>
                 <p className="text-zinc-400 max-w-md font-medium text-sm md:text-base mb-8 leading-relaxed">Custom SaaS platforms, corporate websites, e-commerce stores, and high-performance applications built with modern frameworks and flawless architecture.</p>
                 <Link to="/services/custom-website" className="inline-flex items-center gap-2 font-bold text-sm w-fit text-brand-lime hover:text-white transition-colors duration-300 group/link">
                   Explore Engineering <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -229,7 +229,7 @@ export default function Home() {
             {/* Header Area */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-6 md:gap-8">
               <div className="max-w-2xl">
-                <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter mb-4 sm:mb-6 text-black">Our Latest Work</h2>
+                <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-4 sm:mb-6 text-black">Our Latest Work</h2>
                 <p className="text-zinc-600 text-base sm:text-lg md:text-xl font-medium max-w-lg leading-relaxed">
                   Our tailored solutions empower your online presence, ensuring growth and success in the digital landscape.
                 </p>
@@ -308,7 +308,7 @@ export default function Home() {
               { value: 98, suffix: '%', label: 'Client Satisfaction' },
             ].map((stat, i) => (
               <StaggerItem key={i}>
-                <p className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold mb-1 sm:mb-2 text-brand-lime">
+                <p className="font-display text-3xl sm:text-5xl md:text-6xl font-bold mb-1 sm:mb-2 text-brand-lime">
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </p>
                 <p className="text-zinc-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
@@ -326,7 +326,7 @@ export default function Home() {
         <FadeIn distance={40} once={true}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-12">
             <div className="text-left md:w-1/2">
-               <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tighter text-white leading-tight">
+               <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tighter text-white leading-tight">
                  <span className="text-brand-lime">Reviews</span><br/>
                  from Industry Leaders
                </h2>
@@ -421,7 +421,7 @@ export default function Home() {
           <div className="w-full lg:w-1/3">
             <div className="lg:sticky lg:top-32">
               <ScaleIn>
-                <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tighter text-white mb-4 sm:mb-8 leading-tight">
+                <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tighter text-white mb-4 sm:mb-8 leading-tight">
                   How we<br/><span className="text-brand-lime">operate.</span>
                 </h2>
                 <p className="text-base sm:text-xl lg:text-2xl text-zinc-400 font-medium leading-relaxed">
@@ -443,7 +443,7 @@ export default function Home() {
                 <StaggerItem key={idx} className="group border-b border-white/10 py-6 sm:py-10 lg:py-16 first:pt-0 last:border-b-0 cursor-default">
                   <div className="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6 md:gap-12 transition-transform duration-500 group-hover:translate-x-3">
                     <span 
-                      className="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold text-brand-lime sm:text-transparent transition-all duration-500 sm:group-hover:text-brand-lime w-16 sm:w-24 shrink-0"
+                      className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-brand-lime sm:text-transparent transition-all duration-500 sm:group-hover:text-brand-lime w-16 sm:w-24 shrink-0"
                       style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}
                     >
                       {item.step}

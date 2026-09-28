@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Clock, Calendar } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/seo/SEO';
 
 interface BlogPost {
   id: string;
@@ -36,17 +36,32 @@ export default function Blog() {
     fetchPosts();
   }, []);
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Dreweb Blog & Insights",
+    "description": "Discover the latest strategies, tutorials, and trends in web development, design, and digital growth from the experts at Dreweb.",
+    "url": "https://dreweb.online/blog",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Dreweb",
+      "url": "https://dreweb.online"
+    }
+  };
+
   return (
     <>
-      <Helmet>
-        <title>Blog - Dreweb | Web Design & Development Insights</title>
-        <meta name="description" content="Discover the latest insights on web design, development, SEO, and digital strategy from the experts at Dreweb." />
-      </Helmet>
+      <SEO
+        title="Blog & Insights | Web Design & Development"
+        description="Discover the latest strategies, tutorials, and trends in web development, design, and digital growth from the experts at Dreweb."
+        canonicalUrl="/blog"
+        schema={blogSchema}
+      />
 
       <main className="min-h-screen bg-zinc-50 pt-32 pb-24">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-black mb-4">
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-black mb-4">
               Insights & Resources
             </h1>
             <p className="text-lg text-zinc-500 max-w-2xl">

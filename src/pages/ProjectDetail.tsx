@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/seo/SEO';
 import { ArrowLeft, ArrowUpRight, Play } from 'lucide-react';
 import { useDocumentBySlug } from '../lib/useDocument';
 import NotFound from './NotFound';
@@ -20,18 +20,35 @@ export default function ProjectDetail() {
 
   if (!project) return <NotFound />;
 
+  const projectDesc = project.shortDescription || project.description || `${project.title} — A case study by Dreweb, a modern web design and development agency.`;
+  const projectImg = project.heroImage || project.thumbnailUrl || 'https://dreweb.online/brand-logo.png';
+
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": project.title,
+    "headline": project.title,
+    "description": projectDesc,
+    "image": projectImg,
+    "creator": {
+      "@type": "Organization",
+      "name": "Dreweb",
+      "url": "https://dreweb.online"
+    },
+    "genre": project.industry || "Web Design & Development",
+    "url": `https://dreweb.online/work/${slug}`
+  };
+
   return (
     <div className="w-full bg-white pb-24">
-      <Helmet>
-        <title>{project.title} — Dreweb Portfolio</title>
-        <meta name="description" content={project.shortDescription || project.description || `${project.title} — A project by Dreweb, a modern web design and development agency.`} />
-        <link rel="canonical" href={`https://dreweb.online/work/${slug}`} />
-        <meta property="og:title" content={`${project.title} — Dreweb Portfolio`} />
-        <meta property="og:description" content={project.shortDescription || project.description || ''} />
-        {(project.heroImage || project.thumbnailUrl) && <meta property="og:image" content={project.heroImage || project.thumbnailUrl} />}
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://dreweb.online/work/${slug}`} />
-      </Helmet>
+      <SEO
+        title={`${project.title} — Dreweb Portfolio`}
+        description={projectDesc}
+        canonicalUrl={`/work/${slug}`}
+        ogImage={projectImg}
+        ogType="article"
+        schema={projectSchema}
+      />
       {/* Hero */}
       <section className="pt-24 pb-16 px-6 lg:px-8 max-w-7xl mx-auto">
         <FadeIn>

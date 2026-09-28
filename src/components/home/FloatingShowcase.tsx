@@ -74,9 +74,9 @@ export function FloatingShowcase() {
           transition={{ delay: 0.15 }}
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-zinc-200/80 shadow-sm mb-6 sm:mb-8 pointer-events-auto"
         >
-          <span className="w-2 h-2 rounded-full bg-brand-lime animate-pulse"></span>
-          <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-            Book Call &bull; Build Fast &bull; Convert Leads
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-lime animate-pulse"></span>
+          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-zinc-600">
+            Book a call &bull; Finish project &bull; Get more leads
           </span>
         </motion.div>
 
@@ -85,16 +85,16 @@ export function FloatingShowcase() {
           initial={{ opacity: 0, filter: 'blur(8px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           transition={{ duration: 0.8 }}
-          className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-[80px] font-extrabold tracking-tight leading-[1.12] sm:leading-[1.05] text-zinc-950 mb-5 sm:mb-6 max-w-4xl"
+          className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-medium tracking-tight leading-[1.08] sm:leading-[1.05] text-zinc-900 mb-6 max-w-5xl"
         >
           Websites{' '}
-          <span className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 py-0.5 rounded-lg inline-block my-1">
+          <em className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 py-0.5 rounded-md inline-block my-0.5">
             developed
-          </span>{' '}
-          for speed, clarity, and{' '}
-          <span className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 py-0.5 rounded-lg inline-block my-1">
+          </em>{' '}
+          for <br className="hidden sm:block" /> speed, clarity, and <br className="hidden sm:block" />{' '}
+          <em className="font-serif italic font-normal tracking-normal text-black bg-brand-lime px-2 py-0.5 rounded-md inline-block my-0.5">
             conversion.
-          </span>
+          </em>
         </motion.h1>
 
         {/* Subtitle */}
@@ -102,9 +102,9 @@ export function FloatingShowcase() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-sm sm:text-base md:text-xl text-zinc-600 font-normal max-w-2xl text-balance mb-8 sm:mb-10 px-2 leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-zinc-500 font-light max-w-2xl text-balance mb-8 sm:mb-12 px-2 leading-relaxed"
         >
-          From strategy to deployment, we build digital products and high-converting websites engineered to turn visitors into loyal clients.
+          From structure to launch, we handle everything — creating a website that's simple to use, easy to trust, and built to convert.
         </motion.p>
 
         {/* CTAs */}
@@ -116,15 +116,15 @@ export function FloatingShowcase() {
         >
           <Link 
             to="/contact" 
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-lime text-black font-extrabold text-sm sm:text-base shadow-lg shadow-brand-lime/20 active:scale-95 hover:scale-105 transition-all text-center"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-lime text-black font-medium hover:scale-105 active:scale-95 transition-all text-center"
           >
-            Start Your Project
+            Book a call today
           </Link>
           <Link 
             to="/work" 
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-zinc-200 text-zinc-900 font-bold text-sm sm:text-base hover:bg-zinc-50 active:scale-95 transition-all inline-flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white border border-zinc-200 text-zinc-700 font-medium hover:bg-zinc-50 active:scale-95 transition-all inline-flex items-center justify-center gap-2"
           >
-            <span>Explore Work</span>
+            <span>Recent projects</span>
             <ArrowUpRight size={16} />
           </Link>
         </motion.div>

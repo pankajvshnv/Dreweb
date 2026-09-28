@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useCollection } from '../lib/useCollection';
 import { SERVICES } from '../lib/data';
 import NotFound from './NotFound';
+import SEO from '../components/seo/SEO';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem, TiltCard, ScaleIn, Magnetic } from '../components/motion/Animations';
 import { motion } from 'motion/react';
 
@@ -29,8 +30,28 @@ export default function ServiceDetail() {
 
   if (!service) return <NotFound />;
 
+  const serviceDescription = service.shortDescription || `Professional ${service.title} services by Dreweb. Engineered for high performance, modern aesthetic appeal, and maximum conversion rates.`;
+
   return (
     <div className="w-full">
+      <SEO 
+        title={`${service.title} Services | Dreweb`}
+        description={serviceDescription}
+        canonicalUrl={`/services/${slug}`}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": service.title,
+          "serviceType": service.category || service.title,
+          "provider": {
+            "@type": "Organization",
+            "name": "Dreweb",
+            "url": "https://dreweb.online"
+          },
+          "areaServed": "Worldwide",
+          "description": serviceDescription
+        }}
+      />
       {/* Hero */}
       <section className="pt-24 pb-20 px-6 lg:px-8 max-w-7xl mx-auto border-b border-zinc-100">
         <div className="max-w-4xl">

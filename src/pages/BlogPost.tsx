@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import SEO from '../components/seo/SEO';
 import {
   ArrowLeft, Clock, Calendar, Twitter, Linkedin,
   Facebook, Link2, Sun, Moon, ArrowRight, Check, Heart, BookOpen
@@ -162,15 +163,48 @@ export default function BlogPostPage() {
   const shareUrl = window.location.href;
   const coverImg = post.coverImage || post.cover_image || '';
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": coverImg || 'https://dreweb.online/brand-logo.png',
+    "datePublished": post.createdAt,
+    "dateModified": post.updatedAt || post.createdAt,
+    "author": {
+      "@type": "Person",
+      "name": post.author || "Dreweb Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Dreweb",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dreweb.online/brand-logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://dreweb.online/blog/${post.slug}`
+    }
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{post.title} — Dreweb</title>
-        <meta name="description" content={post.excerpt} />
-        {coverImg && <meta property="og:image" content={coverImg} />}
-        <meta property="og:title" content={post.title} />
-        <meta property="og:type" content="article" />
-      </Helmet>
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        canonicalUrl={`/blog/${post.slug}`}
+        ogImage={coverImg || 'https://dreweb.online/brand-logo.png'}
+        ogType="article"
+        article={{
+          publishedTime: post.createdAt,
+          modifiedTime: post.updatedAt || post.createdAt,
+          author: post.author || 'Dreweb Team',
+          section: post.category,
+        }}
+        schema={articleSchema}
+      />
 
       {/* Reading progress */}
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: 3, zIndex: 9999, background: 'transparent' }}>
