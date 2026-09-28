@@ -39,7 +39,7 @@ jobs:
             docker compose build
 
             echo "Applying updates (replaces only changed containers, no downtime)..."
-            docker compose up -d
+            docker compose up -d --remove-orphans
 
             echo "Checking container status..."
             docker compose ps
